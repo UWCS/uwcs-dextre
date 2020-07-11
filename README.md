@@ -1,4 +1,4 @@
-# uwcs-zarya
+# uwcs-dextre
 
 ### Contents
 * [About](#about)
@@ -8,12 +8,12 @@
 * [License](#license)
 
 ### About
-uwcs-zarya is the newest variant of the University of Warwick Computing Society website, built for the 2016-17 academic year. The site is built upon Python, using Django and the [Wagtail CMS](https://github.com/torchbox/wagtail).
+uwcs-dextre is the latest in a long line of University of Warwick Computing Society websites, started immediatly before the 2020-21 academic year. The site uses Python, Django and the [Wagtail CMS](https://github.com/torchbox/wagtail) (currently).
 
-The name 'Zarya' comes from the Overwatch character of the same name. The previous website, named 'Reinhardt', shares a name with another character within Overwatch - both of the same class. However the previous website pre-dates Overwatch by a significant amount of time, with the name actually deriving from the musician [Django Reinhardt](https://en.wikipedia.org/wiki/Django_Reinhardt).
+The name 'Dextre' comes from the ISS module of the same name. The previous website, named 'Zarya', shares a name with another eponymous module of the ISS. The name for that version having been derived from the computer game Overwatch.
 
 ### Installation
-This section details the deployment of uwcs-zarya on a Linux system.
+This section details the deployment of uwcs-dextre on a Linux system.
 
 #### Dependencies
 uwcs-zarya depends upon a variety of softwares though at its core the website is built upon the Django web framework. The list of dependencies are:
@@ -26,7 +26,7 @@ uwcs-zarya depends upon a variety of softwares though at its core the website is
 * Virtualenv
 * Supervisor
 
-The deployment of the website on the UWCS systems also uses Apache 2 and mod_wsgi for a web server, though it would be possible to use nginx too. The site also uses a transactional email provided for email, though normal SMTP can be used and configured using Django's standard configuration settings.
+The deployment of the website on the UWCS systems also uses Apache 2 and mod_wsgi for a web server, though it would be possible to use nginx too. The site also uses a transactional email provided for email, though normal SMTP is planned to be used and configured using Django's standard configuration settings.
 
 #### Installation and Configuration
 With the packaged dependencies installed and configured (most/all should be available with any Linux distribution's package manager), the steps for installation of the website are as follows, though you may want to stop after step 5 if you are not going to deploy the website for production purposes:
@@ -34,16 +34,17 @@ With the packaged dependencies installed and configured (most/all should be avai
 1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.5
 2. `git clone` the repository to the location you wish to serve the site from (e.g: `/var/www/uwcs-zarya`)
 3. Install the requirements using `pip -r requirements.txt` (make sure you're using the virtualenv if you're using one)
-4. `cd uwcs-zarya/zarya/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
-5. `cd uwcs-zarya/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
-6. `cd uwcs-zarya/zarya/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
-7. `cd uwcs-zarya/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
+4. `cd uwcs-dextre/zarya/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
+5. `cd uwcs-dextre/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
+6. `cd uwcs-dextre/zarya/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
+7. `cd uwcs-dextre/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
 8. Create a directory `uwcs-zarya/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
 9. Create the appropriate configuration files for Supervisor to run Celery automatically and allow it to recover on restart
 10. Create the configuration file(s) for the web server of your chosing
 11. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 #### Ubuntu 16.04 Xenial development setup
+# TODO. These command's don't actually work anymore
 
 If you blindly follow these instructions, you should have a working instance of the website.
 

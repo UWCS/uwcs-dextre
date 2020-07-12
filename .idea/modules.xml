@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/uwcs-zarya.iml" filepath="$PROJECT_DIR$/.idea/uwcs-zarya.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/uwcs-dextre.iml" filepath="$PROJECT_DIR$/.idea/uwcs-dextre.iml" />
     </modules>
   </component>
 </project>

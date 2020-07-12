@@ -89,7 +89,7 @@ ENV/
 
 # Project-specific
 *.sqlite3
-zarya/settings/production.py
+dextre/settings/production.py
 .sass-cache/
 static/CACHE/
 media/
@@ -142,7 +142,3 @@ fabric.properties
 
 # Celery
 celerybeat.pid
-
-# Virtualenv
-env/
-venv/

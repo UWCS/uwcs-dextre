@@ -8,7 +8,7 @@
 * [License](#license)
 
 ### About
-uwcs-dextre is the latest in a long line of University of Warwick Computing Society websites, started immediatly before the 2020-21 academic year. The site uses Python, Django and the [Wagtail CMS](https://github.com/torchbox/wagtail) (currently).
+uwcs-dextre is the latest in a long line of University of Warwick Computing Society websites, started immediately before the 2020-21 academic year. The site uses Python, Django and the [Wagtail CMS](https://github.com/torchbox/wagtail) (currently).
 
 The name 'Dextre' comes from the ISS module of the same name. The previous website, named 'Zarya', shares a name with another eponymous module of the ISS. The name for that version having been derived from the computer game Overwatch.
 
@@ -18,7 +18,7 @@ This section details the deployment of uwcs-dextre on a Linux system.
 #### Dependencies
 uwcs-zarya depends upon a variety of softwares though at its core the website is built upon the Django web framework. The list of dependencies are:
 
-* Python 3.5
+* Python 3.8
 * Redis
 * Sass (Ruby)
 * Bower (npm/node)
@@ -34,11 +34,11 @@ With the packaged dependencies installed and configured (most/all should be avai
 1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.5
 2. `git clone` the repository to the location you wish to serve the site from (e.g: `/var/www/uwcs-zarya`)
 3. Install the requirements using `pip -r requirements.txt` (make sure you're using the virtualenv if you're using one)
-4. `cd uwcs-dextre/zarya/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
+4. `cd uwcs-dextre/dextre/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
 5. `cd uwcs-dextre/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
-6. `cd uwcs-dextre/zarya/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
+6. `cd uwcs-dextre/dextre/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
 7. `cd uwcs-dextre/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
-8. Create a directory `uwcs-zarya/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
+8. Create a directory `uwcs-dextre/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
 9. Create the appropriate configuration files for Supervisor to run Celery automatically and allow it to recover on restart
 10. Create the configuration file(s) for the web server of your chosing
 11. Run your web server (if you're developing locally, simply run `python manage.py runserver`
@@ -93,6 +93,7 @@ python ./manage.py shell
 ```
 
 Run these to create the basic site structure:
+**This block doesnt work any more. New version will be written once site structure is decided upon**
 ```python
 from wagtail.wagtailcore.models import Page, Site
 from blog.models import HomePage, AboutPage
@@ -116,7 +117,7 @@ The last step is to start a celery worker for background tasks. Open a new termi
 
 ```
 . ./bin/zarya-env/activate
-celery -A zarya worker -l info
+celery -A dextre worker -l info
 ```
 
 ### License

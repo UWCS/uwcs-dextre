@@ -30,8 +30,6 @@ INSTALLED_APPS = [
     'events',
     'newsletter',
     'api',
-    # Uncomment this for data migration - otherwise it causes a large number of
-    # 'migration',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',

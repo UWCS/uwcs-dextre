@@ -4,29 +4,29 @@
     {% for child in content %}
         {% if child.block_type == 'h2' %}
             <h2 id="{{ child | slugify }}">
-                {{ child }} <a href="#{{ child | slugify }}" class="icon h-link"><i class="fa fa-paragraph"
-                                                                                    aria-hidden="true"></i></a>
+                {{ child }} <a href="#{{ child | slugify }}" class="icon"><i class="fa fa-paragraph"
+                                                                             aria-hidden="true"></i></a>
             </h2>
         {% elif child.block_type == 'h3' %}
             <h3 id="{{ child | slugify }}">
-                {{ child }} <a href="#{{ child | slugify }}" class="icon h-link"><i class="fas fa-paragraph"
-                                                                                    aria-hidden="true"></i></a>
+                {{ child }} <a href="#{{ child | slugify }}" class="icon"><i class="fas fa-paragraph"
+                                                                             aria-hidden="true"></i></a>
             </h3>
         {% elif child.block_type == 'h4' %}
             <h4 id="{{ child | slugify }}">
-                {{ child }} <a href="#{{ child | slugify }}" class="icon h-link"><i class="fa fa-paragraph"
-                                                                                    aria-hidden="true"></i></a>
+                {{ child }} <a href="#{{ child | slugify }}" class="icon"><i class="fa fa-paragraph"
+                                                                             aria-hidden="true"></i></a>
             </h4>
         {% elif child.block_type == 'code' %}
             <div class="code-block">
                 {{ child }}
-                <p class="has-text-right has-text-muted">{{ child.value.language | get_code_language }}</p>
+                <p class="text-right">{{ child.value.language | get_code_language }}</p>
             </div>
         {% elif child.block_type == 'pullquote' %}
             <blockquote>
                 {{ child.value.quote }}
                 {% if child.value.attribution %}
-                    <cite>- {{ child.value.attribution }}</cite>
+                    <cite>{{ child.value.attribution }}</cite>
                 {% endif %}
             </blockquote>
         {% elif child.block_type == 'paragraph' %}
@@ -37,8 +37,6 @@
             <div class="document-wrapper">
                 {{ child }}
             </div>
-        {% elif block.block_type == 'table' %}
-            {% include_block block %}
         {% else %}
             {{ child }}
         {% endif %}

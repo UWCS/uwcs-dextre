@@ -28,11 +28,11 @@ INSTALLED_APPS = [
     'blog',
     'accounts',
     'events',
+    'newsletter',
     'api',
 
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
-    'wagtail.contrib.table_block',
     'wagtail.embeds',
     'wagtail.sites',
     'wagtail.users',
@@ -64,7 +64,6 @@ INSTALLED_APPS = [
     'compressor',
     'anymail',
     'markdownx',
-    'widget_tweaks',
 ]
 
 REST_FRAMEWORK = {
@@ -90,7 +89,7 @@ MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
 
-    #    'wagtail.core.middleware.SiteMiddleware',
+    'wagtail.core.middleware.SiteMiddleware',
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
@@ -186,7 +185,8 @@ DEFAULT_FROM_EMAIL = "newsletter@uwcs.co.uk"
 
 # Django-bower
 BOWER_INSTALLED_APPS = [
-    'bulma~0.9.0'
+    'foundation-sites~6.6.3',
+    'motion-ui~2.0.3',
 ]
 
 # OAuth2 groups
@@ -211,7 +211,6 @@ UNION_API_KEY = 'insert-api-key'
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = 'UWCS (Dextre)'
-WAGTAIL_FRONTEND_LOGIN_URL = '/accounts/login/'
 
 # Cross-origin Requests
 CORS_ORIGIN_ALLOW_ALL = True

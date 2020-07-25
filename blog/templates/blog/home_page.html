@@ -14,10 +14,7 @@
                         </figure>
                     </div>
                     <div class="column is-four-fifths">
-                        <h1 class="title has-text-white">
-                            <span aria-hidden="true">University&nbsp;<wbr>of&nbsp;<wbr>Warwick Computing&nbsp;<wbr>Society</span>
-                            <span class="is-sr-only">University of Warwick Computing Society</span>
-                        </h1>
+                        <h1 class="title has-text-white">{{ site_root.title }}</h1>
                     </div>
                 </div>
             </div>
@@ -39,6 +36,7 @@
     {% endif %}
     <section class="section">
         <div class="container">
+
             {% include 'blog/includes/streamfield.html' with content=page.description %}
         </div>
     </section>
@@ -56,7 +54,6 @@
     <section class="section">
         {% event_listing_homepage %}
     </section>
-    <section class="section">
-        {% blog_listing_homepage %}
-    </section>
+
+    {% blog_listing_homepage %}
 {% endblock %}

@@ -11,7 +11,7 @@ from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_2
 from rest_framework.views import APIView
 
 from accounts.models import CompsocUser
-from events.models import EventPage, EventSignup, SeatingRevision
+from events.models import EventPage, EventSignup
 from .serializers import DiscordUserSerialiser, EventSerialiser, EventSignupSerialiser, LanAppProfileSerialiser
 
 
@@ -41,23 +41,6 @@ class MemberDiscordInfoApiView(APIView):
         serializer = DiscordUserSerialiser(compsoc_user)
 
         return JsonResponse(serializer.data)
-
-
-class SeatingView(APIView):
-    def get(self, request, event_id):
-        event = get_object_or_404(EventPage, id=event_id)
-
-        if not event.has_seating:
-            return JsonResponse({'detail': 'that event doesn\'t have a seating plan'}, status=HTTP_400_BAD_REQUEST)
-
-        if not event.seating_location:
-            return JsonResponse({'detail': 'the event requires a seating plan but has none set'},
-                                status=HTTP_400_BAD_REQUEST)
-
-        seating_location = event.seating_location
-        revisions = SeatingRevision.objects.for_event(event)
-
-        return JsonResponse({'hello': 'world'}, status=HTTP_200_OK)
 
 
 class EventSignupView(APIView):

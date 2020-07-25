@@ -15,15 +15,16 @@ from wagtail.core.models import Page
 from accounts.models import CompsocUser
 from blog.models import BlogStreamBlock
 
-TARGETS = (
-    ('ACA', 'Academic'),
-    ('GAM', 'Gaming'),
-    ('SCL', 'Social'),
-    ('SCT', 'Society'),
-)
+
 
 
 class EventType(models.Model):
+    class TARGETS(models.TextChoices):
+        ACADEMIC = ('ACA', 'Academic')
+        GAMING = ('GAM', 'Gaming')
+        SOCIAL = ('SCL', 'Social')
+        SOCIETY = ('SCT', 'Society')
+
     name = models.CharField(max_length=50)
     target = models.CharField(max_length=3, choices=TARGETS)
 
@@ -89,7 +90,7 @@ class EventsArchivePage(Page):
         # Filter by date
         filter_date = request.GET.get('date')
         if filter_date:
-            filter_date = datetime.strptime(filter_date, '%Y-%m')
+            filter_date = timezone.make_aware(datetime.strptime(filter_date, '%Y-%m'), timezone.get_current_timezone())
             events = events.filter(start__month=filter_date.month, start__year=filter_date.year)
 
         weeks_dict = OrderedDict()
@@ -123,37 +124,12 @@ class EventsArchivePage(Page):
         return context
 
 
-class SeatingRoom(models.Model):
-    name = models.CharField(max_length=100)
-    """
-    This field will contain a literal array of integers in JSON list notation ([2, 3, 4, 5]). Each position
-    corresponds to a table, and the value is the total seats on that table. For example: [20, 20, 20, 10] would
-    be the standard LIB2 set up.
-    """
-    tables_raw = models.TextField(
-        help_text='This field will contain a literal array of integers in JSON list notation ([2, 3, 4, 5]). Each position corresponds to a table, and the value is the total seats on that table. For example: [20, 20, 20, 10] would be the standard LIB2 set up.')
-
-    @property
-    def tables(self):
-        tables = json.loads(self.tables_raw)
-        return {k: v for k, v in enumerate(tables)}
-
-    @property
-    def tables_pretty(self):
-        return ',\n'.join(map(lambda i: 'Table {k}: {v} seats'.format(k=(i[0] + 1), v=i[1]), self.tables.items()))
-
-    @property
-    def max_capacity(self):
-        return reduce(lambda x, y: x + y, self.tables.values())
-
-    def save_tables(self, tables):
-        self.tables_raw = json.dumps(tables)
-
-    def __str__(self):
-        return self.name
-
-
 class EventPage(Page):
+    class SIGNUP_TYPES(models.IntegerChoices):
+        NONE = 0
+        INTERNAL = 1
+        EXTERNAL = 2
+
     # Parent page/subpage rules
     parent_page_types = ['events.EventsIndexPage']
 
@@ -169,17 +145,16 @@ class EventPage(Page):
                                     help_text='A link to the associated Facebook event if one exists', blank=True,
                                     default='')
     # Event signup fields
+    signup_type = models.IntegerField(choices=SIGNUP_TYPES.choices)
+    signup_url = models.URLField(help_text='External only'),
     signup_limit = models.IntegerField(verbose_name='Signup limit',
-                                       help_text='Enter 0 for unlimited signups or -1 for no signups',
-                                       default=-1)
-    signup_open = models.DateTimeField(default=timezone.now)
-    signup_close = models.DateTimeField(default=timezone.now)
+                                       help_text='Enter 0 for unlimited signups. Internal only',
+                                       default=0)
+    signup_open = models.DateTimeField(default=timezone.now, help_text='Internal only')
+    signup_close = models.DateTimeField(default=timezone.now, help_text='Internal only')
     signup_freshers_open = models.DateTimeField(
         help_text='Set a date for when freshers may sign up to the event, leave blank if they are to sign up at the\
-                   same time as everyone else', blank=True, null=True)
-
-    has_seating = models.BooleanField(help_text='Tick this if the event needs a seating plan', default=False)
-    seating_location = models.ForeignKey(SeatingRoom, on_delete=models.PROTECT, blank=True, null=True)
+                   same time as everyone else. Internal only', blank=True, null=True)
 
     @property
     def is_ongoing(self):
@@ -221,7 +196,7 @@ class EventPage(Page):
         else:
             in_signup_window = False
 
-        if self.signup_limit == -1:
+        if self.signup_type != self.SIGNUP_TYPES.INTERNAL:
             context['can_signup'] = False
         elif self.signup_limit == 0:
             context['can_signup'] = in_signup_window
@@ -246,75 +221,14 @@ EventPage.content_panels = [
         StreamFieldPanel('body'),
     ], heading='Event details'),
     MultiFieldPanel([
+        FieldPanel('signup_type'),
         FieldPanel('signup_limit'),
         FieldPanel('signup_open'),
         FieldPanel('signup_close'),
-        FieldPanel('signup_freshers_open')
+        FieldPanel('signup_freshers_open'),
+        FieldPanel('signup_url'),
     ], heading='Signup information')
 ]
-
-
-class RevisionManager(models.Manager):
-    def for_event(self, e):
-        return self.filter(event=e).order_by('-number')
-
-
-class SeatingRevision(models.Model):
-    event = models.ForeignKey(EventPage, on_delete=models.CASCADE)
-    creator = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    number = models.IntegerField()
-    created_at = models.DateTimeField(default=timezone.now)
-
-    objects = RevisionManager()
-
-    def prev(self):
-        return SeatingRevision.objects.get(event=self.event, number=self.number - 1)
-
-    def added(self):
-        """
-        People who were added to the seating plan in the current
-        revision.
-        Returns an iterable of Seating Objects
-        """
-        try:
-            return self.seating_set.exclude(user__in=self.prev().users())
-        except SeatingRevision.DoesNotExist:
-            return self.seating_set.all()
-
-    def removed(self):
-        try:
-            return self.prev().seating_set.exclude(user__in=self.users())
-        except SeatingRevision.DoesNotExist:
-            return self.seating_set.none()
-
-    def moved(self):
-        try:
-            current = self.seating_set.filter(user__in=self.prev().users()).order_by('user')
-            previous = self.prev().seating_set.filter(user__in=self.users()).order_by('user')
-            return filter(lambda curr, prev: curr.col != prev.col or curr.row != prev.row, zip(current, previous))
-        except SeatingRevision.DoesNotExist:
-            return self.seating_set.none()
-
-    class Meta:
-        unique_together = ('event', 'number')
-
-
-class SeatingManager(models.Manager):
-    def for_event(self, e):
-        """
-        Get all the seatings for every revision for a specific event
-        """
-        return self.filter(revision__event=e)
-
-
-class Seating(models.Model):
-    reserved = models.BooleanField(default=False)
-    revision = models.ForeignKey(SeatingRevision, on_delete=models.CASCADE)
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    table = models.IntegerField()
-    seat = models.IntegerField()
-
-    objects = SeatingManager()
 
 
 class EventSignup(models.Model):

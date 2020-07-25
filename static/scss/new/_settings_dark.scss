@@ -1,0 +1,43 @@
+$family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
+$family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
+$header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
+
+$family-secondary: $header-font-family;
+$title-family: $header-font-family;
+
+$primary: #3d5afe;
+$secondary: #fdd835;
+$info: $primary;
+$success: #00C853;
+$warning: #FFD600;
+$danger: #FF1744;
+
+$primary-scheme: desaturate(darken($primary, 50%), 40%);
+$secondary-scheme: hsl(0,0,10%);
+$info-scheme: $primary-scheme;
+$success-scheme: darken($success,20%);
+$warning-scheme: darken($warning, 20%);
+$danger-scheme: darken($danger, 20%);
+
+$link: $primary;
+
+$scheme-main: hsl(0,0,4%);
+$scheme-main-bis: hsl(0, 0%, 7%);
+$scheme-main-ter: hsl(0, 0%, 14%);
+$scheme-invert: hsl(0,0,100%);
+$scheme-invert-bis: hsl(0, 0%, 98%);
+$scheme-invert-ter: hsl(0, 0%, 96%);
+
+$text: $scheme-invert;
+$text-strong: $scheme-invert;
+
+$card-background-color: $primary-scheme;
+$card-color: hsl(0,0,100%);
+$card-header-color: $card-color;
+$card-shadow: 0 0.5em 1em -0.125em rgba($primary-scheme, 0.1), 0 0px 0 1px rgba($primary-scheme, 0.02);
+
+$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+        "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
+        "danger-scheme": $danger-scheme);
+
+$gap: 128px;

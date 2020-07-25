@@ -16,7 +16,11 @@ def markdownify(value):
 
 @register.simple_tag(takes_context=True)
 def is_nightmode(context):
-    user = context['request'].user
+    try:
+        user = context['request'].user
+        # Wagtail preview context doesn't always have .user available
+    except AttributeError:
+        return False
     try:
         if user.compsocuser:
             return user.compsocuser.nightmode_on or bool(context['request'].session.get('night_mode', default=False))
@@ -29,7 +33,7 @@ def is_nightmode(context):
 @register.inclusion_tag('lib/tags/sponsor_homepage.html', takes_context=True)
 def sponsor_homepage(context):
     return {
-        'sponsors': Sponsor.objects.filter(primary_sponsor=True).all(),
+        'sponsors': Sponsor.objects.filter(tier__gte=Sponsor.TIERS.SILVER).all(),
         'request': context['request'],
     }
 
@@ -37,7 +41,7 @@ def sponsor_homepage(context):
 @register.inclusion_tag('lib/tags/sponsor_sidebar.html', takes_context=True)
 def sponsor_sidebar(context):
     return {
-        'sponsors': Sponsor.objects.filter(primary_sponsor=True).all(),
+        'sponsors': Sponsor.objects.filter(tier__gte=Sponsor.TIERS.GOLD).all(),
         'request': context['request'],
     }
 

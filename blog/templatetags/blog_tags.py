@@ -3,9 +3,13 @@ from django import template
 
 import sys
 
+from django.utils import timezone
+from django.utils.safestring import mark_safe
+from wagtail.core.rich_text import expand_db_html
+
 from events.models import EventPage, EventsIndexPage
 
-from blog.models import BlogPage, BlogIndexPage, CodeBlock
+from blog.models import BlogPage, BlogIndexPage, CodeBlock, SocialMedia
 
 from collections import OrderedDict
 
@@ -91,13 +95,24 @@ def search_filters(context):
     archive_date = context['request'].GET.get('date')
 
     if archive_date:
-        archive_date = datetime.strftime(
-            datetime.strptime(context['request'].GET.get('date'), '%Y-%m'), '%B %Y')
+        archive_date = timezone.make_aware(datetime.strftime(
+            datetime.strptime(context['request'].GET.get('date'), '%Y-%m'), '%B %Y'))
 
     return {
         'archive_date': archive_date,
         'tag': context['request'].GET.get('tag'),
         # required by the pageurl tag that we want to use within this template
+        'request': context['request'],
+    }
+
+
+@register.inclusion_tag(
+    'blog/tags/social_bubbles.html',
+    takes_context=True
+)
+def social_bubbles(context):
+    return {
+        'socials': SocialMedia.objects.all(),
         'request': context['request'],
     }
 
@@ -123,3 +138,18 @@ def to_month_str(value):
         11: 'November',
         12: 'December',
     }[value]
+
+
+@register.filter
+def inlinerichtext(value):
+    if value is None:
+        html = ''
+    else:
+        if isinstance(value, str):
+            html = expand_db_html(value)
+        else:
+            raise TypeError(
+                "'richtext' template filter received an invalid value; expected string, got {}.".format(type(value)))
+    html = html.replace('<p>', '')
+    html = html.replace('</p>', '')
+    return mark_safe(html)

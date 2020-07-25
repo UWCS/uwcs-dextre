@@ -1,30 +1,59 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
+{% load static %}
 {% load wagtailcore_tags wagtailimages_tags blog_tags base_tags %}
 {% get_site_root as site_root %}
 
 {% block content %}
-  <section class="jumbotron margin-top-2x">
-    <div class="flex-row">
-      <div class="flex-column flex-shrink hide-for-small-only">
-        <svg style="margin-top: 16px;" width="102" height="135" viewBox="0 0 144 191" xmlns="http://www.w3.org/2000/svg">
-          <g transform="rotate(45 46.337 82.743)">
-            <ellipse fill="#FDD835" cx="25.961" cy="86.515" rx="25" ry="24.82"/>
-            <ellipse fill="#3D5AFE" cx="88" cy="88.82" rx="25" ry="24.82"/>
-            <ellipse fill="#3D5AFE" cx="150.039" cy="88.82" rx="25" ry="24.82"/>
-            <ellipse fill="#FDD835" cx="26" cy="24.82" rx="25" ry="24.82"/>
-          </g>
-        </svg>
-      </div>
-      <div class="flex-column">
-        <h1>{{ site_root.title }}</h1>
-        <p>{{ page.description }}</p>
-      </div>
+    <div class="head_block">
+        <section class="hero head_inner">
+            <div class="container">
+                <div class="columns is-centered is-vcentered my-4 is-mobile">
+                    <div class="column is-one-fifth is-hidden-mobile">
+                        <figure class="image is-square">
+                            <img alt="University of Warwick Computing Society logo" src="{% static "logo.svg" %}">
+                        </figure>
+                    </div>
+                    <div class="column is-four-fifths">
+                        <h1 class="title has-text-white">{{ site_root.title }}</h1>
+                    </div>
+                </div>
+            </div>
+        </section>
     </div>
+    {% if page.alert %}
+        {% if page.alert_link %}<a href="{{ page.alert_link }}">{% endif %}
+    <section class="hero is-secondary-scheme is-small">
+        <div class="hero-body my-2">
+            <div class="container">
+                <div class="subtitle is-centred has-text-centered content">
+                    {{ page.alert|inlinerichtext }}
+                    {% if page.alert_link %}<i class="fas fa-chevron-right"></i>{% endif %}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if page.alert_link %}</a>{% endif %}
+    {% endif %}
+    <section class="section">
+        <div class="container">
 
-    {% sponsor_homepage %}
-  </section>
+            {% include 'blog/includes/streamfield.html' with content=page.description %}
+        </div>
+    </section>
+    <section class="hero is-primary-scheme">
+        <div class="hero-body">
+            <div class="container">
+                <h2 class="title is-4 has-text-centered">Keep up to date with what we're doing!</h2>
+                {% social_bubbles %}
+            </div>
+        </div>
+    </section>
+    <section class="section">
+        {% sponsor_homepage %}
+    </section>
+    <section class="section">
+        {% event_listing_homepage %}
+    </section>
 
-  {% event_listing_homepage %}
-
-  {% blog_listing_homepage %}
+    {% blog_listing_homepage %}
 {% endblock %}

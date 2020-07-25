@@ -39,14 +39,36 @@ class Footer(models.Model):
 
 
 @register_snippet
+class SocialMedia(models.Model):
+    url = models.URLField()
+    icon = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('url'),
+        FieldPanel('icon'),
+    ]
+
+    def __str__(self):
+        return self.name
+
+
+@register_snippet
 class Sponsor(models.Model):
+    class TIERS(models.IntegerChoices):
+        LAPSED = 0, "Lapsed (Not shown anywhere)"
+        BRONZE = 1, "Bronze (Appears in sponsor page)"
+        SILVER = 2, "Silver (Appears in sponsors and homepage)"
+        GOLD = 3, "Gold (Appears on every page)"
+
     sponsor_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        help_text='This image will be displayed in all sponsor display locations accross the website'
+        help_text='This image will be displayed in all sponsor display locations across the website'
     )
     nightmode_image = models.ForeignKey(
         'wagtailimages.Image',
@@ -54,20 +76,20 @@ class Sponsor(models.Model):
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        help_text='This image will be displayed in all sponsor display locations accross the website in night mode'
+        help_text='This image will be displayed in all sponsor display locations across the website in night mode'
     )
     url = models.URLField(null=True, blank=True)
     name = models.CharField(max_length=255)
     email_sponsor = models.BooleanField(default=True, help_text='Should this sponsor be included in the newsletters?')
-    email_text_markdown = models.TextField(max_length=4000,
+    email_text_markdown = models.TextField(blank=True, max_length=4000,
                                            help_text='The text content in our newsletter emails. Is required to be valid markdown',
                                            verbose_name='Email text')
-    primary_sponsor = models.BooleanField(default=False)
+    tier = models.IntegerField(default=1, choices=TIERS.choices)
 
     panels = [
         MultiFieldPanel([
             FieldPanel('name'),
-            FieldPanel('primary_sponsor'),
+            FieldPanel('tier'),
             FieldPanel('url'),
             ImageChooserPanel('sponsor_image'),
             ImageChooserPanel('nightmode_image'),
@@ -79,12 +101,10 @@ class Sponsor(models.Model):
     ]
 
     def __str__(self):
-        if self.primary_sponsor:
-            return self.name + ' (primary sponsor)'
-        elif self.email_sponsor:
-            return self.name + ' (email sponsor)'
-        else:
-            return self.name
+        tier = self.TIERS(self.tier).name.capitalize()
+        if self.email_sponsor:
+            tier += '+Email'
+        return self.name+" ("+tier+")"
 
 
 class PullQuoteBlock(StructBlock):
@@ -93,6 +113,21 @@ class PullQuoteBlock(StructBlock):
 
     class Meta:
         icon = "openquote"
+
+
+class Heading2Block(CharBlock):
+    class Meta:
+        template = 'blog/blocks/h2.html'
+
+
+class Heading3Block(CharBlock):
+    class Meta:
+        template = 'blog/blocks/h3.html'
+
+
+class Heading4Block(CharBlock):
+    class Meta:
+        template = 'blog/blocks/h4.html'
 
 
 class CodeBlock(StructBlock):
@@ -133,14 +168,14 @@ class CodeBlock(StructBlock):
     class Meta:
         icon = 'code'
 
-    def render(self, value):
+    def render(self, value, **kwargs):
         src = value['code'].strip('\n')
         lang = value['language']
 
         lexer = get_lexer_by_name(lang)
         formatter = get_formatter_by_name(
             'html',
-            linenos='table',
+            linenos='inline',
             cssclass='code-highlight',
             style='default',
             noclasses=False,
@@ -149,9 +184,9 @@ class CodeBlock(StructBlock):
 
 
 class BlogStreamBlock(StreamBlock):
-    h2 = CharBlock(icon="title", classname="title")
-    h3 = CharBlock(icon="title", classname="title")
-    h4 = CharBlock(icon="title", classname="title")
+    h2 = Heading2Block(icon="title", classname="title")
+    h3 = Heading3Block(icon="title", classname="title")
+    h4 = Heading4Block(icon="title", classname="title")
     paragraph = RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()
@@ -163,10 +198,14 @@ class HomePage(Page):
     # Parent page/subpage rules
     subpage_types = ['blog.BlogIndexPage', 'blog.AboutPage', 'events.EventsIndexPage']
 
-    description = models.TextField(max_length=400, default='')
+    description = StreamField(BlogStreamBlock())
+    alert = RichTextField(blank=True, features=['bold', 'italic'])
+    alert_link = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('description', classname="full"),
+        FieldPanel('alert'),
+        FieldPanel('alert_link'),
+        StreamFieldPanel('description'),
     ]
 
 

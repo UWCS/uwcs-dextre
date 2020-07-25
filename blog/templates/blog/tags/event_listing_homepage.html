@@ -1,39 +1,35 @@
 {% load wagtailcore_tags %}
-
-<section class="event-carousel">
-
-  <div class="row">
-    <div class="small-12 columns">
-      <h4 class="{% if not events %}empty-display{% endif %}">{% if events %}Upcoming events{% else %}No upcoming
-        events{% endif %}</h4>
-    </div>
-  </div>
-  <div class="flex-row">
-    {% for event in events %}
-      {% if forloop.counter0 > 1 %}
-        <a class="flex-column event-item show-for-large" href="{% pageurl event %}">
-          <h5>{{ event.title }}</h5>
-          <p>{{ event.start|date:'D jS F Y' }}</p>
-          <p>{{ event.description }}</p>
-        </a>
-      {% elif forloop.counter0 > 0 %}
-        <a class="flex-column event-item show-for-medium" href="{% pageurl event %}">
-          <h5>{{ event.title }}</h5>
-          <p>{{ event.start|date:'D jS F Y' }}</p>
-          <p>{{ event.description }}</p>
-        </a>
-      {% else %}
-        <a class="flex-column event-item" href="{% pageurl event %}">
-          <h5>{{ event.title }}</h5>
-          <p>{{ event.start|date:'D jS F Y' }}</p>
-          <p>{{ event.description }}</p>
-        </a>
-      {% endif %}
-    {% endfor %}
+{% spaceless %}
     {% if events %}
-      <a class="flex-column event-item" href="{% pageurl event_list %}">
-        <h5>See all events <i class="fa fa-chevron-right" aria-hidden="true"></i></h5>
-      </a>
+        <div class="container">
+            <h4 class="title is-4 has-text-centered">
+                Upcoming events
+            </h4>
+
+            <div class="tile is-ancestor">
+                {% for event in events %}
+                    <div class="tile is-parent">
+                        <a href="{% pageurl event %}">
+                            <div class="tile is-child is-primary-scheme">
+                                <h5 class="title is-5">{{ event.title }}</h5>
+                                <p><i class="icon fas fa-clock"></i>{{ event.start|date:'H:m, D jS F Y' }}</p>
+                                <p><i class="icon fas fa-map-marker-alt"></i>{{ event.location }}</p>
+                                <p>{{ event.description }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                <div class="tile is-parent">
+                    <a href="{% pageurl event_list %}">
+                        <div class="tile is-child is-primary-scheme has-text-centered">
+                            <p class="subtitle">
+                                See all events <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+        </div>
     {% endif %}
-  </div>
-</section>
+{% endspaceless %}

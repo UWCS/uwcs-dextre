@@ -1,0 +1,55 @@
+@use "sass:math";
+
+.head_block {
+  background-image: url("/static/img/headbg.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+
+  > .head_inner {
+    background-color: rgba(10, 10, 10, 0.7);
+  }
+
+}
+
+
+$social-outer: 5rem;
+// Calculate the maximum size for a square emoji without breaking the box.
+$social-inner: math.sqrt(($social-outer/2rem)*($social-outer/2rem))*1rem;
+$social-outer-small: 3rem;
+$social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2rem))*1rem;
+.social-circle {
+  width: $social-outer;
+  height: $social-outer;
+  border-radius: $social-outer;
+  flex-shrink: 0;
+  display: block;
+  text-align: center;
+  line-height: $social-outer;
+  font-size: $social-inner;
+  margin-left: auto;
+  margin-right: auto;
+  @include mobile {
+    width: $social-outer-small;
+    height: $social-outer-small;
+    border-radius: $social-outer-small;
+    line-height: $social-outer-small;
+    font-size: $social-inner-small;
+  }
+}
+
+.sponsor-image {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+
+  > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+.title, .subtitle {
+  color: inherit !important; //Nowhere do we actually want different coloured titles
+}

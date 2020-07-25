@@ -157,17 +157,20 @@ MEDIA_URL = '/media/'
 
 # Django Compressor
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
-BOWER_COMPONENTS_ROOT = os.path.join(PROJECT_PATH, "../components")
+BOWER_COMPONENTS_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, "../components"))
 COMPRESS_PRECOMPILERS = (
     ('text/x-scss',
-     'sass --style compressed -I "%s/bower_components/foundation-sites/scss" -I "%s/bower_components/motion-ui" "{infile}" "{outfile}"' % (
-         BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT)),
+     'sass --style compressed'
+     ' -I "%s/bower_components/foundation-sites/scss"'
+     ' -I "%s/bower_components/bulma"'
+     ' -I "%s/bower_components/motion-ui"'
+     ' {infile} "{outfile}"' % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT)),
 )
 
 PASSWORD_HASHERS = [
+    'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2PasswordHasher',
     'django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher',
-    'django.contrib.auth.hashers.Argon2PasswordHasher',
     'django.contrib.auth.hashers.BCryptSHA256PasswordHasher',
     'django.contrib.auth.hashers.BCryptPasswordHasher',
     'django.contrib.auth.hashers.SHA1PasswordHasher',
@@ -182,8 +185,8 @@ DEFAULT_FROM_EMAIL = "newsletter@uwcs.co.uk"
 
 # Django-bower
 BOWER_INSTALLED_APPS = [
-    'foundation-sites~6.2.3',
-    'motion-ui~1.2.2',
+    'foundation-sites~6.6.3',
+    'motion-ui~2.0.3',
 ]
 
 # OAuth2 groups

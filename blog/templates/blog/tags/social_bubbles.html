@@ -1,0 +1,10 @@
+<div class="columns is-mobile is-multiline has-text-white">
+    {% for social in socials %}
+        <figure class="column">
+            <a href="{{ social.url }}" class="social-circle has-background-primary-dark has-text-white"><i
+                    class="{{ social.icon }}"></i></a>
+            <p class="has-text-white has-text-centered">{{ social.name }}</p>
+        </figure>
+    {% endfor %}
+</div>
+

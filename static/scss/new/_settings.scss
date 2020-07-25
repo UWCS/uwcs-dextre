@@ -1,0 +1,31 @@
+$family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
+$family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
+$header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
+
+$family-secondary: $header-font-family;
+$title-family: $header-font-family;
+
+$primary: #3D5AFE;
+$secondary: #fdd835;
+$info: $primary;
+$success: #00C853;
+$warning: #FFD600;
+$danger: #FF1744;
+
+$primary-scheme: $primary;
+$secondary-scheme: $secondary;
+$info-scheme: $info;
+$success-scheme: $success;
+$warning-scheme: $warning;
+$danger-scheme: $danger;
+
+$link: $primary;
+
+$card-background-color: $primary-scheme;
+$card-color: hsl(0,0,100%);
+
+$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+        "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
+        "danger-scheme": $danger-scheme);
+
+$gap: 128px;

@@ -2,7 +2,11 @@
 !.gitignore
 !js/
 !js/*
+!img/
+!img/*
 !scss/
+!scss/new/
+!scss/new/*
 !scss/*
 !browserconfig.xml
 !favicon*

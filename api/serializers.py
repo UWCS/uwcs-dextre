@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
 from rest_framework import serializers
 
-from events.models import EventPage, EventSignup, SeatingRoom, SeatingRevision, Seating
+from events.models import EventPage, EventSignup
 
 
 class DiscordUserSerialiser(serializers.Serializer):
@@ -29,24 +29,6 @@ class LanAppProfileSerialiser(serializers.Serializer):
 
     def update(self, instance, validated_data):
         pass
-
-
-class SeatingRoomSerialiser(serializers.ModelSerializer):
-    class Meta:
-        model = SeatingRoom
-        fields = ('name', 'tables', 'max_capacity')
-
-
-class SeatingRevisionSerialiser(serializers.ModelSerializer):
-    class Meta:
-        model = SeatingRevision
-        fields = ('event', 'creator', 'number', 'created_at')
-
-
-class SeatingSerialiser(serializers.ModelSerializer):
-    class Meta:
-        model = Seating
-        fields = ('reserved', 'revision', 'user', 'table', 'seat')
 
 
 class EventSignupSerialiser(serializers.ModelSerializer):

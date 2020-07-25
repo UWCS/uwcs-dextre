@@ -26,7 +26,7 @@ class EventType(models.Model):
         SOCIETY = ('SCT', 'Society')
 
     name = models.CharField(max_length=50)
-    target = models.CharField(max_length=3, choices=TARGETS)
+    target = models.CharField(max_length=3, choices=TARGETS.choices)
 
     def __str__(self):
         return self.name

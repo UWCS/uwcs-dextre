@@ -1,6 +1,4 @@
 {% load wagtailcore_tags %}
-{% load wagtailimages_tags %}
-
 {% spaceless %}
     {% if events %}
         <div class="container">
@@ -8,41 +6,30 @@
                 Upcoming events
             </h4>
 
-            <div class="events-bar has-{{ events|length }}">
+            <div class="tile is-ancestor">
                 {% for event in events %}
-                    <a class="event is-primary-scheme event-{{ forloop.counter }}" href="{% pageurl event %}">
-                        {% image event.category.list_image original class="event-image" %}
-                        <div class="event-content">
-                            <h5 class="title is-5">{{ event.title }}</h5>
-                            <p class="icon-line">
-                                <i class="fas fa-clock fa-fw icon-lead"></i>
-                                <span class="icon-text">{{ event.start|date:'H:i, D jS F Y' }}</span>
+                    <div class="tile is-parent">
+                        <a href="{% pageurl event %}">
+                            <div class="tile is-child is-primary-scheme">
+                                <h5 class="title is-5">{{ event.title }}</h5>
+                                <p><i class="icon fas fa-clock"></i>{{ event.start|date:'H:m, D jS F Y' }}</p>
+                                <p><i class="icon fas fa-map-marker-alt"></i>{{ event.location }}</p>
+                                <p>{{ event.description }}</p>
+                            </div>
+                        </a>
+                    </div>
+                {% endfor %}
+                <div class="tile is-parent">
+                    <a href="{% pageurl event_list %}">
+                        <div class="tile is-child is-primary-scheme has-text-centered">
+                            <p class="subtitle">
+                                See all events <i class="fas fa-chevron-right" aria-hidden="true"></i>
                             </p>
-                            <p class="icon-line">
-                                <i class="fas fa-map-marker-alt fa-fw icon-lead"></i>
-                                <span class="icon-text">{{ event.location }}</span>
-                            </p>
-                            <br>
-                            <p>{{ event.description }}</p>
                         </div>
                     </a>
-                {% endfor %}
+                </div>
             </div>
-            <div class="level">
-                <a href="{% pageurl event_list %}" class="level-item">
-                    <div class="button is-fullwidth is-primary-scheme has-text-centered">
-                        <p class="subtitle">
-                            See all events <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                        </p>
-                    </div>
-                </a>
-            </div>
-        </div>
-    {% else %}
-        <div class="container">
-            <h4 class="title is-4 has-text-centered">
-                There are currently no events planned, but stay tuned!
-            </h4>
+
         </div>
     {% endif %}
 {% endspaceless %}

@@ -1,66 +1,43 @@
-$light  : $white-ter;
-$dark   : $grey-darker;
+$family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
+$family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
+$header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
 
-$primary-scheme: darken($gray-base, 5%); //desaturate(darken($primary, 40%), 40%);
-$secondary-scheme: darken($gray-base, 2%);
+$family-secondary: $header-font-family;
+$title-family: $header-font-family;
+
+$primary: #3d5afe;
+$secondary: #fdd835;
+$info: $primary;
+$success: #00C853;
+$warning: #FFD600;
+$danger: #FF1744;
+
+$primary-scheme: desaturate(darken($primary, 50%), 40%);
+$secondary-scheme: hsl(0,0,10%);
 $info-scheme: $primary-scheme;
-$success-scheme: darken($success, 30%);
-$warning-scheme: darken($warning, 30%);
-$danger-scheme: darken($danger, 30%);
-$light-scheme: $grey-darker;
-$primary-light-scheme: $primary-scheme;
-$secondary-light-scheme: $secondary-scheme;
-$info-light-scheme: $info-scheme;
-$success-light-scheme: $success-scheme;
-$warning-light-scheme: darken($warning-scheme, 10%);
-$danger-light-scheme: darken($danger-scheme, 20%);
-$cancelled-scheme: darken($gray-base, 5%);
+$success-scheme: darken($success,20%);
+$warning-scheme: darken($warning, 20%);
+$danger-scheme: darken($danger, 20%);
 
-$link: lighten(saturate($primary, 3%),5%);
+$link: $primary;
 
-$scheme-main: darken($gray-base, 10%);
-$scheme-main-bis: darken($gray-base, 3%);
-$scheme-main-ter: lighten($gray-base, 40%);
-$scheme-invert: hsl(0, 0%, 100%);
-$scheme-invert-bis: hsl(0, 0%, 94%);
-$scheme-invert-ter: hsl(0, 0%, 88%);
+$scheme-main: hsl(0,0,4%);
+$scheme-main-bis: hsl(0, 0%, 7%);
+$scheme-main-ter: hsl(0, 0%, 14%);
+$scheme-invert: hsl(0,0,100%);
+$scheme-invert-bis: hsl(0, 0%, 98%);
+$scheme-invert-ter: hsl(0, 0%, 96%);
 
-$text: $white-bis;
-$text-strong: $white;
-$text-light: $white-ter;
-$background: $black-ter;
+$text: $scheme-invert;
+$text-strong: $scheme-invert;
 
-$card-background-color: $scheme-main-bis;
-//$link
-//$card-color: hsl(0,0,100%);
-//$card-header-color: $card-color;
-$shadow: 0 0.5em 1em -0.125em rgba($scheme-main, 0.1), 0 0px 0 1px rgba($scheme-main, 0.02);
-
-$card-shadow: $shadow;
-
-$event-shadow: $shadow;
-
-$box-background-color: $scheme-main-bis;
-$box-shadow: $shadow;
-
-$link-hover: $grey-light;
-$link-hover-border: $grey-dark;
-
-$link-focus: $grey-lighter;
-$link-focus-border: $blue;
-
-$link-active: $grey-light;
-$link-active-border: $grey;
-
-$social-background: $primary;
-
-$border: $grey-dark;
-$border-hover: $grey-darker;
-$border-light: $grey-dark;
-$border-light-hover: $grey-darker;
+$card-background-color: $primary-scheme;
+$card-color: hsl(0,0,100%);
+$card-header-color: $card-color;
+$card-shadow: 0 0.5em 1em -0.125em rgba($primary-scheme, 0.1), 0 0px 0 1px rgba($primary-scheme, 0.02);
 
 $custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
-        "danger-scheme": $danger-scheme, "light-scheme": $light-scheme, "primary-light-scheme": $primary-light-scheme,
-        "secondary-light-scheme": $secondary-light-scheme, "info-light-scheme": $info-light-scheme, "success-light-scheme": $success-light-scheme,
-        "warning-light-scheme": $warning-light-scheme, "danger-light-scheme": $danger-light-scheme, "cancelled-scheme": $cancelled-scheme);
+        "danger-scheme": $danger-scheme);
+
+$gap: 128px;

@@ -36,7 +36,6 @@
     {% endif %}
     <section class="section">
         <div class="container">
-
             {% include 'blog/includes/streamfield.html' with content=page.description %}
         </div>
     </section>
@@ -54,6 +53,7 @@
     <section class="section">
         {% event_listing_homepage %}
     </section>
-
-    {% blog_listing_homepage %}
+    <section>
+        {% blog_listing_homepage %}
+    </section>
 {% endblock %}

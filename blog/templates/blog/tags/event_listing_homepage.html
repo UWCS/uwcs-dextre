@@ -1,4 +1,6 @@
 {% load wagtailcore_tags %}
+{% load wagtailimages_tags %}
+
 {% spaceless %}
     {% if events %}
         <div class="container">
@@ -6,30 +8,28 @@
                 Upcoming events
             </h4>
 
-            <div class="tile is-ancestor">
+            <div class="events-bar">
                 {% for event in events %}
-                    <div class="tile is-parent">
-                        <a href="{% pageurl event %}">
-                            <div class="tile is-child is-primary-scheme">
-                                <h5 class="title is-5">{{ event.title }}</h5>
-                                <p><i class="icon fas fa-clock"></i>{{ event.start|date:'H:m, D jS F Y' }}</p>
-                                <p><i class="icon fas fa-map-marker-alt"></i>{{ event.location }}</p>
-                                <p>{{ event.description }}</p>
-                            </div>
-                        </a>
-                    </div>
-                {% endfor %}
-                <div class="tile is-parent">
-                    <a href="{% pageurl event_list %}">
-                        <div class="tile is-child is-primary-scheme has-text-centered">
-                            <p class="subtitle">
-                                See all events <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                            </p>
+                    <a class="event is-primary-scheme" href="{% pageurl event %}">
+                        {% image event.category.banner_image original class="event-image" %}
+                        <div class="event-content">
+                            <h5 class="title is-5">{{ event.title }}</h5>
+                            <p><i class="icon fas fa-clock"></i>{{ event.start|date:'H:m, D jS F Y' }}</p>
+                            <p><i class="icon fas fa-map-marker-alt"></i>{{ event.location }}</p>
+                            <p>{{ event.description }}</p>
                         </div>
                     </a>
-                </div>
+                {% endfor %}
             </div>
-
+            <div class="level">
+                <a href="{% pageurl event_list %}" class="level-item">
+                    <div class="button is-fullwidth is-primary-scheme has-text-centered">
+                        <p class="subtitle">
+                            See all events <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                        </p>
+                    </div>
+                </a>
+            </div>
         </div>
     {% endif %}
 {% endspaceless %}

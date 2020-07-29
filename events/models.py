@@ -11,13 +11,13 @@ from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
 from wagtail.core.fields import StreamField
 from wagtail.core.models import Page
+from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.snippets.models import register_snippet
 
 from accounts.models import CompsocUser
 from blog.models import BlogStreamBlock
 
-
-
-
+@register_snippet
 class EventType(models.Model):
     class TARGETS(models.TextChoices):
         ACADEMIC = ('ACA', 'Academic')
@@ -27,9 +27,23 @@ class EventType(models.Model):
 
     name = models.CharField(max_length=50)
     target = models.CharField(max_length=3, choices=TARGETS.choices)
+    banner_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='This image will be displayed above the event on the front page'
+    )
 
     def __str__(self):
         return self.name
+
+    panels = [
+        FieldPanel('name'),
+        FieldPanel('target'),
+        ImageChooserPanel('banner_image'),
+    ]
 
     class Meta:
         ordering = ['name']
@@ -132,6 +146,7 @@ class EventPage(Page):
 
     # Parent page/subpage rules
     parent_page_types = ['events.EventsIndexPage']
+    subpage_types = []
 
     # Event fields
     body = StreamField(BlogStreamBlock())
@@ -146,15 +161,16 @@ class EventPage(Page):
                                     default='')
     # Event signup fields
     signup_type = models.IntegerField(choices=SIGNUP_TYPES.choices)
-    signup_url = models.URLField(help_text='External only'),
+    signup_url = models.URLField(help_text='External only', blank=True)
     signup_limit = models.IntegerField(verbose_name='Signup limit',
                                        help_text='Enter 0 for unlimited signups. Internal only',
                                        default=0)
     signup_open = models.DateTimeField(default=timezone.now, help_text='Internal only')
     signup_close = models.DateTimeField(default=timezone.now, help_text='Internal only')
     signup_freshers_open = models.DateTimeField(
-        help_text='Set a date for when freshers may sign up to the event, leave blank if they are to sign up at the\
-                   same time as everyone else. Internal only', blank=True, null=True)
+        help_text='Set a date for when freshers may sign up to the event, '
+                  'leave blank if they are to sign up at the same time as everyone else. Internal only',
+        blank=True, null=True)
 
     @property
     def is_ongoing(self):

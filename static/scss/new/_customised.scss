@@ -1,5 +1,7 @@
 @use "sass:math";
 
+$event-bar-spacing: 1.25rem !default;
+
 .head_block {
   background-image: url("/static/img/headbg.jpg");
   background-size: cover;
@@ -52,4 +54,72 @@ $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2
 
 .title, .subtitle {
   color: inherit !important; //Nowhere do we actually want different coloured titles
+}
+
+.events-bar {
+  display: grid;
+  grid-gap: 1em;
+  grid-template-columns: 1fr 1fr 1fr;
+  @include mobile {
+    grid-template-columns: 1fr;
+  };
+  @include tablet-only {
+    grid-template-columns: 1fr 1fr;
+  };
+  place-items: stretch;
+  margin-bottom: $event-bar-spacing;
+}
+
+a.event:hover {
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+    $color-invert: nth($pair, 2);
+    &.is-#{$name} {
+      background-color: bulmaDarken($color, 2.5%);
+      // If light and dark colors are provided
+      @if length($pair) >= 4 {
+        $color-light: nth($pair, 3);
+        $color-dark: nth($pair, 4);
+        &.is-light {
+          background-color: bulmaDarken($color-light, 2.5%);
+        }
+      }
+    }
+  }
+}
+
+.event {
+  display: flex;
+  flex-wrap: nowrap;
+  height: fit-content;
+
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+    $color-invert: nth($pair, 2);
+    &.is-#{$name} {
+      background-color: $color;
+      color: $color-invert;
+      // If light and dark colors are provided
+      @if length($pair) >= 4 {
+        $color-light: nth($pair, 3);
+        $color-dark: nth($pair, 4);
+        &.is-light {
+          background-color: $color-light;
+          color: $color-dark;
+        }
+      }
+    }
+  }
+
+  > .event-image {
+    flex-grow: 0;
+    flex-shrink: 1;
+    width: 100px;
+    object-fit: cover;
+  }
+
+  > .event-content {
+    padding: 1em;
+    flex: 1 0;
+  }
 }

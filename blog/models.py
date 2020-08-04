@@ -1,5 +1,5 @@
 from datetime import datetime
-from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -19,6 +19,7 @@ from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 
+from lib.ellipsis_paginator import EllipsisPaginator
 
 @register_snippet
 class Footer(models.Model):
@@ -235,7 +236,7 @@ class BlogIndexPage(Page):
             blogs = blogs.filter(date__month=filter_date.month, date__year=filter_date.year)
 
         # Pagination
-        paginator = Paginator(blogs, 10)  # Show 10 blogs per page
+        paginator = EllipsisPaginator(blogs, 10)  # Show 10 blogs per page
         try:
             blogs = paginator.page(request.GET.get('page'))
         except PageNotAnInteger:

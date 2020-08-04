@@ -1,25 +1,33 @@
-{% load wagtailcore_tags %}
-
-<section class="row">
-  <div class="small-12 columns">
-    <ul class="pagination text-center" role="navigation" aria-label="Pagination">
-      <li class="pagination-previous {% if not blogs.has_previous %}disabled{% endif %}">
+{% load base_tags wagtailcore_tags %}
+{% if blogs.has_other_pages %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
         {% if blogs.has_previous %}
-          <a href="?page={{ blogs.previous_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}" aria-label="Previous page">Previous</a>
+            <a class="pagination-previous" href="?{% url_replace "page" blogs.previous_page_number %}"
+               aria-label="Previous page">Previous</a>
         {% else %}
-          <span>Previous</span>
+            <a class="pagination-previous" href="#" disabled>Previous</a>
         {% endif %}
-      </li>
-
-      <li class="current"><span class="show-for-sr">You're on </span> Page {{ blogs.number }} of {{ paginator.num_pages }}</li>
-
-      <li class="pagination-next {% if not blogs.has_next %}disabled{% endif %}">
         {% if blogs.has_next %}
-          <a href="?page={{ blogs.next_page_number }}{% for key,value in request.GET.items %}{% ifnotequal key 'page' %}&amp;{{ key }}={{ value }}{% endifnotequal %}{% endfor %}" aria-label="Next page">Next</a>
+            <a class="pagination-next" href="?{% url_replace "page" blogs.next_page_number %}"
+               aria-label="Next page">Next</a>
         {% else %}
-          <span>Next</span>
+            <a class="pagination-next" href="#" disabled>Next</a>
         {% endif %}
-      </li>
-    </ul>
-  </div>
-</section>
+        <ul class="pagination-list">
+
+            {% for i in blogs.short_page_range %}
+                {% if i == 0 %}
+                    <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% else %}
+                    {% if i == blogs.number %}
+                        <li><a class="pagination-link is-current" href="?{% url_replace "page" i %}">{{ i }}</a></li>
+                    {% else %}
+                        <li><a class="pagination-link" href="?{% url_replace "page" i %}">{{ i }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+        <p class="is-sr-only">You're on page {{ blogs.number }} of {{ paginator.num_pages }}</p>
+    </nav>
+{% endif %}

@@ -21,22 +21,24 @@ from wagtail.snippets.models import register_snippet
 
 from lib.ellipsis_paginator import EllipsisPaginator
 
+
 @register_snippet
-class Footer(models.Model):
-    facebook_url = models.URLField(null=True, blank=True)
-    twitch_url = models.URLField(null=True, blank=True)
-    twitter_url = models.URLField(null=True, blank=True)
-    privacy_policy_url = models.URLField(null=True, blank=True)
+class FooterLink(models.Model):
+    link_url = models.URLField(null=True, blank=True)
+    title = models.CharField(max_length=20, blank=True)
+    order = models.SmallIntegerField(default=0)
 
     panels = [
-        FieldPanel('facebook_url'),
-        FieldPanel('twitch_url'),
-        FieldPanel('twitter_url'),
-        FieldPanel('privacy_policy_url'),
+        FieldPanel('title'),
+        FieldPanel('link_url'),
+        FieldPanel('order')
     ]
 
+    class Meta:
+        ordering = ('order',)
+
     def __str__(self):
-        return 'Footer URLs'
+        return self.title
 
 
 @register_snippet
@@ -44,11 +46,13 @@ class SocialMedia(models.Model):
     url = models.URLField()
     icon = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
+    footer = models.BooleanField(default=True, help_text="Should this be shown in the footer")
 
     panels = [
         FieldPanel('name'),
         FieldPanel('url'),
         FieldPanel('icon'),
+        FieldPanel('footer')
     ]
 
     def __str__(self):
@@ -105,7 +109,7 @@ class Sponsor(models.Model):
         tier = self.TIERS(self.tier).name.capitalize()
         if self.email_sponsor:
             tier += '+Email'
-        return self.name+" ("+tier+")"
+        return self.name + " (" + tier + ")"
 
 
 class PullQuoteBlock(StructBlock):
@@ -204,9 +208,11 @@ class HomePage(Page):
     alert_link = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('alert'),
-        FieldPanel('alert_link'),
         StreamFieldPanel('description'),
+        MultiFieldPanel(
+            [FieldPanel('alert'),
+             FieldPanel('alert_link'),
+             ], heading="Alert"),
     ]
 
 

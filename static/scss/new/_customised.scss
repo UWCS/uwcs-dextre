@@ -53,45 +53,69 @@ $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2
 }
 
 .title, .subtitle {
-  color: inherit !important; //Nowhere do we actually want different coloured titles
+  color: inherit; //Nowhere do we actually want different coloured titles
+}
+
+.icon-line {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+
+.icon-lead {
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-self: center;
+  justify-self: center;
+  text-align: center;
+  margin-right: 0.5em;
+}
+
+.icon-text {
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
 }
 
 .events-bar {
   display: grid;
   grid-gap: 1em;
-  grid-template-columns: 1fr 1fr 1fr;
-  @include mobile {
-    grid-template-columns: 1fr;
-  };
-  @include tablet-only {
+  &.has-3 {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+  &.has-2 {
     grid-template-columns: 1fr 1fr;
-  };
-  place-items: stretch;
-  margin-bottom: $event-bar-spacing;
-}
-
-a.event:hover {
-  @each $name, $pair in $colors {
-    $color: nth($pair, 1);
-    $color-invert: nth($pair, 2);
-    &.is-#{$name} {
-      background-color: bulmaDarken($color, 2.5%);
-      // If light and dark colors are provided
-      @if length($pair) >= 4 {
-        $color-light: nth($pair, 3);
-        $color-dark: nth($pair, 4);
-        &.is-light {
-          background-color: bulmaDarken($color-light, 2.5%);
-        }
-      }
+  }
+  &.has-1 {
+    grid-template-columns: 1fr;
+  }
+  @include mobile {
+    &.has-1, &.has-2, &.has-3 {
+      grid-template-columns: 1fr;
+    }
+    .event-2, .event-3 {
+      display: none;
     }
   }
+  @include tablet-only {
+    &.has-2, &.has-3 {
+      grid-template-columns: 1fr 1fr;
+    }
+    &.has-1 {
+      grid-template-columns: 1fr;
+    }
+    .event-3 {
+      display: none;
+    }
+  }
+  place-items: stretch;
+  margin-bottom: $event-bar-spacing;
 }
 
 .event {
   display: flex;
   flex-wrap: nowrap;
-  height: fit-content;
+  height: available;
 
   @each $name, $pair in $colors {
     $color: nth($pair, 1);
@@ -121,5 +145,108 @@ a.event:hover {
   > .event-content {
     padding: 1em;
     flex: 1 0;
+  }
+}
+
+a.event:hover {
+  @each $name, $pair in $colors {
+    $color: nth($pair, 1);
+    $color-invert: nth($pair, 2);
+    &.is-#{$name} {
+      background-color: bulmaDarken($color, 2.5%);
+      // If light and dark colors are provided
+      @if length($pair) >= 4 {
+        $color-light: nth($pair, 3);
+        $color-dark: nth($pair, 4);
+        &.is-light {
+          background-color: bulmaDarken($color-light, 2.5%);
+        }
+      }
+    }
+  }
+}
+
+.card-footer {
+  border-color: $scheme-main-ter;
+}
+
+.columns.is-reversed {
+  flex-direction: row-reverse;
+}
+
+.footer-links {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: content;
+  justify-content: end;
+  align-content: center;
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.footer-link {
+  padding: .1em 0 .1em 1em;
+  @include mobile {
+    padding: .1em .5em .1em .5em;
+  }
+  > a {
+    color: $white;
+    &:hover {
+      color: $grey;
+    }
+  }
+}
+
+.social-links {
+  list-style: none;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  flex-basis: content;
+  justify-content: start;
+  align-content: center;
+  @include mobile {
+    justify-content: center;
+  }
+}
+
+.social-link {
+  > a {
+    color: $white;
+    &:hover {
+      color: $grey;
+    }
+  }
+  padding: .1em 0.5em .1em 0;
+
+  @include tablet {
+    font-size: 2em;
+  }
+  @include mobile {
+    font-size: 1.5em;
+    padding: .1em .5em .1em .5em;
+  }
+}
+
+.switch-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  @include tablet {
+    max-width: 120px;
+  }
+}
+
+.credits {
+  color: $grey-light;
+  a {
+    color: $white;
+    &:hover {
+      color: $grey;
+    }
   }
 }

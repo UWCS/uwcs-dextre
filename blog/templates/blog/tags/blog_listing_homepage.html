@@ -1,21 +1,31 @@
 {% load wagtailcore_tags blog_tags %}
 
-<section class="row margin-bottom-1x" id="news">
-  <div class="small-12 columns margin-bottom-1x-mobile">
-    <h4>Recent news</h4>
-  </div>
-  {% blog_sidebar show_sponsor=False show_tags=True%}
-  <div class="small-12 medium-8 medium-pull-4 large-9 large-pull-3 columns">
-    {% for blog in blogs %}
-      {% include "blog/includes/blog_list_item.html" %}
-    {% endfor %}
+{% if blogs %}
+    <div class="container">
+        <h4 class="title is-4 has-text-centered">
+            Recent News
+        </h4>
+        <div class="columns is-reversed">
+            <div class="column is-one-fifth-desktop is-one-quarter-tablet sticky">
+                {% blog_sidebar show_tags=True %}
+            </div>
+            <div class="column">
+                {% for blog in blogs %}
+                    {% include "blog/includes/blog_list_item.html" %}
+                {% endfor %}
+                <div class="level">
+                    <a href="{% pageurl blog_index %}" class="level-item">
+                        <div class="button is-fullwidth is-primary-scheme has-text-centered">
+                            <p class="subtitle">
+                                Older News <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            </div>
 
-    {% if blogs %}
-      <div class="row" role="navigation" aria-label="Older news">
-        <div class="small-12 columns">
-          <p class="text-right older-news"><a href="{% pageurl blog_index %}">Older news</span></a></p>
         </div>
-      </div>
-    {% endif %}
-  </div>
-</section>
+
+
+    </div>
+{% endif %}

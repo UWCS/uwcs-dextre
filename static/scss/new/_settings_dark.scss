@@ -1,3 +1,24 @@
+$black: hsl(0, 0%, 4%);
+$black-bis: hsl(0, 0%, 7%);
+$black-ter: hsl(0, 0%, 14%);
+$grey-darker: hsl(0, 0%, 21%);
+$grey-dark: hsl(0, 0%, 29%);
+$grey: hsl(0, 0%, 48%);
+$grey-light: hsl(0, 0%, 71%);
+$grey-lighter: hsl(0, 0%, 86%);
+$grey-lightest: hsl(0, 0%, 93%);
+$white-ter: hsl(0, 0%, 96%);
+$white-bis: hsl(0, 0%, 98%);
+$white: hsl(0, 0%, 100%);
+$orange: hsl(14, 100%, 53%);
+$yellow: hsl(48, 100%, 67%);
+$green: hsl(141, 53%, 53%);
+$turquoise: hsl(171, 100%, 41%);
+$cyan: hsl(204, 71%, 53%);
+$blue: hsl(217, 71%, 53%);
+$purple: hsl(271, 100%, 71%);
+$red: hsl(348, 86%, 61%);
+
 $family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
 $family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
 $header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
@@ -12,32 +33,50 @@ $success: #00C853;
 $warning: #FFD600;
 $danger: #FF1744;
 
-$primary-scheme: desaturate(darken($primary, 50%), 40%);
-$secondary-scheme: hsl(0,0,10%);
+$primary-scheme: desaturate(darken($primary, 40%), 40%);
+$secondary-scheme: hsl(0, 0%, 20%);
 $info-scheme: $primary-scheme;
-$success-scheme: darken($success,20%);
+$success-scheme: darken($success, 20%);
 $warning-scheme: darken($warning, 20%);
 $danger-scheme: darken($danger, 20%);
 
 $link: $primary;
 
-$scheme-main: hsl(0,0,4%);
-$scheme-main-bis: hsl(0, 0%, 7%);
-$scheme-main-ter: hsl(0, 0%, 14%);
-$scheme-invert: hsl(0,0,100%);
-$scheme-invert-bis: hsl(0, 0%, 98%);
-$scheme-invert-ter: hsl(0, 0%, 96%);
+$scheme-main: hsl(0, 0%, 10%);
+$scheme-main-bis: hsl(0, 0%, 20%);
+$scheme-main-ter: hsl(0, 0%, 25%);
+$scheme-invert: hsl(0, 0%, 100%);
+$scheme-invert-bis: hsl(0, 0%, 94%);
+$scheme-invert-ter: hsl(0, 0%, 88%);
 
 $text: $scheme-invert;
 $text-strong: $scheme-invert;
+$background: $scheme-main-ter;
 
-$card-background-color: $primary-scheme;
-$card-color: hsl(0,0,100%);
-$card-header-color: $card-color;
-$card-shadow: 0 0.5em 1em -0.125em rgba($primary-scheme, 0.1), 0 0px 0 1px rgba($primary-scheme, 0.02);
+$card-background-color: $scheme-main-bis;
+//$link
+//$card-color: hsl(0,0,100%);
+//$card-header-color: $card-color;
+$card-header-shadow: 0 0.125em 0.25em rgba($scheme-main, 0.1);
+$card-shadow: 0 0.5em 1em -0.125em rgba($scheme-main, 0.1), 0 0px 0 1px rgba($scheme-main, 0.02);
+
+$box-background-color: $scheme-main-bis;
+$box-shadow: 0 0.5em 1em -0.125em rgba($scheme-main, 0.1), 0 0px 0 1px rgba($scheme-main, 0.02);
+
+$link-hover: $grey-light;
+$link-hover-border: $grey-dark;
+
+$link-focus: $grey-lighter;
+$link-focus-border: $blue;
+
+$link-active: $grey-light;
+$link-active-border: $grey;
 
 $custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
         "danger-scheme": $danger-scheme);
 
-$gap: 128px;
+$container-offset: 64px;
+
+$footer-background-color: #2C3134;
+$footer-color: hsl(0, 0, 100%);

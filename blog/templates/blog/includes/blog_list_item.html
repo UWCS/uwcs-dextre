@@ -1,11 +1,11 @@
 {% load wagtailcore_tags wagtailimages_tags %}
 
-<article class="row news-item">
-  <div class="small-12 columns">
-    <div id="article-title">
-      <a href="{% pageurl blog %}"><h3>{{ blog.title }}</h3></a>
-      <h6 class="subheader">Posted on {{ blog.date|date:'jS F Y' }}</h6>
+
+<div class="card mb-2">
+    <div class="card-content">
+        <a class="title is-4" href="{% pageurl blog %}"><h3>{{ blog.title }}</h3></a>
+        <small class="mb-3">Posted on {{ blog.date|date:'jS F Y' }}</small>
+        <div class="content">{{ blog.intro | richtext }}</div>
     </div>
-    <p>{{ blog.intro | richtext }} <a class="read-more" href="{% pageurl blog %}">Read more</a></p>
-  </div>
-</article>
+    <div class="card-footer"><a class="card-footer-item" href="{% pageurl blog %}">Read more&nbsp;<i class="fas fa-chevron-right"></i></a></div>
+</div>

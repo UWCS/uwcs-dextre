@@ -2,74 +2,50 @@
 {% get_site_root as site_root %}
 {% is_nightmode as nightmode %}
 
-<div class="row">
-  <div class="small-12 medium-3 columns uwcs-socials">
-    <div class="row">
-      <div class="small-8 medium-12 columns margin-bottom-1x-mobile-inv">
-        <h5>{{ site_root.title }}</h5>
-        <ul class="no-bullet social-list">
-        {% if facebook_url %}
-          <li>
-            <a href="{{ facebook_url }}">
-              <span class="show-for-sr">Facebook</span>
-              <i class="fa fa-2x fa-facebook-square" aria-hidden="true"></i>
-            </a>
-          </li>
-        {% endif %}
-        {% if twitter_url %}
-          <li>
-            <a href="{{ twitter_url }}">
-              <span class="show-for-sr">Twitter</span>
-              <i class="fa fa-2x fa-twitter-square" aria-hidden="true"></i>
-            </a>
-          </li>
-        {% endif %}
-        {% if twitch_url %}
-          <li>
-            <a href="{{ twitch_url }}">
-              <span class="show-for-sr">Twitch</span>
-              <i class="fa fa-2x fa-twitch" aria-hidden="true"></i>
-            </a>
-          </li>
-        {% endif %}
-      </ul>
-      </div>
-      <div class="small-4 medium-12 columns switch-wrapper">
-        <h6>Night mode</h6>
-        <div class="switch">
-          <input
-              {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
-                disabled
-              {% endif %}
-              class="switch-input" id="night-mode-switch" type="checkbox" name="night-mode-switch" {% if nightmode %}checked="checked"{% endif %}>
-          {% csrf_token %}
-          {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
-            <p class="margin-top-05x help-text">You have enabled night mode in your profile, you can turn it off there</p>
-          {% endif %}
-          <label class="switch-paddle" for="night-mode-switch">
-            <span class="show-for-sr">Toggle dark theme</span>
-          </label>
+<div class="columns">
+    <div class="column is-half-tablet is-one-third-desktop">
+        <h1 class="title is-5 mb-0 has-text-centered-mobile has-text-left-tablet">{{ site_root.title }}</h1>
+        <ul class="social-links">
+            {% for social in socials %}
+                <li class="social-link">
+                    <a href="{{ social.url }}">
+                        <span class="is-sr-only">{{ social.name }}</span>
+                        <i class="{{ social.icon }}" aria-hidden="true"></i>
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="switch-wrapper">
+            <p class="title is-6 mt-2 mb-1 has-text-centered">Night mode</p>
+            <label class="switch">
+                <input id="night-mode-switch" type="checkbox" name="night-mode-switch"
+                       {% if nightmode %}checked="checked"{% endif %}>
+
+                {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
+                    <p class="margin-top-05x help-text">You have enabled night mode in your profile, you can turn it off
+                        there</p>
+                {% endif %}
+                <span class="slider"></span>
+                <span class="is-sr-only">Toggle dark theme</span>
+            </label>
+            {% csrf_token %}
         </div>
-      </div>
     </div>
-  </div>
-  <div class="small-12 medium-6 medium-pull-3 columns sitemap">
-    <h6 class="sitemap-title">Sitemap</h6>
-    <ul class="no-bullet text-center sitemap-list">
-      <li><a href="{% pageurl site_root %}">Home</a></li>
-      {% for menuitem in menuitems %}
-        <li><a href="{% pageurl menuitem %}">{{ menuitem.title }}</a></li>
-      {% endfor %}
-      {% if privacy_policy_url %}
-        <li><a href="{{ privacy_policy_url }}">Privacy Policy</a></li>
-      {% endif %}
-    </ul>
-  </div>
+    <nav class="column">
+        <h2 class="title is-6 mb-0 has-text-centered-mobile has-text-right-tablet">Important Links</h2>
+        <ul class="footer-links">
+            <li class="footer-link"><a href="{% pageurl site_root %}">Home</a></li>
+            {% for menuitem in menuitems %}
+                <li class="footer-link"><a href="{{ menuitem.link_url }}">{{ menuitem.title }}</a></li>
+            {% endfor %}
+        </ul>
+    </nav>
 </div>
-<div class="row">
-  <div class="small-12 columns">
-    <p class="credits text-center">
-      Copyright © University of Warwick Computing Society. Website built by <a href="https://github.com/davidjrichardson">David Richardson</a>. Powered by <a href="https://www.djangoproject.com/">Django</a>.
-    </p>
-  </div>
-</div>
+
+
+<p class="credits has-text-centered">
+    Copyright © University of Warwick Computing Society. Website built by the <a href="https://github.com/UWCS">UWCS
+    Exec</a>. Powered by <a href="https://www.djangoproject.com/">Django</a>.
+</p>
+

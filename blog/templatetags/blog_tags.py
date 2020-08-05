@@ -20,7 +20,7 @@ register = template.Library()
     'blog/tags/blog_sidebar.html',
     takes_context=True
 )
-def blog_sidebar(context, show_sponsor=True, show_archives=False, show_tags=False, show_children=False, parent=None,
+def blog_sidebar(context, show_archives=False, show_tags=False, show_children=False, parent=None,
                  archive_count=sys.maxsize):
     blog_index = BlogIndexPage.objects.live().in_menu().first()
 
@@ -41,7 +41,6 @@ def blog_sidebar(context, show_sponsor=True, show_archives=False, show_tags=Fals
         'blog_index': blog_index,
         'archives': archives,
         'children': children,
-        'show_sponsor': show_sponsor,
         'show_tags': show_tags,
         'archive_count': archive_count,
         # required by the pageurl tag that we want to use within this template
@@ -77,7 +76,7 @@ def blog_listing_homepage(context, count=5):
     takes_context=True
 )
 def event_listing_homepage(context, count=3):
-    events = EventPage.objects.live().filter(finish__gte=datetime.now()).order_by('start')[:count]
+    events = EventPage.objects.live().filter(finish__gte=timezone.now()).order_by('start')[:count]
 
     return {
         'events': events,
@@ -95,8 +94,7 @@ def search_filters(context):
     archive_date = context['request'].GET.get('date')
 
     if archive_date:
-        archive_date = timezone.make_aware(datetime.strftime(
-            datetime.strptime(context['request'].GET.get('date'), '%Y-%m'), '%B %Y'))
+        archive_date = datetime.strftime(datetime.strptime(archive_date, '%Y-%m'), '%B %Y')
 
     return {
         'archive_date': archive_date,

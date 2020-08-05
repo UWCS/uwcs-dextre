@@ -1,7 +1,7 @@
 from django import template
 from django.template.defaultfilters import safe
 
-from blog.models import Sponsor, Footer
+from blog.models import Sponsor, FooterLink, SocialMedia
 
 from wagtail.core.models import Page
 from markdown import markdown
@@ -12,6 +12,15 @@ register = template.Library()
 @register.filter()
 def markdownify(value):
     return markdown(value)
+
+
+@register.simple_tag(takes_context=True)
+def url_replace(context, field, value):
+    dict_ = context.request.GET.copy()
+
+    dict_[field] = value
+
+    return dict_.urlencode()
 
 
 @register.simple_tag(takes_context=True)
@@ -79,24 +88,16 @@ def top_menu(context, parent, calling_page=None):
     }
 
 
-# Retrieves the footer sitemap items
+# Retrieves the footer items
 @register.inclusion_tag('lib/tags/footer.html', takes_context=True)
 def footer(context, parent):
-    if Footer.objects.first():
-        return {
-            'menuitems': parent.get_children().live().in_menu(),
-            'facebook_url': Footer.objects.first().facebook_url,
-            'twitch_url': Footer.objects.first().twitch_url,
-            'twitter_url': Footer.objects.first().twitter_url,
-            'privacy_policy_url': Footer.objects.first().privacy_policy_url,
-            # required by the pageurl tag that we want to use within this template
-            'request': context['request'],
-        }
-    else:
-        return {
-            # required by the pageurl tag that we want to use within this template
-            'request': context['request'],
-        }
+    return {
+        'parent': parent,
+        'menuitems': FooterLink.objects.all(),
+        'socials': SocialMedia.objects.filter(footer=True),
+        # required by the pageurl tag that we want to use within this template
+        'request': context['request'],
+    }
 
 
 @register.inclusion_tag('lib/tags/breadcrumbs.html', takes_context=True)

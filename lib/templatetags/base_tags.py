@@ -3,7 +3,7 @@ from django.template.defaultfilters import safe
 
 from blog.models import Sponsor, FooterLink, SocialMedia
 
-from wagtail.core.models import Page
+from wagtail.core.models import Page, Site
 from markdown import markdown
 
 register = template.Library()
@@ -59,7 +59,8 @@ def sponsor_sidebar(context):
 def get_site_root(context):
     # NB this returns a core.Page, not the implementation-specific model used
     # so object-comparison to self will return false as objects would differ
-    return context['request'].site.root_page
+    site= Site.find_for_request(context['request'])
+    return site.root_page
 
 
 # Retrieves the top menu items

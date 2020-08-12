@@ -2,6 +2,7 @@
 
 {% get_taglist as tags for 'blog.BlogPage' %}
 
+{% if tags and show_tags or archives or children %}
 <aside class="box">
 <div class="menu">
     {% if tags and show_tags %}
@@ -45,3 +46,4 @@
     {% endif %}
 </div>
 </aside>
+{% endif %}

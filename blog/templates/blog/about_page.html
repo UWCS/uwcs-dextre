@@ -1,23 +1,26 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
 
 {% load wagtailcore_tags blog_tags base_tags %}
 
 {% block title_prefix %}UWCS | {% endblock %}
 
 {% block content %}
-  {% if self.is_child %}
-    {% breadcrumbs %}
-  {% endif %}
+    {% if self.is_child %}
+        {% breadcrumbs %}
+    {% endif %}
 
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 columns">
-      <h4>{{ self.full_title }}</h4>
-    </div>
-
-    {% blog_sidebar show_children=True parent=self %}
-
-    <div class="small-12 medium-8 medium-pull-4 large-9 large-pull-3 columns">
-      {% include 'blog/includes/streamfield.html' with content=body %}
-    </div>
-  </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title has-2">{{ self.full_title }}</h1>
+                    {% include 'blog/includes/streamfield.html' with content=body %}
+                </div>
+                <div class="column is-one-third-tablet is-one-quarter-desktop is-one-fifth-fullhd">
+                    {% blog_sidebar show_children=True parent=self %}
+                    {% sponsor_sidebar %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

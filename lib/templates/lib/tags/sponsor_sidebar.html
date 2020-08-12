@@ -2,23 +2,27 @@
 {% is_nightmode as nightmode %}
 
 {% if sponsors %}
-  <aside>
+    <aside>
 
+        <div class="card">
+            <div class="card-header">
+                <h5 class="card-header-title title is-5">Sponsored by:</h5>
+            </div>
+            <div class="card-content columns is-mobile is-multiline is-centered is-vcentered">
+                {% for sponsor in sponsors %}
+                    <div class="column is-narrow-mobile is-full-tablet">
+                        <a class="sponsor-image" href="{% if sponsor.url %}{{ sponsor.url }}{% else %}/about/sponsors/{% endif %}">
+                            {% if nightmode and sponsor.nightmode_image %}
+                                {% image sponsor.nightmode_image max-400x75 %}
+                            {% else %}
+                                {% image sponsor.sponsor_image max-400x75 %}
+                            {% endif %}
+                        </a>
+                    </div>
+                {% endfor %}
+            </div>
 
-    <h5 class="title is-5">Sponsored by:</h5>
-
-    {% for sponsor in sponsors %}
-      <div class="flex-row sponsor-row sidebar">
-        <div class="flex-column flex-shrink">
-          <a href="{% if sponsor.url %}{{ sponsor.url }}{% else %}/about/sponsors/{% endif %}">
-          {% if nightmode %}
-            {% image sponsor.nightmode_image max-400x75 %}
-          {% else %}
-            {% image sponsor.sponsor_image max-400x75 %}
-          {% endif %}
-        </a>
         </div>
-      </div>
-    {% endfor %}
-  </aside>
+
+    </aside>
 {% endif %}

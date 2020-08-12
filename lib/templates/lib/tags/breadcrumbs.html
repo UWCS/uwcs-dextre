@@ -1,12 +1,12 @@
 {% load wagtailcore_tags %}
 
 {% if ancestors %}
-    <section class="section has-background-light">
-        <nav aria-label="You are here:" role="navigation">
-            <ul class="breadcrumb">
+    <section class="section py-2 has-background-light-scheme">
+        <nav class="breadcrumb" aria-label="You are here:" role="navigation">
+            <ul>
                 {% for ancestor in ancestors %}
                     {% if forloop.last %}
-                        <li class="is-active"><span class="show-for-sr">Current: </span>{{ ancestor }}</li>
+                        <li class="is-active"><a href="#" aria-current="page"><span class="is-sr-only">Current: </span>{{ ancestor }}</a></li>
                     {% else %}
                         <li><a href="{% pageurl ancestor %}">{{ ancestor }}</a></li>
                     {% endif %}

@@ -1,6 +1,7 @@
 @use "sass:math";
 
 $event-bar-spacing: 1.25rem !default;
+$event-shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
 
 .head_block {
   background-image: url("/static/img/headbg.jpg");
@@ -14,13 +15,14 @@ $event-bar-spacing: 1.25rem !default;
 
 }
 
-
+$social-background: rgba(0, 0, 0, .15) !default;
 $social-outer: 5rem;
 // Calculate the maximum size for a square emoji without breaking the box.
 $social-inner: math.sqrt(($social-outer/2rem)*($social-outer/2rem))*1rem;
 $social-outer-small: 3rem;
 $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2rem))*1rem;
 .social-circle {
+  background: $social-background;
   width: $social-outer;
   height: $social-outer;
   border-radius: $social-outer;
@@ -38,6 +40,17 @@ $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2
     line-height: $social-outer-small;
     font-size: $social-inner-small;
   }
+}
+
+.social-text {
+  padding-top: 0.5rem;
+  @include mobile {
+    padding-top: 0.25rem;
+  }
+}
+
+.column > .is-narrow-ish {
+  flex-grow: 0;
 }
 
 .sponsor-image {
@@ -80,15 +93,19 @@ $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2
 .events-bar {
   display: grid;
   grid-gap: 1em;
+
   &.has-3 {
     grid-template-columns: 1fr 1fr 1fr;
   }
+
   &.has-2 {
     grid-template-columns: 1fr 1fr;
   }
+
   &.has-1 {
     grid-template-columns: 1fr;
   }
+
   @include mobile {
     &.has-1, &.has-2, &.has-3 {
       grid-template-columns: 1fr;
@@ -116,6 +133,7 @@ $social-inner-small: math.sqrt(($social-outer-small/2rem)*($social-outer-small/2
   display: flex;
   flex-wrap: nowrap;
   height: available;
+  box-shadow: $event-shadow;
 
   @each $name, $pair in $colors {
     $color: nth($pair, 1);
@@ -166,10 +184,6 @@ a.event:hover {
   }
 }
 
-.card-footer {
-  border-color: $scheme-main-ter;
-}
-
 .columns.is-reversed {
   flex-direction: row-reverse;
 }
@@ -192,8 +206,10 @@ a.event:hover {
   @include mobile {
     padding: .1em .5em .1em .5em;
   }
+
   > a {
     color: $white;
+
     &:hover {
       color: $grey;
     }
@@ -216,10 +232,12 @@ a.event:hover {
 .social-link {
   > a {
     color: $white;
+
     &:hover {
       color: $grey;
     }
   }
+
   padding: .1em 0.5em .1em 0;
 
   @include tablet {
@@ -243,10 +261,43 @@ a.event:hover {
 
 .credits {
   color: $grey-light;
+
   a {
     color: $white;
+
     &:hover {
       color: $grey;
     }
   }
+}
+
+h1, h2, h3, h4, h5, h6 {
+  .h-link {
+    visibility: hidden;
+  }
+
+  &:hover {
+    .h-link {
+      visibility: visible;
+
+      &:hover {
+
+      }
+    }
+  }
+}
+
+body {
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+}
+
+.page-content {
+  flex: 1;
+}
+
+.menu-label {
+  text-transform: capitalize;
+  font-weight: 800;
 }

@@ -1,0 +1,43 @@
+$gray-base: #2c3134;
+
+$black: darken($gray-base, 20%);
+$black-bis: darken($gray-base, 15%);
+$black-ter: darken($gray-base, 10%);;
+$grey-darker: $gray-base;
+$grey-dark: desaturate(lighten($gray-base, 10%),2%);
+$grey: desaturate(lighten($gray-base, 20%),3%);
+$grey-light: desaturate(lighten($gray-base, 40%),5%);
+$grey-lighter: hsl(0, 0%, 86%);
+$grey-lightest: hsl(0, 0%, 93%);
+$white-ter: hsl(0, 0%, 96%);
+$white-bis: hsl(0, 0%, 98%);
+$white: hsl(0, 0%, 100%);
+$orange: hsl(14, 100%, 53%);
+$yellow: hsl(48, 100%, 67%);
+$green: hsl(141, 53%, 53%);
+$turquoise: hsl(171, 100%, 41%);
+$cyan: hsl(204, 71%, 53%);
+$blue: hsl(217, 71%, 53%);
+$purple: hsl(271, 100%, 71%);
+$red: hsl(348, 86%, 61%);
+
+$container-offset: 128px;
+$footer-background-color: #2C3134;
+$footer-color: hsl(0, 0, 100%);
+
+$primary: #3d5afe;
+$secondary: #fdd835;
+$info: $primary;
+$success: #00C853;
+$warning: #FFD600;
+$danger: #FF1744;
+
+$family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
+$family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
+$header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
+
+$family-secondary: $header-font-family;
+$title-family: $header-font-family;
+
+$menu-label-letter-spacing: 0;
+$menu-label-font-size: 1em;

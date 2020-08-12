@@ -23,12 +23,12 @@ $text-strong: $white;
 $text-light: $white-ter;
 $background: $black-ter;
 
-$card-background-color: $primary-scheme;
+$card-background-color: $scheme-main-bis;
 //$link
 //$card-color: hsl(0,0,100%);
 //$card-header-color: $card-color;
 $shadow: 0 0.5em 1em -0.125em rgba($scheme-main, 0.1), 0 0px 0 1px rgba($scheme-main, 0.02);
-$card-header-shadow: 0 0.125em 0.25em rgba($scheme-main, 0.1);
+
 $card-shadow: $shadow;
 
 $event-shadow: $shadow;

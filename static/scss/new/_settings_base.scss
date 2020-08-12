@@ -39,5 +39,11 @@ $header-font-family: 'Montserrat', 'Muli', Helvetica, Roboto, Arial, sans-serif;
 $family-secondary: $header-font-family;
 $title-family: $header-font-family;
 
-$menu-label-letter-spacing: 0;
-$menu-label-font-size: 1em;
+$menu-label-letter-spacing: normal;
+$menu-label-font-size: 1.25em;
+
+$radius-small: 2px;
+$radius: 4px;
+$radius-large: 6px;
+$box-radius: 0;
+$card-header-shadow: 0;

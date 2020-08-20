@@ -52,6 +52,6 @@ $border-hover: $grey-darker;
 $border-light: $grey-dark;
 $border-light-hover: $grey-darker;
 
-$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+$custom-colors: ("secondary": $secondary, "muted": $grey-lighter, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
         "danger-scheme": $danger-scheme, "light-scheme": $light-scheme);

@@ -1,7 +1,10 @@
+import bleach
 from django import template
 from django.template.defaultfilters import safe
+from django.utils.safestring import mark_safe
 
 from blog.models import Sponsor, FooterLink, SocialMedia
+from lib.html_cleaners import chlorox as chlorox_
 
 from wagtail.core.models import Page, Site
 from markdown import markdown
@@ -21,6 +24,13 @@ def url_replace(context, field, value):
     dict_[field] = value
 
     return dict_.urlencode()
+
+
+@register.filter()
+def chlorox(field):
+
+
+    return mark_safe(chlorox_.clean(field))
 
 
 @register.simple_tag(takes_context=True)
@@ -59,7 +69,7 @@ def sponsor_sidebar(context):
 def get_site_root(context):
     # NB this returns a core.Page, not the implementation-specific model used
     # so object-comparison to self will return false as objects would differ
-    site= Site.find_for_request(context['request'])
+    site = Site.find_for_request(context['request'])
     return site.root_page
 
 

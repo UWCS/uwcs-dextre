@@ -1,3 +1,4 @@
+import copy
 from datetime import datetime
 from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
@@ -10,8 +11,9 @@ from pygments.formatters import get_formatter_by_name
 from pygments.lexers import get_lexer_by_name
 from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
+from wagtail.contrib.table_block.blocks import TableBlock, DEFAULT_TABLE_OPTIONS
 from wagtail.core.blocks import TextBlock, StructBlock, StreamBlock, CharBlock, RichTextBlock, \
-    ChoiceBlock
+    ChoiceBlock, StaticBlock
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 from wagtail.documents.blocks import DocumentChooserBlock
@@ -20,6 +22,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 import bleach
 
+from html_cleaners import domestos
 from lib.ellipsis_paginator import EllipsisPaginator
 
 
@@ -136,6 +139,14 @@ class Heading4Block(CharBlock):
         template = 'blog/blocks/h4.html'
 
 
+class HRuleBlock(StaticBlock):
+    class Meta:
+        icon = 'horizontalrule'
+        label = 'Divider'
+        admin_text = 'Horizontal Rule'
+        template = 'blog/blocks/hr.html'
+
+
 class CodeBlock(StructBlock):
     """
     Code Highlighting Block
@@ -169,7 +180,7 @@ class CodeBlock(StructBlock):
     )
 
     language = ChoiceBlock(choices=LANGUAGE_CHOICES)
-    code = TextBlock()
+    code = TextBlock(rows=15)
 
     class Meta:
         icon = 'code'
@@ -189,104 +200,8 @@ class CodeBlock(StructBlock):
         return mark_safe(highlight(src, lexer, formatter))
 
 
-domestos = bleach.Cleaner(
-    tags=["a", "abbr", "address", "area", "article", "aside", "audio", "b", "bdi", "bdo", "blockquote", "body", "br",
-          "button", "canvas", "caption", "cite", "code", "col", "colgroup", "data", "datalist", "dd", "del", "details",
-          "dfn", "div", "dl", "dt", "em", "fieldset", "figcaption", "figure", "footer", "form", "h1", "h2", "h3", "h4",
-          "h5", "h6", "header", "hr", "i", "iframe", "img", "input", "ins", "kbd", "label", "legend", "li", "map",
-          "mark", "meter", "nav", "noscript", "ol", "optgroup", "option", "output", "p", "picture", "pre", "progress",
-          "q", "rp", "rt", "ruby", "s", "samp", "section", "select", "small", "source", "span", "strong", "style",
-          "svg", "sub", "summary", "sup", "table", "tbody", "td", "textarea", "tfoot", "th", "thead", "time", "tr",
-          "track", "u", "ul", "var", "video", "wbr"],
-    attributes={
-        '*': ['style', 'dir', 'class', 'id', 'lang', 'tabindex', 'title', 'translate'],
-        'a': ['download', 'href', 'hreflang', 'media', 'referrerpolicy', 'rel', 'target', 'type'],
-        'area': ['alt', 'coords', 'download', 'href', 'hreflang', 'media', 'rel', 'shape', 'target', 'type'],
-        'audio': ['autoplay', 'controls', 'loop', 'muted', 'preload', 'src'],
-        'bdo': ['dir'],
-        'blockquote': ['cite'],
-        'button': ['autofocus', 'disabled', 'form', 'formaction', 'formenctype', 'formmethod', 'formnovalidate',
-                   'formtarget', 'name', 'type', 'value'],
-        'canvas': ['height', 'width'],
-        'col': ['span'],
-        'colgroup': ['span'],
-        'data': ['value'],
-        'del': ['cite', 'datetime'],
-        'details': ['open'],
-        'fieldset': ['disabled', 'form', 'name'],
-        'form': ['accept-charset', 'action', 'autocomplete', 'enctype', 'method', 'name', 'novalidate', 'rel',
-                 'target'],
-        'iframe': ['allow', 'allowfullscreen', 'height', 'name', 'referrerpolicy', 'sandbox', 'src', 'srcdoc', 'width'],
-        'img': ['alt', 'crossorigin', 'height', 'ismap', 'longdesc', 'referrerpolicy', 'sizes', 'src', 'srcset',
-                'usemap', 'width'],
-        'input': ['accept', 'alt', 'autocomplete', 'autofocus', 'checked', 'dirname', 'disabled', 'form', 'formaction',
-                  'formenctype', 'formmethod', 'formnovalidate', 'formtarget', 'height', 'list', 'max', 'maxlength',
-                  'min', 'minlength', 'multiple', 'name', 'pattern', 'placeholder', 'readonly', 'required', 'size',
-                  'src', 'step', 'type', 'value', 'width'],
-        'ins': ['cite', 'datetime'],
-        'label': ['for', 'form'],
-        'li': ['value'],
-        'map': ['name'],
-        'meter': ['form', 'high', 'low', 'max', 'min', 'optimum', 'value'],
-        'ol': ['reversed', 'start', 'type'],
-        'optgroup': ['disabled', 'label'],
-        'option': ['disabled', 'label', 'selected', 'value'],
-        'output': ['for', 'form', 'name'],
-        'progress': ['max', 'value'],
-        'q': ['cite'],
-        'select': ['autofocus', 'disabled', 'form', 'multiple', 'name', 'required', 'size'],
-        'source': ['media', 'sizes', 'src', 'srcset', 'type'],
-        'style': ['media', 'type'],
-        'td': ['colspan', 'headers', 'rowspan'],
-        'textarea': ['autofocus', 'cols', 'dirname', 'disabled', 'form', 'maxlength', 'name', 'placeholder', 'readonly',
-                     'required', 'rows', 'wrap'],
-        'th': ['abbr', 'colspan', 'headers', 'rowspan', 'scope'],
-        'time': ['datetime'],
-        'track': ['default', 'kind', 'label', 'src', 'srclang'],
-        'video': ['autoplay', 'controls', 'height', 'loop', 'muted', 'poster', 'preload', 'src', 'width']
-    },
-    styles=["align-content", "align-items", "align-self", "animation", "animation-delay", "animation-direction",
-            "animation-duration", "animation-fill-mode", "animation-iteration-count", "animation-name",
-            "animation-play-state", "animation-timing-function", "backface-visibility", "background",
-            "background-attachment", "background-blend-mode", "background-clip", "background-color", "background-image",
-            "background-origin", "background-position", "background-repeat", "background-size", "border",
-            "border-bottom", "border-bottom-color", "border-bottom-left-radius", "border-bottom-right-radius",
-            "border-bottom-style", "border-bottom-width", "border-collapse", "border-color", "border-image",
-            "border-image-outset", "border-image-repeat", "border-image-slice", "border-image-source",
-            "border-image-width", "border-left", "border-left-color", "border-left-style", "border-left-width",
-            "border-radius", "border-right", "border-right-color", "border-right-style", "border-right-width",
-            "border-spacing", "border-style", "border-top", "border-top-color", "border-top-left-radius",
-            "border-top-right-radius", "border-top-style", "border-top-width", "border-width", "bottom",
-            "box-decoration-break", "box-shadow", "box-sizing", "break-after", "break-before", "break-inside",
-            "caption-side", "caret-color", "clear", "clip", "color", "column-count", "column-fill", "column-gap",
-            "column-rule", "column-rule-color", "column-rule-style", "column-rule-width", "column-span", "column-width",
-            "columns", "cursor", "direction", "display", "empty-cells", "filter", "flex", "flex-basis",
-            "flex-direction", "flex-flow", "flex-grow", "flex-shrink", "flex-wrap", "float", "font", "font-family",
-            "font-feature-settings", "font-kerning", "font-language-override", "font-size", "font-size-adjust",
-            "font-stretch", "font-style", "font-synthesis", "font-variant", "font-variant-alternates",
-            "font-variant-caps", "font-variant-east-asian", "font-variant-ligatures", "font-variant-numeric",
-            "font-variant-position", "font-weight", "grid", "grid-area", "grid-auto-columns", "grid-auto-flow",
-            "grid-auto-rows", "grid-column", "grid-column-end", "grid-column-gap", "grid-column-start", "grid-gap",
-            "grid-row", "grid-row-end", "grid-row-gap", "grid-row-start", "grid-template", "grid-template-areas",
-            "grid-template-columns", "grid-template-rows", "hanging-punctuation", "height", "hyphens",
-            "image-rendering", "isolation", "justify-content", "@keyframes", "left", "letter-spacing", "line-break",
-            "line-height", "list-style", "list-style-image", "list-style-position", "list-style-type", "margin",
-            "margin-bottom", "margin-left", "margin-right", "margin-top", "max-height", "max-width", "@media",
-            "min-height", "min-width", "mix-blend-mode", "object-fit", "object-position", "opacity", "order", "outline",
-            "outline-color", "outline-offset", "outline-style", "outline-width", "overflow", "overflow-wrap",
-            "overflow-x", "overflow-y", "padding", "padding-bottom", "padding-left", "padding-right", "padding-top",
-            "perspective", "perspective-origin", "pointer-events", "position", "quotes", "resize", "right",
-            "scroll-behavior", "tab-size", "table-layout", "text-align", "text-align-last", "text-combine-upright",
-            "text-decoration", "text-decoration-color", "text-decoration-line", "text-decoration-style", "text-indent",
-            "text-justify", "text-orientation", "text-overflow", "text-shadow", "text-transform",
-            "text-underline-position", "top", "transform", "transform-origin", "transform-style", "transition",
-            "transition-delay", "transition-duration", "transition-property", "transition-timing-function",
-            "unicode-bidi", "user-select", "vertical-align", "visibility", "white-space", "width", "word-break",
-            "word-spacing", "word-wrap", "writing-mode", "z-index"])
-
-
 class HTMLBlock(StructBlock):
-    value = TextBlock()
+    value = TextBlock(rows=15)
 
     class Meta:
         icon = 'cogs'
@@ -296,15 +211,26 @@ class HTMLBlock(StructBlock):
         return mark_safe(content)
 
 
+TABLE_SETTINGS = DEFAULT_TABLE_OPTIONS.copy()
+TABLE_SETTINGS['renderer'] = "html"
+
+
+class HtmlTableBlock(TableBlock):
+    class Meta:
+        template = 'blog/blocks/table.html'
+
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
     h4 = Heading4Block(icon="title", classname="title")
+    hr = HRuleBlock()
     paragraph = RichTextBlock(icon="pilcrow")
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()
     document = DocumentChooserBlock(icon="doc-full-inverse")
     code = CodeBlock()
+    table = HtmlTableBlock(table_options=TABLE_SETTINGS)
     html = HTMLBlock()
 
 

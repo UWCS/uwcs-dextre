@@ -279,10 +279,6 @@ h1, h2, h3, h4, h5, h6 {
   &:hover {
     .h-link {
       visibility: visible;
-
-      &:hover {
-
-      }
     }
   }
 }
@@ -301,4 +297,8 @@ body {
   text-transform: capitalize;
   font-weight: 700;
   font-family: $header-font-family;
+}
+
+.code-block {
+  margin-bottom: 1em;
 }

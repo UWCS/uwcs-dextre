@@ -1,0 +1,9 @@
+$wagtail-color: #202429;
+
+.wagtail-userbar-trigger {
+    box-shadow: 0 0 1px 0 $primary, 0 1px 10px 0 transparentize($primary, .3) !important;
+}
+
+.wagtail-userbar.no-touch .wagtail-userbar-trigger:hover, .wagtail-userbar.touch.is-active .wagtail-userbar-trigger {
+    box-shadow: 0 0 1px 0 $primary, 0 3px 15px 0 transparentize($primary, .05) !important;
+}

@@ -10,7 +10,7 @@
             <ul class="menu-list">
                 {% for tag in tags %}
                     <li>
-                        <a href="{% pageurl blog_index %}?tag={{ tag|urlencode }}">{{ tag }}</a>
+                        <a href="{% pageurl blog_index %}?tag={{ tag|urlencode }}" {% if filter_tag == tag %}class="is-active"{% endif %}>{{ tag|title }}</a>
                     </li>
                 {% endfor %}
             </ul>
@@ -21,12 +21,15 @@
                 {% for year, months in archives.items %}
                     {% if forloop.counter0 < archive_count %}
                         <li>
-                            <a href="#">{{ year }}</a>
-                            <ul>
+                            <a onclick="$('#archive-{{ year }}').slideToggle(200);">{{ year }}</a>
+                            <ul id="archive-{{ year }}" {% if year != archive_year %}style="display: none;"{% endif %}>
                                 {% for month, posts in months.items %}
-                                    <li><a
-                                            href="{% pageurl blog_index %}?date={{ year }}-{{ month|stringformat:'02d' }}">{{ month|to_month_str }}
-                                        ({{ posts|length }})</a></li>
+                                    <li>
+                                        <a href="{% pageurl blog_index %}?date={{ year }}-{{ month|stringformat:'02d' }}"
+                                           {% if filter_date.year == year and filter_date.month == month %}class="is-active"{% endif %}>
+                                            {{ month|to_month_str }} ({{ posts|length }})
+                                        </a>
+                                    </li>
                                 {% endfor %}
                             </ul>
                         </li>

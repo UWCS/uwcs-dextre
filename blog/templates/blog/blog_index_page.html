@@ -16,7 +16,7 @@
                     {% for blog in blogs.object_list %}
                         {% include "blog/includes/blog_list_item.html" %}
                     {% empty %}
-                        <p>No news item can be found</p>
+                        <p class="has-text-muted">Oops. Nothing matches the filter currently applied.</p>
                     {% endfor %}
 
                     {% if blogs %}
@@ -24,7 +24,7 @@
                     {% endif %}
                 </div>
                 <div class="column is-one-quarter-tablet is-one-fifth">
-                    {% blog_sidebar show_tags=True show_archives=True %}
+                    {% blog_sidebar show_tags=True show_archives=True archive_year=archive_year %}
                     {% sponsor_sidebar %}
                 </div>
             </div>

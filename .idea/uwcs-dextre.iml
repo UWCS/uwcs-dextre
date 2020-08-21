@@ -19,6 +19,8 @@
       <sourceFolder url="file://$MODULE_DIR$/dextre" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/accounts" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/newsletter" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/events" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/static/CACHE" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv_minimal" />

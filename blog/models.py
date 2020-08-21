@@ -220,12 +220,14 @@ class HtmlTableBlock(TableBlock):
         template = 'blog/blocks/table.html'
 
 
+PARAGRAPH_FEATURES = ['bold','italic','underline','h2','h3','h4','superscript','subscript','strikethrough','ol','ul','code','link','document-link','image','embed']
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
     h4 = Heading4Block(icon="title", classname="title")
     hr = HRuleBlock()
-    paragraph = RichTextBlock(icon="pilcrow")
+    paragraph = RichTextBlock(icon="pilcrow", features=PARAGRAPH_FEATURES)
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()
     document = DocumentChooserBlock(icon="doc-full-inverse")
@@ -239,7 +241,7 @@ class HomePage(Page):
     subpage_types = ['blog.BlogIndexPage', 'blog.AboutPage', 'events.EventsIndexPage']
 
     description = StreamField(BlogStreamBlock())
-    alert = RichTextField(blank=True, features=['bold', 'italic'])
+    alert = RichTextField(blank=True, features=['bold', 'italic', 'underline'])
     alert_link = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
@@ -266,14 +268,16 @@ class BlogIndexPage(Page):
         blogs = self.blogs
 
         # Filter by tag
-        tag = request.GET.get('tag')
+        tag = request.GET.get('tag', None)
         if tag:
             blogs = blogs.filter(tags__name=tag)
 
         # Filter by date
-        filter_date = request.GET.get('date')
+        filter_date = request.GET.get('date', None)
+        archive_year = timezone.now().year
         if filter_date:
             filter_date = datetime.strptime(filter_date, '%Y-%m')
+            archive_year = filter_date.year
             blogs = blogs.filter(date__month=filter_date.month, date__year=filter_date.year)
 
         # Pagination
@@ -289,6 +293,9 @@ class BlogIndexPage(Page):
         context = super(BlogIndexPage, self).get_context(request)
         context['blogs'] = blogs
         context['paginator'] = paginator
+        context['archive_year'] = archive_year
+        context['filter_date'] = filter_date
+        context['filter_tag'] = tag
         return context
 
 
@@ -299,9 +306,10 @@ class BlogPageTag(TaggedItemBase):
 class BlogPage(Page):
     # Parent page/subpage rules
     parent_page_types = ['blog.BlogIndexPage']
+    subpage_types = []
 
     body = StreamField(BlogStreamBlock())
-    intro = RichTextField(help_text="This is displayed on the home and blog listing pages")
+    intro = RichTextField(help_text="This is displayed on the home and blog listing pages", features=PARAGRAPH_FEATURES)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     date = models.DateTimeField("Post date", default=timezone.now)
 

@@ -9,7 +9,7 @@ from events.models import EventsArchivePage
 register = template.Library()
 
 
-@register.inclusion_tag('events/tags/event_breadcrumbs.html', takes_context=True)
+@register.inclusion_tag('lib/tags/breadcrumbs.html', takes_context=True)
 def breadcrumbs(context):
     self = context.get('self')
     if self is None or self.depth <= 2:

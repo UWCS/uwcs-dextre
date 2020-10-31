@@ -16,6 +16,7 @@ register = template.Library()
 def markdownify(value):
     return markdown(value)
 
+
 @register.simple_tag(takes_context=True)
 def url_replace(context, field, value):
     dict_ = context.request.GET.copy()

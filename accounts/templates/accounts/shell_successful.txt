@@ -11,7 +11,7 @@ Your shell account request has been successful and an account has been created w
 You can access our server(s) using SSH with the address of lovelace.uwcs.co.uk. We recommend you change your password
 as soon as you log in for the first time. From lovelace you then may log into our other servers, hopper and milner.
 
-A full breakdown of our servers and what they do is available on our about page at https://uwcs.co.uk/about/.
+A full breakdown of our servers and what they do is available on our about page at https://uwcs.co.uk/about/servers/.
 
 Kind regards,
 UWCS Techteam

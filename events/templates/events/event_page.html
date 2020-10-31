@@ -1,177 +1,124 @@
-{% extends "base.html" %}
-
-{% load wagtailcore_tags event_tags %}
+{% extends "new_base.html" %}
+{% load wagtailcore_tags wagtailimages_tags base_tags event_tags %}
 
 {% block title %}UWCS | {{ self.title }} ({{ self.start|date:'Y-m-d' }}) {% endblock %}
 
 {% block content %}
   {% breadcrumbs %}
-
-  <section class="row margin-top-1x">
-    {% if self.cancelled %}
-      <div class="callout alert">
-        <h4>This event has been cancelled</h4>
-        <p>Sorry for any inconvenience caused</p>
+  <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-background">
+    {% image self.category.banner_image original class="hero-background is-transparent" %}
+    <div class="hero-body">
+      <div class="container">
+        <h2 class="title">{{ self.title }}</h2>
       </div>
-    {% endif %}
+    </div>
+  </section>
 
-    {% sidebar show_sponsor=True display_first=True %}
-
-    <article class="small-12 medium-8 medium-pull-4 large-9 large-pull-3 columns">
-      <section class="row">
-        <div class="small-12 columns">
-          <h2>{{ self.title }}</h2>
-          {% if self.is_ongoing %}
-            <p><strong>This event is in progress</strong></p>
+  <section class="section">
+    <div class="container">
+      <div class="columns">
+        <article class="column">
+          {% if self.cancelled %}
+            <div class="notification is-warning">
+              <h4 class="title is-4">This event has been cancelled</h4>
+              <p class="subtitle">Sorry for any inconvenience caused</p>
+            </div>
           {% endif %}
-          <p>{{ self.description }}</p>
-        </div>
-      </section>
-      <section class="row details">
-        <div class="small-12 columns">
-          <div class="row">
-            <div class="small-12 columns row-title">Time &amp; Date</div>
-            <div class="small-12 columns row-info">
-              <p>{{ self.start|date:'D jS F Y, H:i' }} - {{ self.finish|date:'D jS F Y, H:i' }}</p>
+          {% if self.is_ongoing %}
+            <div class="notification is-primary">
+              <h4 class="title is-4">This event is in progress</h4>
+            </div>
+          {% endif %}
+
+          <div class="card mb-5">
+            <div class="card-content">
+              <div class="columns">
+                <div class="column">
+                  <h3 class="subtitle is-5 mb-2"><span class="icon mr-2"><i class="fas fa-clock"></i></span>Time
+                    &amp; Date</h3>
+                  <p class="pl-6">{{ self.start|date:'D jS F Y, H:i' }}
+                    - {{ self.finish|date:'D jS F Y, H:i' }}</p>
+                </div>
+                <div class="column">
+                  <h3 class="subtitle is-5 mb-2"><span class="icon mr-2"><i
+                    class="fas fa-map-marker-alt"></i></span>Location</h3>
+                  <p class="pl-6">{{ self.location }}</p>
+                </div>
+              </div>
             </div>
           </div>
-          <div class="row">
-            <div class="small-12 columns row-title">Location</div>
-            <div class="small-12 columns row-info">
-              <p>{{ self.location }}</p>
-            </div>
+
+          <h3 class="title is-4">
+            Description
+          </h3>
+          <div class="content">
+            {{ self.body }}
           </div>
-          <div class="row">
-            <div class="small-12 columns row-title">Description</div>
-            <div class="small-12 columns row-info">
-              {{ self.body }}
-            </div>
-          </div>
-          {% if self.signup_limit >= 0 %}
-            <div class="row">
-              <div class="small-12 columns row-title">Signups open</div>
-              <div class="small-12 columns row-info">
-                <p>{{ self.signup_open|date:'D jS F Y, H:i' }} {% if self.signup_freshers_open %}(Freshers:
+
+          {% if self.facebook_link %}
+            <a class="subtitle is-5 is-primary" href="{{ self.facebook_link }}">
+              <i class="icon fab fa-facebook"></i> Facebook Event link
+            </a>
+          {% endif %}
+
+          {% if self.signup_type != self.SIGNUP_TYPES.NONE %}
+            <section class="card">
+              <div class="card-content">
+                <div>Signups open</div>
+                <p>{{ self.signup_open|date:'D jS F Y, H:i' }} {% if self.signup_freshers_open %}
+                  (Freshers:
                   {{ self.signup_freshers_open|date:'D jS F Y, H:i' }}{% endif %}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-12 columns row-title">Signups close</div>
-              <div class="small-12 columns row-info">
+                <div>Signups close</div>
                 <p>{{ self.signup_close|date:'D jS F Y, H:i' }}</p>
-              </div>
-            </div>
-            <div class="row">
-              <div class="small-12 columns row-title">Total signups</div>
-              <div class="small-12 columns row-info">
+                <div>Total signups</div>
                 <p>
                   {% if self.signup_limit == 0 %}
                     This event has unlimited spaces
                   {% else %}
                     {% if self.signups.count < self.signup_limit %}
-                      This event has {{ self.signup_limit|subtract:self.signups.count }} places remaining ({{ self.signups.count }}/{{ self.signup_limit }})
+                      This event has {{ self.signup_limit|subtract:self.signups.count }}
+                      places remaining ({{ self.signups.count }}/{{ self.signup_limit }})
                     {% else %}
-                      There are no more spaces left for this event ({{ self.signups.count }}/{{ self.signup_limit }})
+                      There are no more spaces left for this event ({{ self.signups.count }}/
+                      {{ self.signup_limit }})
                     {% endif %}
                   {% endif %}
                 </p>
               </div>
-            </div>
-          {% endif %}
-          {% if self.facebook_link %}
-            <div class="row">
-              <div class="small-12 columns row-title">Facebook event</div>
-              <div class="small-12 columns row-info">
-                <p><a href="{{ self.facebook_link }}">Facebook event for {{ self.title }} ({{ self.start|date:'Y-m-d' }})</a>
-                </p>
-              </div>
-            </div>
-          {% endif %}
-          {# TODO: Seating plan link goes here #}
-          {% if user_signed_up and not self.cancelled %}
-            <div class="row">
-              <div class="small-12 columns row-title">Unsignup</div>
-              <div class="small-12 columns row-info">
-                <p><a href="{% url 'event_unsignup' event_id=self.page_ptr_id %}">Click here to unsignup from this event
+              {% if user_signed_up and not self.cancelled %}
+                <div>Unsignup</div>
+                <p><a href="{% url 'event_unsignup' event_id=self.page_ptr_id %}">
+                  Click here to unsignup from this event
                   <i class="fa fa-trash" aria-hidden="true"></i></a></p>
-              </div>
-            </div>
-          {% endif %}
-        </div>
-      </section>
-      {% if request.user.is_authenticated %}
-        {% if not user_signed_up and not self.cancelled and can_signup %}
-          <section class="row signup">
-            <div class="small-12 columns">
-              <p>You aren't signed up for this event. Press sign up below, optionally leaving a comment</p>
-              <form action="{% url 'event_signup' event_id=self.page_ptr_id %}" method="post">
-                {% csrf_token %}
+              {% endif %}
 
-                <div class="flex-row">
-                  <div class="flex-columns collapse-left">
-                    <input id="id_comment" name="comment" type="text" maxlength="1024">
-                  </div>
-                  <div class="flex-shrink flex-columns collapse-right">
-                    <input type="submit" class="button float-right" value="Signup">
-                  </div>
-                </div>
-              </form>
-            </div>
-          </section>
-        {% endif %}
-      {% endif %}
 
-      <section class="comments row">
-        <div class="small-12 columns">
-          {% if can_signup or self.signups %}
-            <h4>Signup comments</h4>
-          {% endif %}
-          {% if self.signups %}
-            <table class="comment-table">
-              <thead class="sr-only">
-              <tr>
-                <th>User</th>
-                <th>Comment</th>
-              </tr>
-              </thead>
-              <tbody>
-              {% for comment in self.signups %}
-                <tr>
-                  <td class="user">
-                    <a href="{% url 'public_profile' uid=comment.member.id %}">
-                      {% if comment.member.compsocuser %}
-                        {% with comment.member.compsocuser as user %}
-                          {% if user.nickname %}
-                            <span data-tooltip aria-haspopup="true" class="has-tip" data-disable-hover="false" tabindex="1" title="{{ user.full_name }}">{{ user }}</span>
-                          {% else %}
-                            {{ user }}
-                          {% endif %}
-                        {% endwith %}
-                      {% else %}
-                        {{ comment.member.get_full_name }}
-                      {% endif %}
-                    </a>
-                  </td>
-                  <td>
-                    <p><span class="date">{{ comment.signup_created|date:'D jS F Y, H:i' }}</span></p>
-                    {% if comment.comment %}
-                      <p>{{ comment.comment }}</p>
-                    {% endif %}
-                  </td>
-                </tr>
-              {% endfor %}
-              </tbody>
-            </table>
-          {% else %}
-            {% if can_signup %}
-              <p>There are no sign ups for this event yet, why not be the first?</p>
-            {% else %}
-              <p>There are no sign ups for this event</p>
-            {% endif %}
-          {% endif %}
-        </div>
-      </section>
-    </article>
+              {% if request.user.is_authenticated %}
+                {% if not user_signed_up and not self.cancelled and can_signup %}
+                  <section>
+                    <p>You aren't signed up for this event. Press sign up below, optionally leaving
+                      a
+                      comment</p>
+                    <form action="{% url 'event_signup' event_id=self.page_ptr_id %}" method="post">
+                      {% csrf_token %}
 
+                      <input id="id_comment" name="comment" type="text" maxlength="1024">
+                      <input type="submit" class="button float-right" value="Signup">
+                    </form>
+                  </section>
+                {% endif %}
+              {% endif %}
+
+              {# Comments #}
+            </section>
+
+          {% endif %}
+        </article>
+        <aside class="column is-one-third-tablet is-one-quarter-desktop is-one-fifth-fullhd">
+          {% sidebar show_sponsor=True display_first=True %}
+          {% sponsor_sidebar %}
+        </aside>
+      </div>
+    </div>
   </section>
 {% endblock content %}

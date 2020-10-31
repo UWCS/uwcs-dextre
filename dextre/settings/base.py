@@ -65,6 +65,7 @@ INSTALLED_APPS = [
     'compressor',
     'anymail',
     'markdownx',
+    'widget_tweaks',
 ]
 
 REST_FRAMEWORK = {

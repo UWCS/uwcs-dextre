@@ -1,24 +1,17 @@
 {% load base_tags wagtailcore_tags %}
 
-<aside class="small-12 medium-4 large-3 {% if display_first %}medium-push-8 large-push-9{% endif %} columns sidebar">
-  {% if show_sponsor %}
-    {% sponsor_sidebar %}
-  {% endif %}
-
-
-  <div class="row">
-    <div class="small-12 columns">
-      <h5>Useful links</h5>
-      <ul class="vertical menu">
-        {% if archive_page %}
-          <li>
-            <a href="{% pageurl archive_page %}">{{ archive_page.title }}</a>
-          </li>
-        {% endif %}
-        <li>
-          <a href="{% url 'ical_feed' %}">iCal feed</a>
-        </li>
-      </ul>
+<div class="box">
+    <div class="menu">
+        <p class="menu-label">Useful links</p>
+        <ul class="menu-list">
+            {% if archive_page %}
+                <li>
+                    <a href="{% pageurl archive_page %}">{{ archive_page.title }}</a>
+                </li>
+            {% endif %}
+            <li>
+                <a href="{% url 'ical_feed' %}">iCal feed</a>
+            </li>
+        </ul>
     </div>
-  </div>
-</aside>
+</div>

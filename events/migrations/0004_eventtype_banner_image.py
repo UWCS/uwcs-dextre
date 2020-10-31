@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
     operations = [
         migrations.AddField(
             model_name='eventtype',
-            name='banner_image',
+            name='list_image',
             field=models.ForeignKey(blank=True, help_text='This image will be displayed above the event on the front page', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image'),
         ),
     ]

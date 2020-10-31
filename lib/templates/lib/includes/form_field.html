@@ -1,0 +1,28 @@
+{% load widget_tweaks %}
+
+{% spaceless %}
+        <div class="field">
+            <label class="label {{ size|default:"is-normal" }}" for="{{ field.id_for_label }}">
+                {% if label %}{{ label }}{% else %}{{ field.label }}{% endif %}</label>
+            <div class="control{% if iconleft %} has-icons-left{% endif %}{% if iconright %} has-icons-right{% endif %}">
+                {% if size %}
+                    {{ field|add_class:"input"|add_class:size|add_error_class:"is-danger" }}
+                {% else %}
+                    {{ field|add_class:"input is-normal"|add_error_class:"is-danger" }}
+                {% endif %}
+                {% if iconleft %}
+                    <span class="icon is-normal is-left"><i class="{{ iconleft }}"></i></span>
+                {% endif %}
+                {% if iconright %}
+                    <span class="icon is-normal is-right"><i class="{{ iconright }}"></i></span>
+                {% endif %}
+            </div>
+            {% if field.errors %}
+                {% for e in field.errors %}
+                    <p class="help is-danger">{{ e }}</p>
+                {% endfor %}
+            {% elif field.help_text %}
+                <p class="help">{{ field.help_text|safe }}</p>
+            {% endif %}
+        </div>
+{% endspaceless %}

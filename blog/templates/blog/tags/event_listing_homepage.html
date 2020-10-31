@@ -11,7 +11,7 @@
             <div class="events-bar has-{{ events|length }}">
                 {% for event in events %}
                     <a class="event is-primary-scheme event-{{ forloop.counter }}" href="{% pageurl event %}">
-                        {% image event.category.banner_image original class="event-image" %}
+                        {% image event.category.list_image original class="event-image" %}
                         <div class="event-content">
                             <h5 class="title is-5">{{ event.title }}</h5>
                             <p class="icon-line">

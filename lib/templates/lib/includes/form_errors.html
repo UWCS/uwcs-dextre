@@ -1,0 +1,10 @@
+{% if form.errors %}
+    <div class="notification is-danger">
+        <p>Please correct the error{{form.errors.items|pluralize }} below.</p>
+    </div>
+{% endif %}
+{% if form.non_field_errors %}
+    <div class="notification is-danger">
+        <p>{{ form.non_field_errors }}</p>
+    </div>
+{% endif %}

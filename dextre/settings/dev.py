@@ -22,8 +22,8 @@ DATABASES = {
 CORS_ORIGIN_ALLOW_ALL = True
 
 # Anymail
-# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+# EMAIL_BACKEND = 'anymail.backends.sendgrid.EmailBackend'
 EMAIL_ABS_URL = 'https://uwcs.co.uk'
 
 ANYMAIL = {

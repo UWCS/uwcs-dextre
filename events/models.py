@@ -27,13 +27,21 @@ class EventType(models.Model):
 
     name = models.CharField(max_length=50)
     target = models.CharField(max_length=3, choices=TARGETS.choices)
+    list_image = models.ForeignKey(
+        'wagtailimages.Image',
+        null=True,
+        blank=True,
+        on_delete=models.SET_NULL,
+        related_name='+',
+        help_text='This image will be displayed beside the event on the front page and event list'
+    )
     banner_image = models.ForeignKey(
         'wagtailimages.Image',
         null=True,
         blank=True,
         on_delete=models.SET_NULL,
         related_name='+',
-        help_text='This image will be displayed above the event on the front page'
+        help_text='This image will be displayed as the event page banner'
     )
 
     def __str__(self):
@@ -42,6 +50,7 @@ class EventType(models.Model):
     panels = [
         FieldPanel('name'),
         FieldPanel('target'),
+        ImageChooserPanel('list_image'),
         ImageChooserPanel('banner_image'),
     ]
 

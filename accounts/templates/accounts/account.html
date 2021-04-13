@@ -18,7 +18,7 @@
                             <h5 class="card-header-title title is-4">User information</h5>
                         </div>
                         <div class="card-content">
-                            <div class="tile notification is-info">
+                            <div class="tile notification is-primary-light-scheme">
                                 <div class="content">
                                     <p class="subtitle is-5">Full name (from Warwick SU):</p>
                                     <p>{{ user.full_name|default:user.username }}</p>
@@ -30,7 +30,7 @@
                                     {% with request.user.compsocuser as user %}
                                       {% if user.first_name %}
                                           <div class="column is-half ">
-                                              <div class="tile notification is-info">
+                                              <div class="tile notification is-primary-light-scheme">
                                                   <div class="content">
                                                       <p class="subtitle is-5">Preferred name:</p>
                                                     <p>{{ user.full_name }}</p>
@@ -41,7 +41,7 @@
 
                                       {% if user.nickname %}
                                           <div class="column is-half ">
-                                              <div class="tile notification is-info">
+                                              <div class="tile notification is-primary-light-scheme">
                                                   <div class="content">
                                                       <p class="subtitle is-5">Nickname:</p>
                                                     <p>{{ user.nickname }}</p>
@@ -52,7 +52,7 @@
 
                                       {% if user.discord_user %}
                                           <div class="column is-half ">
-                                              <div class="tile notification is-info">
+                                              <div class="tile notification is-primary-light-scheme">
                                                   <div class="content">
                                                       <p class="subtitle is-5">Discord tag:</p>
                                                       <p>{{ user.discord_user }}</p>
@@ -63,7 +63,7 @@
 
                                       {% if user.website_url %}
                                           <div class="column is-half ">
-                                              <div class="tile notification is-info">
+                                              <div class="tile notification is-primary-light-scheme">
                                                 <div class="content">
                                                     <p class="subtitle is-5">Website:</p>
                                                     <a href="{{ user.abs_website_url }}">
@@ -76,7 +76,7 @@
                                     {% endwith %}
                                   {% else %}
                                     <div class="column is-half ">
-                                        <div class="tile notification is-warning">
+                                        <div class="tile notification is-warning-light-scheme">
                                             <p>You have not provided any additional user information</p>
                                         </div>
                                     </div>
@@ -84,7 +84,7 @@
                             </div>
                                 <div class="tile is-ancestor">
                                     <div class="tile is-parent">
-                                        <div class="tile is-child notification is-success">
+                                        <div class="tile is-child notification is-secondary-light-scheme">
                                             <div class="content">
                                                 <p class="subtitle is-5">Shell account</p>
                                                 {% if request.user.shellaccount %}
@@ -102,7 +102,7 @@
                                         </div>
                                     </div>
                                     <div class="tile is-parent">
-                                        <div class="tile is-child notification is-success is-fullheight">
+                                        <div class="tile is-child notification is-secondary-light-scheme">
                                             <div class="content">
                                                 <p class="subtitle is-5">Database account</p>
                                                 {% if request.user.databaseaccount %}

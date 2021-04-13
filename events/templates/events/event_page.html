@@ -5,8 +5,7 @@
 
 {% block content %}
   {% breadcrumbs %}
-  <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-background">
-    {% image self.category.banner_image original class="hero-background is-transparent" %}
+  <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-bg-image hero-background is-transparent" style="background-image: url('/static/img/headbg.jpg')">
     <div class="hero-body">
       <div class="container">
         <h2 class="title">{{ self.title }}</h2>
@@ -115,7 +114,7 @@
           {% endif %}
         </article>
         <aside class="column is-one-third-tablet is-one-quarter-desktop is-one-fifth-fullhd">
-          {% sidebar show_sponsor=True display_first=True %}
+          {% sidebar display_first=True %}
           {% sponsor_sidebar %}
         </aside>
       </div>

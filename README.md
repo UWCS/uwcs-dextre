@@ -31,9 +31,9 @@ The deployment of the website on the UWCS systems also uses Apache 2 and mod_wsg
 #### Installation and Configuration
 With the packaged dependencies installed and configured (most/all should be available with any Linux distribution's package manager), the steps for installation of the website are as follows, though you may want to stop after step 5 if you are not going to deploy the website for production purposes:
 
-1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.5
-2. `git clone` the repository to the location you wish to serve the site from (e.g: `/var/www/uwcs-zarya`)
-3. Install the requirements using `pip -r requirements.txt` (make sure you're using the virtualenv if you're using one)
+1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.8
+2. `git clone` the repository to the location you wish to serve the site from (e.g: `/var/www/uwcs-dextre`)
+3. Install the requirements using `pip install -r requirements.txt` (make sure you're using the virtualenv if you're using one)
 4. `cd uwcs-dextre/dextre/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
 5. `cd uwcs-dextre/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
 6. `cd uwcs-dextre/dextre/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
@@ -43,17 +43,17 @@ With the packaged dependencies installed and configured (most/all should be avai
 10. Create the configuration file(s) for the web server of your chosing
 11. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
-#### Ubuntu 16.04 Xenial development setup
-# TODO. These command's don't actually work anymore
+#### Ubuntu 20.04 development setup
+These are (mostly) tested on Josh's system using WSL. 
 
 If you blindly follow these instructions, you should have a working instance of the website.
 
 Setup postgres database:
 ```
 sudo apt-get install postgresql
-sudo -u postgres createuser -D -A -P zarya
+sudo -u postgres createuser -D -A -P dextre
 (enter 'password' as password)
-sudo -u postgres createdb -Ozarya zarya
+sudo -u postgres createdb -0dextre dextre
 ```
 
 Install systemwide runtime/build dependencies:
@@ -69,30 +69,30 @@ sudo apt-get install -y nodejs
 
 Create python virtualenv and install python dependencies:
 ```
-virtualenv -p /usr/bin/python3 zarya-env
-. ./zarya-env/bin/activate
-pip install -r requirements.txt
+python3 -m venv dextre-venv
+. ./dextre-env/bin/activate
+pip3 install -r requirements.txt
 ```
 
 Fetch bower components:
 ```
-cd zarya/components
+cd dextre/components
 npm install bower
 ./node_modules/.bin/bower install
 ```
 
 Seed the database:
 ```
-python ./manage.py migrate
-python ./manage.py createsuperuser
+python3 ./manage.py migrate
+python3 ./manage.py createsuperuser
 ```
 
-At this point you can get a repl using:
+**NOT NEEDED** At this point you can get a repl using:
 ```
 python ./manage.py shell
 ```
 
-Run these to create the basic site structure:
+**NOT NEEDED** Run these to create the basic site structure:
 **This block doesnt work any more. New version will be written once site structure is decided upon**
 ```python
 from wagtail.wagtailcore.models import Page, Site
@@ -113,10 +113,10 @@ python ./manage.py runserver
 
 Go to http://localhost:8000 and you should see a basic instance of the site!
 
-The last step is to start a celery worker for background tasks. Open a new terminal and run:
+**NOT TESTED** The last step is to start a celery worker for background tasks. Open a new terminal and run:
 
 ```
-. ./bin/zarya-env/activate
+. ./bin/dextre-env/activate
 celery -A dextre worker -l info
 ```
 

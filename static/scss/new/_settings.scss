@@ -1,3 +1,5 @@
+@import "../sass/utilities/functions";
+
 $light  : $white-ter;
 $dark   : $grey-darker;
 
@@ -14,8 +16,18 @@ $warning-scheme: $warning;
 $danger-scheme: $danger;
 $light-scheme: $light;
 
+$primary-light-scheme: findLightColor($primary);
+$secondary-light-scheme: findLightColor($secondary);
+$info-light-scheme: findLightColor($info);
+$success-light-scheme: findLightColor($success);
+$warning-light-scheme: findLightColor($warning);
+$danger-light-scheme: findLightColor($danger);
+$cancelled-scheme: $danger-light-scheme;
+
 $link: $primary;
 
-$custom-colors: ("secondary": $secondary, "muted": $grey, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
-        "danger-scheme": $danger-scheme, "light-scheme": $light);
+        "danger-scheme": $danger-scheme, "light-scheme": $light, "primary-light-scheme": $primary-light-scheme,
+        "secondary-light-scheme": $secondary-light-scheme, "info-light-scheme": $info-light-scheme, "success-light-scheme": $success-light-scheme,
+        "warning-light-scheme": $warning-light-scheme, "danger-light-scheme": $danger-light-scheme, "cancelled-scheme": $cancelled-scheme);

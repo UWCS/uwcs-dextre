@@ -4,10 +4,17 @@ $dark   : $grey-darker;
 $primary-scheme: darken($gray-base, 5%); //desaturate(darken($primary, 40%), 40%);
 $secondary-scheme: darken($gray-base, 2%);
 $info-scheme: $primary-scheme;
-$success-scheme: darken($success, 20%);
-$warning-scheme: darken($warning, 20%);
-$danger-scheme: darken($danger, 20%);
-$light-scheme: $grey-dark;
+$success-scheme: darken($success, 30%);
+$warning-scheme: darken($warning, 30%);
+$danger-scheme: darken($danger, 30%);
+$light-scheme: $grey-darker;
+$primary-light-scheme: $primary-scheme;
+$secondary-light-scheme: $secondary-scheme;
+$info-light-scheme: $info-scheme;
+$success-light-scheme: $success-scheme;
+$warning-light-scheme: darken($warning-scheme, 10%);
+$danger-light-scheme: darken($danger-scheme, 20%);
+$cancelled-scheme: darken($gray-base, 5%);
 
 $link: lighten(saturate($primary, 3%),5%);
 
@@ -52,6 +59,8 @@ $border-hover: $grey-darker;
 $border-light: $grey-dark;
 $border-light-hover: $grey-darker;
 
-$custom-colors: ("secondary": $secondary, "muted": $grey-lighter, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
-        "danger-scheme": $danger-scheme, "light-scheme": $light-scheme);
+        "danger-scheme": $danger-scheme, "light-scheme": $light-scheme, "primary-light-scheme": $primary-light-scheme,
+        "secondary-light-scheme": $secondary-light-scheme, "info-light-scheme": $info-light-scheme, "success-light-scheme": $success-light-scheme,
+        "warning-light-scheme": $warning-light-scheme, "danger-light-scheme": $danger-light-scheme, "cancelled-scheme": $cancelled-scheme);

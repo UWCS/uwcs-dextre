@@ -222,6 +222,16 @@ class HtmlTableBlock(TableBlock):
 
 PARAGRAPH_FEATURES = ['bold','italic','underline','h2','h3','h4','superscript','subscript','strikethrough','ol','ul','code','link','document-link','image','embed']
 
+
+class CalloutBlock(RichTextBlock):
+
+    class Meta:
+        icon = 'placeholder'
+        label = 'Callout'
+        admin_text = 'Callout'
+        template = 'blog/blocks/callout.html'
+
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
@@ -233,6 +243,7 @@ class BlogStreamBlock(StreamBlock):
     document = DocumentChooserBlock(icon="doc-full-inverse")
     code = CodeBlock()
     table = HtmlTableBlock(table_options=TABLE_SETTINGS)
+    callout = CalloutBlock()
     html = HTMLBlock()
 
 

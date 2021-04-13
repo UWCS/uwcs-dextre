@@ -1,51 +1,78 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
 
-{% load wagtailcore_tags event_tags %}
+{% load wagtailcore_tags event_tags%}
+{% load base_tags %}
+{% load wagtailimages_tags %}
 `
 {% block title %}UWCS | Events overview {% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x events">
-    <div class="small-12 columns">
-      <h4>{{ self.title }}</h4>
-    </div>
-    {% sidebar show_sponsor=True display_first=True show_archive_link=True %}
-    <div class="small-12 medium-8 medium-pull-4 large-9 large-pull-3 columns">
-      {% if weeks %}
-        <ul class="no-bullet week-list">
-          {% for week in weeks %}
-            <li>
-              <div class="row">
-                <h5 class="week-title">Week beginning {{ week.0.start|first_monday|date:'jS F Y' }}</h5>
-              </div>
-              <ul class="no-bullet event-list">
-                {% for event in week %}
-                  <li class="row event {% if event.is_ongoing %}ongoing{% elif event.cancelled %}cancelled{% endif %}">
-                    <div class="small-12 columns">
-                      <a href="{% pageurl event %}"><h3>{{ event.title }}</h3></a>
-                      {% if event.is_ongoing %}
-                        <p><strong>Event is in progress</strong></p>
-                      {% elif event.cancelled %}
-                        <p><strong>Event has been cancelled</strong></p>
-                      {% endif %}
-                      {% if event.signup_limit > 0 %}
-                        <h6 class="subheader">Signups: {{ event.signups.count }}/{{ event.signup_limit }}</h6>
-                      {% endif %}
-                    </div>
-                    <ul class="small-12 columns no-bullet">
-                      <li>{{ event.start|date:'D jS F H:i' }} - {{ event.finish|date:'D jS F H:i' }}</li>
-                      <li>Location: {{ event.location }}</li>
-                      <li>{{ event.description }}</li>
-                    </ul>
-                  </li>
-                {% endfor %}
-              </ul>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p class="margin-top-1x-mobile">There are no upcoming events</p>
-      {% endif %}
-    </div>
-  </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title is-2">Events</h1>
+
+                    {% if weeks %}
+                        <div class="block">
+                            {% for week in weeks %}
+                                <div>
+                                    <div class="tile is-ancestor is-vertical">
+                                        <div class="tile is-parent is-vertical">
+                                            <div class="tile is-child notification is-dark">
+                                                <h5 class="subtitle">Week beginning {{ week.0.start|first_monday|date:'jS F Y' }} </h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="tile is-parent is-vertical">
+                                            {% for event in week %}
+                                                <div class="tile is-child is-vertical notification {% if event.is_ongoing %}is-primary{% elif event.cancelled %}is-danger{% endif %}">
+                                                        <div class="event-content">
+                                                            <div class="columns is-vcentered">
+                                                                <div class="column is-vcentered">
+                                                                    <h3 class="title is-4">{{ event.title }}</h3>
+                                                                    {% if event.is_ongoing %}
+                                                                        <small class="mb-3"><strong>Event is in progress</strong></small>
+                                                                    {% elif event.cancelled %}
+                                                                        <small class="mb-3"><strong>Event has been cancelled</strong></small>
+                                                                    {% endif %}
+                                                                    {% if event.signup_limit > 0 %}
+                                                                        <h6 class="mb-4">Signups: {{ event.signups.count }}/{{ event.signup_limit }}</h6>
+                                                                    {% endif %}
+                                                                </div>
+                                                                <div class="column">
+                                                                        <p class="icon-line">
+                                                                            <i class="fas fa-clock fa-fw icon-lead"></i>
+                                                                            <span class="icon-text">{{ event.start|date:'H:m, D jS F Y' }}</span>
+                                                                        </p>
+                                                                        <p class="icon-line">
+                                                                            <i class="fas fa-map-marker-alt fa-fw icon-lead"></i>
+                                                                            <span class="icon-text">{{ event.location }}</span>
+                                                                        </p>
+                                                                        <br>
+                                                                        <p>{{ event.description }}</p>
+                                                                    <br>
+                                                                    <a class="button is-right {% if event.is_ongoing == False and event.cancelled == False %}is-primary{% endif %}" href="{% pageurl event %}">Learn more&nbsp;<i class="fas fa-chevron-right"></i></a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                </div>
+                                            {% endfor %}
+                                        </div>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="margin-top-1x-mobile">There are no upcoming events</p>
+                    {% endif %}
+
+                </div>
+                <div class="column is-one-quarter-tablet is-one-fifth">
+                    {% sponsor_sidebar %}
+                    {% sidebar %}
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock content %}

@@ -3,7 +3,7 @@
 {% get_taglist as tags for 'blog.BlogPage' %}
 
 {% if tags and show_tags or archives or children %}
-<aside class="box">
+<aside class="box is-shadowless">
 <div class="menu">
     {% if tags and show_tags %}
             <p class="menu-label">News categories</p>

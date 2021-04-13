@@ -12,6 +12,8 @@ class EventFeed(ICalFeed):
     product_id = '-//uwcs.co.uk//Events//EN'
     timezone = 'GMT'
     file_name = 'events.ics'
+    title = 'UWCS Events'
+    description = 'Events hosted by the University of Warwick Computing Society'
 
     def items(self):
         return EventPage.objects.filter(finish__gte=timezone.now()).order_by('-start')

@@ -22,7 +22,7 @@ from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 import bleach
 
-from html_cleaners import domestos
+from lib.html_cleaners import domestos
 from lib.ellipsis_paginator import EllipsisPaginator
 
 

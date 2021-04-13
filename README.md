@@ -45,7 +45,7 @@ With the packaged dependencies installed and configured (most/all should be avai
 12. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 #### Ubuntu 20.04 development setup
-These are (mostly) tested on Josh's system using WSL. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
+These are (mostly) tested on Josh's system using WSL 2 & Ubuntu 20.04. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
 
 If you blindly follow these instructions, you should have a working instance of the website.
 
@@ -59,10 +59,10 @@ sudo -u postgres createdb -0dextre dextre
 
 Install systemwide runtime/build dependencies:
 ```
-sudo apt-get install virtualenv postgresql-server-dev-9.5 build-essential python3-dev redis ruby-sass
+sudo apt-get install virtualenv postgresql-server-dev-9.5 build-essential python3 python3-pip redis ruby-sass
 ```
 
-The nodejs in the default ubuntu repositories is too old so you have to do:
+Install NodeJS
 ```
 curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
 sudo apt-get install -y nodejs
@@ -88,31 +88,23 @@ python3 ./manage.py migrate
 python3 ./manage.py createsuperuser
 ```
 
-**NOT NEEDED** At this point you can get a repl using:
-```
-python ./manage.py shell
-```
-
-**NOT NEEDED** Run these to create the basic site structure:
-**This block doesnt work any more. New version will be written once site structure is decided upon**
-```python
-from wagtail.wagtailcore.models import Page, Site
-from blog.models import HomePage, AboutPage
-from events.models import EventsIndexPage
-
-root = Page.objects.first()
-home = root.add_child(instance=HomePage(title='UWCS Home', slug='home', description='UWCS Home', show_in_menus=True))
-home.add_child(instance=AboutPage(title='Home', slug='home', show_in_menus=True))
-home.add_child(instance=EventsIndexPage(title='Events', slug='events', show_in_menus=True))
-Site.objects.create(hostname='localhost', port=8000, root_page=home, site_name='local', is_default_site=True)
-```
-
 Start development server:
 ```
 python ./manage.py runserver
 ```
 
 Go to http://localhost:8000 and you should see a basic instance of the site!
+
+Head to http://localhost:8000/cms and sign in with the super user you just created. Head to Pages, and create the following pages with the below hierarchy:
+```
+UWCS Home *type - home page
+| About *type - about page
+| News *type - blog index page
+| Events *type - events index page
+ | Events archive * type - events archive page
+```
+
+You should now have the basic structure set up for the website to function. You can go ahead and add other pages and content to it.
 
 **NOT TESTED** The last step is to start a celery worker for background tasks. Open a new terminal and run:
 

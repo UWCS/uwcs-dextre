@@ -18,19 +18,16 @@
                             <h5 class="card-header-title title is-4">User information</h5>
                         </div>
                         <div class="card-content">
-
-                                <div class="tile notification is-info">
-                                    <div class="tile is-child">
-                                        <p class="subtitle is-5">Full name (from Warwick SU):</p>
-                                        <p>{{ user.get_full_name|default:user.username }}</p>
-                                    </div>
-                                </div>
+                            <div class="tile notification is-info">
+                                <p class="subtitle is-5">Full name (from Warwick SU):</p>
+                                <p>{{ user.get_full_name|default:user.username }}</p>
+                            </div>
                             <div class="columns is-multiline">
                                 {% if request.user.compsocuser %}
                                     {% with request.user.compsocuser as user %}
                                       {% if user.first_name %}
-                                          <div class="column is-half tile is-parent notification is-info">
-                                              <div class="tile is-child">
+                                          <div class="column is-half ">
+                                              <div class="tile notification is-info">
                                                   <p class="subtitle is-5">Preferred name:</p>
                                                   <p>{{ user.full_name }}</p>
                                               </div>
@@ -38,8 +35,8 @@
                                       {% endif %}
 
                                       {% if user.nickname %}
-                                          <div class="column is-half tile is-parent notification is-info">
-                                              <div class="tile is-child">
+                                          <div class="column is-half ">
+                                              <div class="tile notification is-info">
                                                   <p class="subtitle is-5">Nickname:</p>
                                                   <p>{{ user.nickname }}</p>
                                               </div>
@@ -47,8 +44,8 @@
                                       {% endif %}
 
                                       {% if user.discord_user %}
-                                          <div class="column is-half tile is-parent notification is-info">
-                                              <div class="tile is-child">
+                                          <div class="column is-half ">
+                                              <div class="tile notification is-info">
                                                   <p class="subtitle is-5">Discord tag:</p>
                                                   <p>{{ user.discord_user }}</p>
                                               </div>
@@ -56,8 +53,8 @@
                                       {% endif %}
 
                                       {% if user.website_url %}
-                                          <div class="column is-half tile is-parent notification is-info">
-                                              <div class="tile is-child">
+                                          <div class="column is-half ">
+                                              <div class="tile notification is-info">
                                                   <p class="subtitle is-5">Website:</p>
                                                   <a href="{{ user.abs_website_url }}">
                                                       {% if user.website_title %}{{ user.website_title }}{% else %}{{ user.abs_website_url }}{% endif %}
@@ -67,14 +64,14 @@
                                       {% endif %}
                                     {% endwith %}
                                   {% else %}
-                                    <div class="column if-half tile is-parent notification is-warning">
-                                        <div class="tile is-child">
+                                    <div class="column is-half ">
+                                        <div class="tile notification is-warning">
                                             <p>You have not provided any additional user information</p>
                                         </div>
                                     </div>
                                   {% endif %}
-                                    <div class="column is-half tile is-parent notification is-success">
-                                        <div class="tile is-child">
+                                    <div class="column is-half ">
+                                        <div class="tile notification is-success">
                                             <p class="subtitle is-5">Shell account</p>
                                             {% if request.user.shellaccount %}
                                                 {% if request.user.shellaccount.status == 'RE' %}
@@ -89,8 +86,8 @@
                                             {% endif %}
                                         </div>
                                     </div>
-                                    <div class="column is-half tile is-parent notification is-success">
-                                        <div class="tile is-child">
+                                    <div class="column is-half ">
+                                        <div class="tile notification is-success">
                                             <p class="subtitle is-5">Database account</p>
                                             {% if request.user.databaseaccount %}
                                                 {% if request.user.databaseaccount.status == 'RE' %}

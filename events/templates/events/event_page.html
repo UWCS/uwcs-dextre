@@ -5,7 +5,8 @@
 
 {% block content %}
   {% breadcrumbs %}
-  <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-bg-image hero-background is-transparent" style="background-image: url('/static/img/headbg.jpg')">
+  <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-background">
+    {% image self.category.banner_image original class="hero-background is-transparent" %}
     <div class="hero-body">
       <div class="container">
         <h2 class="title">{{ self.title }}</h2>

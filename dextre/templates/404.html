@@ -1,12 +1,19 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
 
 {% block title %}UWCS | Error 404{% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 columns">
-      <h1 class="text-center error-code">404</h1>
-      <p class="text-center">Sorry, this page could not be found.</p>
-    </div>
-  </section>
+    <section class="hero is-primary-scheme is-medium">
+        <div class="hero-body my-2">
+            <div class="container">
+                <h1 class="title is-centred has-text-centered content">
+                    404
+                </h1>
+                <p class="is-centred has-text-centered content">
+                    Sorry, this page could not be found
+                </p>
+            </div>
+        </div>
+    </section>
 {% endblock %}
+

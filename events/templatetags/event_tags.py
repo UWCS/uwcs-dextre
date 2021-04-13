@@ -2,7 +2,10 @@ from datetime import date, timedelta
 
 from collections import OrderedDict
 
+import sys
+
 from django import template
+from django.utils import timezone
 from wagtail.core.models import Page
 from events.models import EventsArchivePage
 
@@ -54,7 +57,7 @@ def sidebar(context, show_sponsor=False, display_first=False, show_archive_link=
 
 
 @register.inclusion_tag('events/tags/event_archive_sidebar.html', takes_context=True)
-def archive_sidebar(context, calling_page, show_sponsor=False, display_first=False):
+def archive_sidebar(context, calling_page, show_sponsor=False, display_first=False, archive_year=None, archive_count=sys.maxsize):
     events = calling_page.archive_events
     archives = OrderedDict()
 
@@ -65,7 +68,11 @@ def archive_sidebar(context, calling_page, show_sponsor=False, display_first=Fal
         'show_sponsor': show_sponsor,
         'display_first': display_first,
         'archives': archives,
+        'archive_year': archive_year or timezone.now().year,
         'archive_index': calling_page,
+        'archive_count': archive_count,
+        'filter_date': context.get('filter_date'),
+        'filter_tag': context.get('filter_tag'),
         # required by the pageurl tag that we want to use within this template
         'request': context['request'],
     }

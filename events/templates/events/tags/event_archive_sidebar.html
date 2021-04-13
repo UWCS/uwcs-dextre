@@ -1,9 +1,14 @@
 {% load base_tags blog_tags wagtailcore_tags event_tags %}
 
-{% if archives or children %}
 <aside class="box is-shadowless">
-<div class="menu">
-    {% if archives %}
+    <div class="menu">
+        <p class="menu-label">Useful links</p>
+        <ul class="menu-list">
+            <li>
+                <a href="{% url 'ical_feed' %}">iCal feed</a>
+            </li>
+        </ul>
+        {% if archives %}
             <p class="menu-label">Archives</p>
             <ul class="menu-list" data-accordion-menu>
                 {% for year, months in archives.items %}
@@ -11,11 +16,11 @@
                         <li>
                             <a onclick="$('#archive-{{ year }}').slideToggle(200);">{{ year }}</a>
                             <ul id="archive-{{ year }}" {% if year != archive_year %}style="display: none;"{% endif %}>
-                                {% for month, posts in months.items %}
+                                {% for month, events in months.items %}
                                     <li>
                                         <a href="{% pageurl archive_index %}?date={{ year }}-{{ month|stringformat:'02d' }}"
                                            {% if filter_date.year == year and filter_date.month == month %}class="is-active"{% endif %}>
-                                            {{ month|to_month_str }} ({{ posts|length }})
+                                            {{ month|to_month_str }} ({{ events|length }})
                                         </a>
                                     </li>
                                 {% endfor %}
@@ -24,17 +29,6 @@
                     {% endif %}
                 {% endfor %}
             </ul>
-    {% endif %}
-    {% if children %}
-            <p class="menu-label">Useful links</p>
-            <ul class="menu-list">
-                {% for child in children %}
-                    <li>
-                        <a href="{% pageurl child %}">{{ child.title }}</a>
-                    </li>
-                {% endfor %}
-            </ul>
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
 </aside>
-{% endif %}

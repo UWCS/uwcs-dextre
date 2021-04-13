@@ -23,10 +23,9 @@
                                                 <h5 class="subtitle">Week beginning {{ week.0.start|first_monday|date:'jS F Y' }} </h5>
                                             </div>
                                         </div>
-
-                                        <div class="tile is-parent is-vertical">
-                                            {% for event in week %}
-                                                <div class="tile is-child is-vertical notification {% if event.is_ongoing %}is-primary{% elif event.cancelled %}is-danger{% endif %}">
+                                        {% for event in week %}
+                                                <div class="tile is-parent is-vertical">
+                                                <div class="tile is-child is-vertical notification {% if event.is_ongoing %}is-primary-light-scheme{% elif event.cancelled %}is-cancelled-scheme{% else %}is-light-scheme{% endif %}">
                                                         <div class="event-content">
                                                             <div class="columns is-vcentered">
                                                                 <div class="column is-vcentered">
@@ -57,10 +56,11 @@
                                                             </div>
                                                         </div>
                                                 </div>
-                                            {% endfor %}
-                                        </div>
+                                            </div>
+                                        {% endfor %}
                                     </div>
                                 </div>
+                                <br />
                             {% endfor %}
                         </div>
                         {% include "events/includes/pagination.html" %}

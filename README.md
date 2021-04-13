@@ -36,15 +36,16 @@ With the packaged dependencies installed and configured (most/all should be avai
 3. Install the requirements using `pip install -r requirements.txt` (make sure you're using the virtualenv if you're using one)
 4. `cd uwcs-dextre/dextre/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
 5. `cd uwcs-dextre/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
-6. `cd uwcs-dextre/dextre/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
-7. `cd uwcs-dextre/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
-8. Create a directory `uwcs-dextre/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
-9. Create the appropriate configuration files for Supervisor to run Celery automatically and allow it to recover on restart
-10. Create the configuration file(s) for the web server of your chosing
-11. Run your web server (if you're developing locally, simply run `python manage.py runserver`
+6. Download the [Bulma](https://bulma.io/) CSS files from their website, and copy `bulma.scss` and the `css` and `sass` folders from the downloaded zip file into `uwcs-dextre/static/scss`
+7. `cd uwcs-dextre/dextre/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
+8. `cd uwcs-dextre/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
+9. Create a directory `uwcs-dextre/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
+10. Create the appropriate configuration files for Supervisor to run Celery automatically and allow it to recover on restart
+11. Create the configuration file(s) for the web server of your chosing
+12. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 #### Ubuntu 20.04 development setup
-These are (mostly) tested on Josh's system using WSL. 
+These are (mostly) tested on Josh's system using WSL. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
 
 If you blindly follow these instructions, you should have a working instance of the website.
 

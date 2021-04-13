@@ -1,5 +1,39 @@
-{% load wagtailcore_tags %}
+{% load base_tags wagtailcore_tags %}
+{% if events.has_other_pages %}
+    <nav class="pagination" role="navigation" aria-label="pagination">
+        {% if events.has_previous %}
+            <a class="pagination-previous" href="?{% url_replace "page" events.previous_page_number %}"
+               aria-label="Previous page">Previous</a>
+        {% else %}
+            <a class="pagination-previous" href="#" disabled>Previous</a>
+        {% endif %}
+        {% if events.has_next %}
+            <a class="pagination-next" href="?{% url_replace "page" events.next_page_number %}"
+               aria-label="Next page">Next</a>
+        {% else %}
+            <a class="pagination-next" href="#" disabled>Next</a>
+        {% endif %}
+        <ul class="pagination-list">
 
+            {% for i in events.short_page_range %}
+                {% if i == 0 %}
+                    <li><span class="pagination-ellipsis">&hellip;</span></li>
+                {% else %}
+                    {% if i == events.number %}
+                        <li><a class="pagination-link is-current" href="?{% url_replace "page" i %}">{{ i }}</a></li>
+                    {% else %}
+                        <li><a class="pagination-link" href="?{% url_replace "page" i %}">{{ i }}</a></li>
+                    {% endif %}
+                {% endif %}
+            {% endfor %}
+
+        </ul>
+        <p class="is-sr-only">You're on page {{ events.number }} of {{ paginator.num_pages }}</p>
+    </nav>
+{% endif %}
+
+
+{% comment %}
 <section class="row">
   <div class="small-12 columns">
     <ul class="pagination text-center" role="navigation" aria-label="Pagination">
@@ -22,4 +56,4 @@
       </li>
     </ul>
   </div>
-</section>
+</section>{% endcomment %}

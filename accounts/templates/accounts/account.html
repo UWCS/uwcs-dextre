@@ -19,8 +19,11 @@
                         </div>
                         <div class="card-content">
                             <div class="tile notification is-info">
-                                <p class="subtitle is-5">Full name (from Warwick SU):</p>
-                                <p>{{ user.get_full_name|default:user.username }}</p>
+                                <div class="content">
+                                    <p class="subtitle is-5">Full name (from Warwick SU):</p>
+                                    <p>{{ user.full_name|default:user.username }}</p>
+                                </div>
+
                             </div>
                             <div class="columns is-multiline">
                                 {% if request.user.compsocuser %}
@@ -28,8 +31,10 @@
                                       {% if user.first_name %}
                                           <div class="column is-half ">
                                               <div class="tile notification is-info">
-                                                  <p class="subtitle is-5">Preferred name:</p>
-                                                  <p>{{ user.full_name }}</p>
+                                                  <div class="content">
+                                                      <p class="subtitle is-5">Preferred name:</p>
+                                                    <p>{{ user.full_name }}</p>
+                                                  </div>
                                               </div>
                                           </div>
                                       {% endif %}
@@ -37,8 +42,10 @@
                                       {% if user.nickname %}
                                           <div class="column is-half ">
                                               <div class="tile notification is-info">
-                                                  <p class="subtitle is-5">Nickname:</p>
-                                                  <p>{{ user.nickname }}</p>
+                                                  <div class="content">
+                                                      <p class="subtitle is-5">Nickname:</p>
+                                                    <p>{{ user.nickname }}</p>
+                                                  </div>
                                               </div>
                                           </div>
                                       {% endif %}
@@ -46,8 +53,10 @@
                                       {% if user.discord_user %}
                                           <div class="column is-half ">
                                               <div class="tile notification is-info">
-                                                  <p class="subtitle is-5">Discord tag:</p>
-                                                  <p>{{ user.discord_user }}</p>
+                                                  <div class="content">
+                                                      <p class="subtitle is-5">Discord tag:</p>
+                                                      <p>{{ user.discord_user }}</p>
+                                                  </div>
                                               </div>
                                           </div>
                                       {% endif %}
@@ -55,10 +64,12 @@
                                       {% if user.website_url %}
                                           <div class="column is-half ">
                                               <div class="tile notification is-info">
-                                                  <p class="subtitle is-5">Website:</p>
-                                                  <a href="{{ user.abs_website_url }}">
-                                                      {% if user.website_title %}{{ user.website_title }}{% else %}{{ user.abs_website_url }}{% endif %}
-                                                  </a>
+                                                <div class="content">
+                                                    <p class="subtitle is-5">Website:</p>
+                                                    <a href="{{ user.abs_website_url }}">
+                                                        {% if user.website_title %}{{ user.website_title }}{% else %}{{ user.abs_website_url }}{% endif %}
+                                                    </a>
+                                                </div>
                                               </div>
                                           </div>
                                       {% endif %}
@@ -70,36 +81,42 @@
                                         </div>
                                     </div>
                                   {% endif %}
-                                    <div class="column is-half ">
-                                        <div class="tile notification is-success">
-                                            <p class="subtitle is-5">Shell account</p>
-                                            {% if request.user.shellaccount %}
-                                                {% if request.user.shellaccount.status == 'RE' %}
-                                                    <p>You have requested a shell account. Its login details will be emailed to you shortly</p>
-                                                {% elif request.user.shellaccount.status == 'DD' %}
-                                                    <p>Your shell account has been disabled. Please contact <a href="mailto:tech@uwcs.co.uk">the technical officer</a> for assistance</p>
+                            </div>
+                                <div class="tile is-ancestor">
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child notification is-success">
+                                            <div class="content">
+                                                <p class="subtitle is-5">Shell account</p>
+                                                {% if request.user.shellaccount %}
+                                                    {% if request.user.shellaccount.status == 'RE' %}
+                                                        <p>You have requested a shell account. Its login details will be emailed to you shortly</p>
+                                                    {% elif request.user.shellaccount.status == 'DD' %}
+                                                        <p>Your shell account has been disabled. Please contact <a href="mailto:tech@uwcs.co.uk">the technical officer</a> for assistance</p>
+                                                    {% else %}
+                                                        <p>Your shell account is active for the username '{{ request.user.shellaccount.name }}'</p>
+                                                    {% endif %}
                                                 {% else %}
-                                                    <p>Your shell account is active for the username '{{ request.user.shellaccount.name }}'</p>
+                                                    <p>You currently have no requests for a shell account</p>
                                                 {% endif %}
-                                            {% else %}
-                                                <p>You currently have no requests for a shell account</p>
-                                            {% endif %}
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="column is-half ">
-                                        <div class="tile notification is-success">
-                                            <p class="subtitle is-5">Database account</p>
-                                            {% if request.user.databaseaccount %}
-                                                {% if request.user.databaseaccount.status == 'RE' %}
-                                                    <p>You have requested a database account. Its login details will be emailed to you shortly</p>
-                                                {% elif request.user.databaseaccount.status == 'DD' %}
-                                                    <p>Your database account has been disabled. Please contact <a href="mailto:tech@uwcs.co.uk">the technical officer</a> for assistance</p>
+                                    <div class="tile is-parent">
+                                        <div class="tile is-child notification is-success is-fullheight">
+                                            <div class="content">
+                                                <p class="subtitle is-5">Database account</p>
+                                                {% if request.user.databaseaccount %}
+                                                    {% if request.user.databaseaccount.status == 'RE' %}
+                                                        <p>You have requested a database account. Its login details will be emailed to you shortly</p>
+                                                    {% elif request.user.databaseaccount.status == 'DD' %}
+                                                        <p>Your database account has been disabled. Please contact <a href="mailto:tech@uwcs.co.uk">the technical officer</a> for assistance</p>
+                                                    {% else %}
+                                                        <p>Your database account is active for the username '{{ request.user.database.name }}'</p>
+                                                    {% endif %}
                                                 {% else %}
-                                                    <p>Your database account is active for the username '{{ request.user.database.name }}'</p>
+                                                    <p>You currently have no requests for a database account</p>
                                                 {% endif %}
-                                            {% else %}
-                                                <p>You currently have no requests for a database account</p>
-                                            {% endif %}
+                                            </div>
                                         </div>
                                     </div>
                             </div>

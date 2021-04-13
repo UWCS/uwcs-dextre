@@ -28,9 +28,9 @@ $footer-color: hsl(0, 0, 100%);
 $primary: #3d5afe;
 $secondary: #fdd835;
 $info: $primary;
-$success: #00C853;
+$success: #48C774;
 $warning: #FFD600;
-$danger: #FF1744;
+$danger: #F14668;
 
 $family-sans-serif: 'Muli', Helvetica, Roboto, Arial, sans-serif;
 $family-monospace: 'Ubuntu Mono', Consolas, 'Liberation Mono', Courier, monospace;
@@ -47,8 +47,3 @@ $radius: 4px;
 $radius-large: 6px;
 $box-radius: 0;
 $card-header-shadow: 0;
-
-$help-size: 1rem;
-
-$spacing-values: ("0": 0, "1": 0.25rem, "2": 0.5rem, "3": 0.75rem,
-        "4": 1rem, "5": 1.5rem, "6": 2rem, "7": 2.5rem, "8": 3rem)

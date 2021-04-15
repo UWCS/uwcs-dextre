@@ -1,24 +1,25 @@
-{% extends 'base.html' %}
+{% extends 'new_base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}UWCS | Request database account {% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 medium-8 large-6 medium-push-2 large-push-3 columns">
-      <h2>Enter requested username</h2>
-      <form method="post">
-        <p>Enter the desired database account username in the field below using lowercase alphanumerics</p>
-        {% csrf_token %}
+    <section class="section">
+        <div class="container">
+            <h3 class="title is-2">Request database account</h3>
+            <form method="post">
+                <p>Enter the desired database account username in the field below using lowercase alphanumerics</p>
+                {% csrf_token %}
 
-        <label {% if form.name.errors %}class="error"{% endif %}>{{ form.name.label }}
-          {{ form.name }}
-          {% if form.name.errors %}
-            <span class="error">{{ form.name.errors.as_text }}</span>
-          {% endif %}
-        </label>
+                {% include "lib/includes/form_errors.html" with form=form %}
 
-        <input type="submit" class="button" value="Request account">
-      </form>
-    </div>
-  </section>
+                {% include "lib/includes/form_field.html" with iconleft="fas fa-user" size="is-medium" field=form.name label="Username" %}
+
+                <input type="hidden" name="next" value="{{ next }}"/>
+                <div class="control">
+                    <input type="submit" class="button is-primary is-medium is-fullwidth" value="Log in">
+                </div>
+            </form>
+        </div>
+    </section>
 {% endblock %}

@@ -1,51 +1,86 @@
-{% extends 'base.html' %}
+{% extends 'new_base.html' %}
 
 {% block title %}UWCS | {% if user.compsocuser %}{{ user.compsocuser }}'s profile{% else %}{{ user.get_full_name|default:user.username }}'s profile{% endif %}{% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 columns">
-      <h2>
-        {% if user.compsocuser %}
-          {{ user.compsocuser }}'s profile
-        {% else %}
-          {{ user.get_full_name|default:user.username }}'s profile
-        {% endif %}
-      </h2>
-      <div class="margin-top-1x">
-        <h4>User information</h4>
-        <h6>Preferred name:</h6>
-        {% if user.compsocuser %}
-          <p>{{ user.compsocuser.full_name }}</p>
-        {% else %}
-          <p>{{ user.get_full_name }}</p>
-        {% endif %}
-
-        {% if user.compsocuser %}
-          {% with user.compsocuser as csuser %}
-            {% if csuser.nickname %}
-              <h6>Nickname:</h6>
-              <p>{{ csuser.nickname }}</p>
-            {% endif %}
-
-            {% if csuser.website_url %}
-              <h6>Website:</h6>
-              <p>
-                <a href="{{ csuser.abs_website_url }}">
-                  {% if csuser.website_title %}
-                    {{ csuser.website_title }}
-                  {% else %}
-                    {{ csuser.abs_website_url }}
-                  {% endif %}
-                </a>
-              </p>
-            {% endif %}
-          {% endwith %}
-        {% endif %}
-
-        <h6>Join date</h6>
-        <p>User joined UWCS in {{ user.date_joined|date:'M Y' }}</p>
-      </div>
-    </div>
-  </section>
+    <section class="section">
+        <div class="container">
+            <div class="columns">
+                <div class="column">
+                    <h1 class="title has-2">
+                        {% if user.compsocuser %}
+                          {{ user.compsocuser }}'s profile
+                        {% else %}
+                          {{ user.get_full_name|default:user.username }}'s profile
+                        {% endif %}
+                    </h1>
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column">
+                    <div class="card">
+                        <div class="card-header pt-3 px-1">
+                            <h5 class="card-header-title title is-4">User information</h5>
+                        </div>
+                        <div class="card-content">
+                            <div class="columns is-multiline">
+                                <div class="column is-half">
+                                    <div class="tile notification is-primary-light-scheme">
+                                        <div class="content">
+                                            <p class="subtitle is-5">Preferred name:</p>
+                                            {% if user.compsocuser %}
+                                              <p>{{ user.compsocuser.full_name }}</p>
+                                            {% else %}
+                                              <p>{{ user.get_full_name }}</p>
+                                            {% endif %}
+                                          </div>
+                                      </div>
+                                </div>
+                                {% if user.compsocuser %}
+                                    {% with user.compsocuser as csuser %}
+                                        {% if csuser.nickname %}
+                                            <div class="column is-half">
+                                                <div class="tile notification is-primary-light-scheme">
+                                                    <div class="content">
+                                                        <p class="subtitle is-5">Nickname:</p>
+                                                        <p>{{ csuser.nickname }}</p>
+                                                      </div>
+                                                  </div>
+                                            </div>
+                                        {% endif %}
+                                        {% if csuser.website_url %}
+                                            <div class="column is-half">
+                                                <div class="tile notification is-primary-light-scheme">
+                                                    <div class="content">
+                                                        <p class="subtitle is-5">Website:</p>
+                                                        <p>
+                                                            <a href="{{ csuser.abs_website_url }}">
+                                                                {% if csuser.website_title %}
+                                                                    {{ csuser.website_title }}
+                                                                {% else %}
+                                                                    {{ csuser.abs_website_url }}
+                                                                {% endif %}
+                                                            </a>
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        {% endif %}
+                                    {% endwith %}
+                                {% endif %}
+                                <div class="column is-half">
+                                    <div class="tile notification is-secondary-light-scheme">
+                                        <div class="content">
+                                            <p class="subtitle is-5">Join date:</p>
+                                            <p>User joined UWCS in {{ user.date_joined|date:'M Y' }}</p>
+                                          </div>
+                                      </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}

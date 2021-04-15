@@ -1,85 +1,65 @@
-{% extends 'base.html' %}
+{% extends 'new_base.html' %}
+{% load widget_tweaks %}
 
 {% block title %}UWCS | Account settings {% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 medium-8 large-6 medium-push-2 large-push-3 columns margin-top-1x">
-      <h2>Change account settings</h2>
-      <form method="post">
-        {% csrf_token %}
-
-        <div class="row">
-          <div class="small-12 medium-6 columns">
-            <label {% if form.first_name.errors %}class="error"{% endif %}>{{ form.first_name.label }}
-              {{ form.first_name }}
-              {% if form.first_name.errors %}
-                <span class="error">{{ form.first_name.errors.as_text }}</span>
-              {% endif %}
-            </label>
-          </div>
-          <div class="small-12 medium-6 columns">
-            <label {% if form.last_name.errors %}class="error"{% endif %}>{{ form.last_name.label }}
-              {{ form.last_name }}
-              {% if form.last_name.errors %}
-                <span class="error">{{ form.last_name.errors.as_text }}</span>
-              {% endif %}
-            </label>
-          </div>
-          <div class="small-12 columns">
-            <p class="help-text">Setting your first name (and last name) will change your public preferred name, visible
-              on event signups</p>
-          </div>
-          <div class="small-12 medium-6 columns">
-            <label {% if form.nickname.errors %}class="error"{% endif %}>{{ form.nickname.label }}
-              {{ form.nickname }}
-              {% if form.nickname.errors %}
-                <span class="error">{{ form.nickname.errors.as_text }}</span>
-              {% endif %}
-            </label>
-          </div>
-          <div class="small-12 medium-6 columns">
-            <label {% if form.discord_user.errors %}class="error"{% endif %}>{{ form.discord_user.label }}
-              {{ form.discord_user }}
-              {% if form.discord_user.errors %}
-                <span class="error">{{ form.discord_user.errors.as_text }}</span>
-              {% endif %}
-            </label>
-            <p class="help-text">This is your name <strong>and</strong> number, for example: Foobar#1337</p>
-          </div>
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-2">Change account settings</h1>
+            <div class="card">
+                <div class="card-content">
+                    <form method="post">
+                        {% csrf_token %}
+                        {% include "lib/includes/form_errors.html" with form=form %}
+                        <div class="columns">
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-user" size="is-medium" field=form.first_name label="First name" %}
+                                <p class="help">Setting your first name (and last name) will change your public preferred name, visible on event signups</p>
+                            </div>
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-user" size="is-medium" field=form.last_name label="Last name" %}
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-user-tag" size="is-medium" field=form.nickname label="Nickname" %}
+                            </div>
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fab fa-discord" size="is-medium" field=form.discord_user label="Discord user" %}
+                                <p class="help">This is your name <strong>and</strong> number, for example: Foobar#1337</p>
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-signature" size="is-medium" field=form.website_title label="Website title" %}
+                            </div>
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-globe" size="is-medium" field=form.website_url label="Website url" %}
+                            </div>
+                        </div>
+                        <div class="columns">
+                            <div class="column">
+                                {% include "lib/includes/form_field.html" with iconleft="fas fa-moon" size="is-medium" field=form.nightmode_on label="Night mode" %}
+                                <div class="field">
+                                    <label class="label is-medium" for="id_nightmode_on">Night mode</label>
+                                    <div class="control">
+                                        <label class="checkbox">
+                                            <input type="checkbox" name="nightmode_on" id="id_nightmode_on">
+                                            Night mode on
+                                        </label>
+                                        <p class="help">Enable night mode whenever you are logged into UWCS - overrides the nightmode switch in the footer</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="hidden" name="next" value="{{ next }}"/>
+                        <div class="control">
+                            <input type="submit" class="button is-primary" value="Update settings">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
-
-        <hr/>
-
-        <div class="row">
-          <div class="small-12 columns">
-            <label {% if form.website_title.errors %}class="error"{% endif %}>{{ form.website_title.label }}
-              {{ form.website_title }}
-              {% if form.website_title.errors %}
-                <span class="error">{{ form.website_title.errors.as_text }}</span>
-              {% endif %}
-            </label>
-
-            <label {% if form.website_url.errors %}class="error"{% endif %}>{{ form.website_url.label }}
-              {{ form.website_url }}
-              {% if form.website_url.errors %}
-                <span class="error">{{ form.website_url.errors.as_text }}</span>
-              {% endif %}
-            </label>
-          </div>
-        </div>
-
-        <hr/>
-
-        <div class="row">
-          <div class="small-12 columns">
-            {{ form.nightmode_on }}<label for="nightmode_on">{{ form.nightmode_on.label }}</label>
-            <p class="help-text">{{ form.nightmode_on.help_text }}</p>
-          </div>
-        </div>
-
-        <input type="submit" class="button" value="Update settings">
-      </form>
-    </div>
-  </section>
+    </section>
 {% endblock %}

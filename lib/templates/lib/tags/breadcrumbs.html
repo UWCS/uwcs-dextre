@@ -3,6 +3,7 @@
 {% if ancestors %}
     <section class="section py-2 has-background-light-scheme">
         <nav class="breadcrumb" aria-label="You are here:" role="navigation">
+            <div class="container">
             <ul>
                 {% for ancestor in ancestors %}
                     {% if forloop.last %}
@@ -12,6 +13,7 @@
                     {% endif %}
                 {% endfor %}
             </ul>
+            </div>
         </nav>
     </section>
 {% endif %}

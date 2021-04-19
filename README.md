@@ -16,7 +16,7 @@ The name 'Dextre' comes from the ISS module of the same name. The previous websi
 This section details the deployment of uwcs-dextre on a Linux system.
 
 #### Dependencies
-uwcs-zarya depends upon a variety of softwares though at its core the website is built upon the Django web framework. The list of dependencies are:
+uwcs-dextre depends upon a variety of softwares though at its core the website is built upon the Django web framework. The list of dependencies are:
 
 * Python 3.8
 * Redis

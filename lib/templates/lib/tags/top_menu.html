@@ -3,63 +3,65 @@
 {% get_site_root as site_root %}
 
 <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
-    <div class="navbar-brand">
-        <a href="{% pageurl site_root %}" class="navbar-item">
-            <img src="{% static "favicon-32.png" %}" alt="University of Warwick Logo">
-            <strong><span class="has-text-primary">UW</span><span class="has-text-secondary">CS</span> </strong>
-        </a>
+    <div class="container">
+        <div class="navbar-brand">
+            <a href="{% pageurl site_root %}" class="navbar-item">
+                <img src="{% static "favicon-32.png" %}" alt="University of Warwick Logo">
+                <strong><span class="has-text-primary">UW</span><span class="has-text-secondary">CS</span> </strong>
+            </a>
 
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-            <span aria-hidden="true"></span>
-        </a>
-    </div>
-
-    <div id="navbarMain" class="navbar-menu px-4">
-        <div class="navbar-start">
-            {% for menuitem in menuitems %}
-                <a href="{% pageurl menuitem %}"
-                   class="navbar-item{% if menuitem.active %} current{% endif %}">
-                    {{ menuitem.title }}
-                </a>
-            {% endfor %}
+            <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarMain">
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+                <span aria-hidden="true"></span>
+            </a>
         </div>
 
-        <div class="navbar-end">
-            {% if request.user.is_authenticated %}
-                <div class="navbar-item has-dropdown is-hoverable">
-                    <a class="navbar-link">
-                        {% if request.user.compsocuser %}
-                            {{ request.user.compsocuser }}
-                        {% else %}
-                            {{ request.user.get_username }}
-                        {% endif %}
+        <div id="navbarMain" class="navbar-menu px-4">
+            <div class="navbar-start">
+                {% for menuitem in menuitems %}
+                    <a href="{% pageurl menuitem %}"
+                       class="navbar-item{% if menuitem.active %} current{% endif %}">
+                        {{ menuitem.title }}
                     </a>
+                {% endfor %}
+            </div>
 
-                    <div class="navbar-dropdown is-right">
-                        <a class="navbar-item" href="{% url 'profile' %}">
-                            Profile
+            <div class="navbar-end">
+                {% if request.user.is_authenticated %}
+                    <div class="navbar-item has-dropdown is-hoverable">
+                        <a class="navbar-link">
+                            {% if request.user.compsocuser %}
+                                {{ request.user.compsocuser }}
+                            {% else %}
+                                {{ request.user.get_username }}
+                            {% endif %}
                         </a>
-                        {% if request.user.is_staff %}
-                            <a class="navbar-item" href="{% url 'admin:index' %}">
-                                Admin
+
+                        <div class="navbar-dropdown is-right">
+                            <a class="navbar-item" href="{% url 'profile' %}">
+                                Profile
                             </a>
-                        {% endif %}
-                        {% if has_newsletter_perms %}
-                            <a class="navbar-item" href="{% url 'newsletters_index' %}">
-                                Newsletters
-                            </a>
-                        {% endif %}
-                        <hr class="navbar-divider">
-                        <a class="navbar-item" href="{% url 'logout' %}">Log out</a>
+                            {% if request.user.is_staff %}
+                                <a class="navbar-item" href="{% url 'admin:index' %}">
+                                    Admin
+                                </a>
+                            {% endif %}
+                            {% if has_newsletter_perms %}
+                                <a class="navbar-item" href="{% url 'newsletters_index' %}">
+                                    Newsletters
+                                </a>
+                            {% endif %}
+                            <hr class="navbar-divider">
+                            <a class="navbar-item" href="{% url 'logout' %}">Log out</a>
+                        </div>
                     </div>
-                </div>
-            {% else %}
-                <a class="navbar-item" href="{% url 'login' %}">
-                    Log In
-                </a>
-            {% endif %}
+                {% else %}
+                    <a class="navbar-item" href="{% url 'login' %}">
+                        Log In
+                    </a>
+                {% endif %}
+            </div>
         </div>
     </div>
 </nav>

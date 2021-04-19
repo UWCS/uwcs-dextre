@@ -9,7 +9,7 @@
                 <div class="column">
                     <h1 class="title is-2">Newsletters overview</h1>
                     {% if sent_mail %}
-                        <div class="events">
+                        {% comment %}<div class="events">
                           <ul class="no-bullet event-list">
                             {% for newsletter in sent_mail %}
                               <li class="row event">
@@ -20,16 +20,24 @@
                               </li>
                             {% endfor %}
                           </ul>
-                        </div>
+                        </div>{% endcomment %}
+
+                        {% for newsletter in sent_mail %}
+                            <div class="card">
+                                <div class="card-content">
+                                    <a href="{% url 'sent_email_detail' email_id=newsletter.id %}"><h3 class="subtitle">{{ newsletter.subject }}</h3></a>
+                                    <p>Sent {{ newsletter.date_created|date:'jS F Y, h:i a' }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
 
                     {% else %}
                         <p class="margin-top-1x-mobile">There are no newsletters do display. Why not send the first?</p>
                     {% endif %}
-
                 </div>
                 <div class="column is-one-quarter-tablet is-one-fifth">
                     <aside>
-                        <div class="card">
+                        <div class="card is-shadowless">
                             <div class="card-header pt-3 px-1">
                                 <h5 class="card-header-title title is-5">Useful links</h5>
                             </div>

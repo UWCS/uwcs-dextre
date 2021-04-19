@@ -37,7 +37,7 @@
                         {% endif %}
                     </a>
 
-                    <div class="navbar-dropdown">
+                    <div class="navbar-dropdown is-right">
                         <a class="navbar-item" href="{% url 'profile' %}">
                             Profile
                         </a>
@@ -51,6 +51,7 @@
                                 Newsletters
                             </a>
                         {% endif %}
+                        <hr class="navbar-divider">
                         <a class="navbar-item" href="{% url 'logout' %}">Log out</a>
                     </div>
                 </div>

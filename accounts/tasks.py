@@ -77,6 +77,7 @@ def send_user_issue_email(user, username):
 def send_success_mail(user, username, password):
     email_context = {
         'title': 'Shell account request successful',
+        'first_name': user.first_name,
         'username': username,
         'password': password,
     }

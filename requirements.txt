@@ -73,7 +73,7 @@ tablib==2.0.0
 Unidecode==1.1.1
 urllib3==1.25.11
 vine==5.0.0
-wagtail==2.12.3
+wagtail==2.12.4
 wcwidth==0.2.5
 webencodings==0.5.1
 Willow==1.4

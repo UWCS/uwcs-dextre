@@ -1,12 +1,19 @@
-{% extends "base.html" %}
+{% extends "new_base.html" %}
 
 {% block title %}UWCS | Error 500{% endblock %}
 
 {% block content %}
-  <section class="row margin-top-2x margin-bottom-1x">
-    <div class="small-12 columns">
-      <h1 class="text-center error-code">500</h1>
-      <p class="text-center">Sorry, there seems to be an error. Please try again soon.</p>
-    </div>
-  </section>
+    <section class="hero is-primary-scheme is-medium">
+        <div class="hero-body my-2">
+            <div class="container">
+                <h1 class="title is-centred has-text-centered content">
+                    500
+                </h1>
+                <p class="is-centred has-text-centered content">
+                    Sorry, there seems to be an error. Please try again soon.
+                </p>
+            </div>
+        </div>
+    </section>
 {% endblock %}
+

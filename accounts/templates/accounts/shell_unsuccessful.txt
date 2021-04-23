@@ -1,4 +1,4 @@
-{% extends 'newsletter/email_base.txt' %}
+{% extends 'accounts/email_text.txt' %}
 
 {% block title %}{{ title }}{% endblock %}
 

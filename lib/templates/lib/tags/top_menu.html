@@ -47,11 +47,6 @@
                                     Admin
                                 </a>
                             {% endif %}
-                            {% if has_newsletter_perms %}
-                                <a class="navbar-item" href="{% url 'newsletters_index' %}">
-                                    Newsletters
-                                </a>
-                            {% endif %}
                             <hr class="navbar-divider">
                             <a class="navbar-item" href="{% url 'logout' %}">Log out</a>
                         </div>

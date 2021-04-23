@@ -28,7 +28,6 @@ INSTALLED_APPS = [
     'blog',
     'accounts',
     'events',
-    'newsletter',
     'api',
 
     'wagtail.contrib.forms',

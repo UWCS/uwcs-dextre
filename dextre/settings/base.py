@@ -62,7 +62,6 @@ INSTALLED_APPS = [
     'corsheaders',
 
     'djangobower',
-    'django_inlinecss',
     'compressor',
     'anymail',
     'markdownx',

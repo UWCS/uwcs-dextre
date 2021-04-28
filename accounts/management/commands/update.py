@@ -4,6 +4,8 @@ from django.conf import settings
 from django.template.defaultfilters import title
 
 from django.contrib.auth.models import User
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import render_to_string
 
 import requests
 
@@ -17,19 +19,6 @@ API_PREFIX = 'https://www.warwicksu.com/membershipapi/listMembers/'
 
 
 def send_signup_mail(user, password):
-    # subject = 'Welcome to the University of Warwick Computing Society'
-    # from_email = 'UWCS Exec <noreply@uwcs.co.uk>'
-    # message = 'Thanks for joining the society! Your login details are as follows:\n\n' \
-    #           'Username: {username}\n' \
-    #           'Password: {password}\n\n' \
-    #           'You can log in at https://uwcs.co.uk/accounts/login/. We suggest you change your \n' \
-    #           'password as soon as you log in. Don\'t forget to add a nickname, too!\n\n' \
-    #           'Regards,\n' \
-    #           'UWCS Exec\n\n' \
-    #           'P.S.: Please don\'t reply to this email, you will not get a response.'.format(username=user.username,
-    #                                                                                          password=password)
-    # user.email_user(subject, message, from_email)
-
     email_context = {
         'title': 'Welcome to the University of Warwick Computing Society',
         'first_name': user.first_name,

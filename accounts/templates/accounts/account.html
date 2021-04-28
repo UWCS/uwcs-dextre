@@ -21,7 +21,7 @@
                             <div class="tile notification is-primary-light-scheme">
                                 <div class="content">
                                     <p class="subtitle is-5">Full name (from Warwick SU):</p>
-                                    <p>{{ user.full_name|default:user.username }}</p>
+                                    <p>{{ user.get_full_name|default:user.username }}</p>
                                 </div>
 
                             </div>

@@ -18,18 +18,18 @@
             </ul>
 
             <div class="switch-wrapper">
-                <p class="title is-6 mt-2 mb-1 has-text-centered">Night mode</p>
+                <p class="title is-6 mt-2 mb-1">Night mode</p>
                 <label class="switch">
                     <input id="night-mode-switch" type="checkbox" name="night-mode-switch"
                            {% if nightmode %}checked="checked"{% endif %}>
 
-                    {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
-                        <p class="margin-top-05x help-text">You have enabled night mode in your profile, you can turn it off
-                            there</p>
-                    {% endif %}
+
                     <span class="slider"></span>
                     <span class="is-sr-only">Toggle dark theme</span>
                 </label>
+                {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
+                    <p class="is-size-7">You have enabled night mode in your profile, you can turn it off there</p>
+                {% endif %}
                 {% csrf_token %}
             </div>
         </div>

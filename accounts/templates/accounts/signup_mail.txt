@@ -1,0 +1,17 @@
+{% extends 'accounts/email_text.txt' %}
+
+{% block title %}{{ title }}{% endblock %}
+
+{% block content %}
+Thanks for joining the society! Your login details are as follows:
+
+ - Username: {{ username }}
+ - Password: {{ password }}
+
+You can log in at https://uwcs.co.uk/accounts/login/. We suggest you change your password as soon as you log in. Don't forget to add a nickname, too!
+
+Regards,
+UWCS Exec
+
+P.S.: Please don't reply to this email, you will not get a response.
+{% endblock %}

@@ -17,18 +17,32 @@ API_PREFIX = 'https://www.warwicksu.com/membershipapi/listMembers/'
 
 
 def send_signup_mail(user, password):
-    subject = 'Welcome to the University of Warwick Computing Society'
-    from_email = 'UWCS Exec <noreply@uwcs.co.uk>'
-    message = 'Thanks for joining the society! Your login details are as follows:\n\n' \
-              'Username: {username}\n' \
-              'Password: {password}\n\n' \
-              'You can log in at https://uwcs.co.uk/accounts/login/. We suggest you change your \n' \
-              'password as soon as you log in. Don\'t forget to add a nickname, too!\n\n' \
-              'Regards,\n' \
-              'UWCS Exec\n\n' \
-              'P.S.: Please don\'t reply to this email, you will not get a response.'.format(username=user.username, 
-                                                                                             password=password)
-    user.email_user(subject, message, from_email)
+    # subject = 'Welcome to the University of Warwick Computing Society'
+    # from_email = 'UWCS Exec <noreply@uwcs.co.uk>'
+    # message = 'Thanks for joining the society! Your login details are as follows:\n\n' \
+    #           'Username: {username}\n' \
+    #           'Password: {password}\n\n' \
+    #           'You can log in at https://uwcs.co.uk/accounts/login/. We suggest you change your \n' \
+    #           'password as soon as you log in. Don\'t forget to add a nickname, too!\n\n' \
+    #           'Regards,\n' \
+    #           'UWCS Exec\n\n' \
+    #           'P.S.: Please don\'t reply to this email, you will not get a response.'.format(username=user.username,
+    #                                                                                          password=password)
+    # user.email_user(subject, message, from_email)
+
+    email_context = {
+        'title': 'Welcome to the University of Warwick Computing Society',
+        'first_name': user.first_name,
+        'username': user.username,
+        'password': password
+    }
+    email_html = render_to_string('accounts/signup_mail.html', email_context)
+    email_text = render_to_string('accounts/signup_mail.txt', email_context)
+
+    email = EmailMultiAlternatives(email_context['title'], email_text, 'UWCS Exec <noreply@uwcs.co.uk>',
+                                   to=[user.email])
+    email.attach_alternative(email_html, 'text/html')
+    email.send()
 
 
 class Command(BaseCommand):

@@ -138,6 +138,7 @@
                                 <table class="table is-striped is-fullwidth is-hoverable">
                                     <tbody>
                                         {% for comment in self.signups %}
+                                            {% if comment.comment %}
                                             <tr>
                                                 <td class="user">
                                                     <a href="{% url 'public_profile' uid=comment.member.id %}" class="subtitle has-text-primary">
@@ -154,11 +155,10 @@
                                                         {% endif %}
                                                     </a>
                                                     <p><i><span class="date is-size-7">{{ comment.signup_created|date:'D jS F Y, H:i' }}</span></i></p>
-                                                    {% if comment.comment %}
-                                                        <p class="subtitle">{{ comment.comment }}</p>
-                                                    {% endif %}
+                                                    <p class="subtitle">{{ comment.comment }}</p>
                                                 </td>
                                             </tr>
+                                            {% endif %}
                                         {% endfor %}
                                     </tbody>
                                 </table>

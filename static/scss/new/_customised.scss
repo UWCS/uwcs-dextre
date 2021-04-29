@@ -194,7 +194,7 @@ a.event:hover {
   flex-direction: row;
   flex-wrap: wrap;
   flex-basis: content;
-  justify-content: end;
+  justify-content: flex-end;
   align-content: center;
   @include mobile {
     justify-content: center;

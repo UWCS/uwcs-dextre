@@ -170,6 +170,45 @@
                                 {% endif %}
                             {% endif %}
                         </div>
+
+                        {% if self.signups and request.user.is_staff %}
+                            <hr />
+                            <div class="container">
+                                <h4 class="title is-4">
+                                    View all signups
+                                </h4>
+                                <table class="table is-striped is-fullwidth is-hoverable">
+                                    <thead>
+                                        <tr>
+                                            <td><b>Name</b></td>
+                                            <td><b>Email</b></td>
+                                            <td><b>Discord</b></td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for signup in self.signups %}
+                                            <tr>
+                                                <td class="user">
+                                                    <a href="{% url 'public_profile' uid=signup.member.id %}" class="subtitle has-text-primary">
+                                                        {% if signup.member.compsocuser.first_name %}
+                                                            {{ signup.member.compsocuser.full_name }}
+                                                        {% else %}
+                                                            {{ signup.member.get_full_name }}
+                                                        {% endif %}
+                                                    </a>
+                                                </td>
+                                                <td>
+                                                    {{ signup.member.email }}
+                                                </td>
+                                                <td>
+                                                    {{ signup.member.compsocuser.discord_user }}
+                                                </td>
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </article>
                 <aside class="column is-one-third-tablet is-one-quarter-desktop is-one-fifth-fullhd">

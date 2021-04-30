@@ -31,8 +31,11 @@
                                                         {% elif event.cancelled %}
                                                             <small class="mb-3"><strong>Event has been cancelled</strong></small>
                                                         {% endif %}
-                                                        {% if event.signup_limit > 0 %}
-                                                            <h6 class="mb-4">Signups: {{ event.signups.count }}/{{ event.signup_limit }}</h6>
+                                                        {% if event.signup_type != 0 %}
+                                                            <h6 class="mb-4">Signup required {% if event.sighup_type == 2 %}via external link{% endif %}</h6>
+                                                            {% if event.signup_limit > 0 %}
+                                                                <small class="mb-3">Signups: {{ event.signups.count }}/{{ event.signup_limit }}</small>
+                                                            {% endif %}
                                                         {% endif %}
                                                     </div>
                                                     <div class="column">

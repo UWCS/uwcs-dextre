@@ -90,6 +90,18 @@
                                         </p>
                                     </div>
                                     <div class="column">
+                                        {% if self.signup_type == 2 %}
+                                            <p>
+                                                <a href="{{ self.signup_url }}" class="button is-primary-scheme">
+                                                    <span class="icon is-small">
+                                                        <i class="fas fa-ticket-alt" aria-hidden="true"></i>
+                                                    </span>
+                                                    <span>
+                                                        Signup here
+                                                    </span>
+                                                </a>
+                                            </p>
+                                        {% endif %}
                                         {% if user_signed_up and not self.cancelled %}
                                             <p>
                                                 <a href="{% url 'event_unsignup' event_id=self.page_ptr_id %}" class="button is-warning-scheme">

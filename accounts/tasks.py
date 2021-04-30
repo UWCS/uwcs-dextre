@@ -125,13 +125,13 @@ def create_ldap_user(account_id):
         password_hashed = '{crypt}' + crypt.crypt(password, salt)
         days_since_epoch = (datetime.utcnow() - datetime(1970, 1, 1)).days
         uid_list = list(user.username.encode('ascii'))
-        uid = ''.join([str(x) for x in uid_list])
+        uid_num = ''.join([str(x) for x in uid_list])
 
         group_add_dn = 'cn={nickname},ou=Groups,dc=uwcs,dc=co,dc=uk'.format(nickname=request.name)
         group_attributes_dict = {
             'objectClass': ['posixGroup', 'top'],
             'cn': request.name,
-            'gidNumber': [uid],
+            'gidNumber': [uid_num],
             'userPassword': [password_hashed],
         }
 
@@ -141,9 +141,9 @@ def create_ldap_user(account_id):
         user_attributes_dict = {
             'objectClass': ['account', 'posixAccount', 'top', 'shadowAccount'],
             'cn': [user.get_full_name()],
-            'gidNumber': [uid],
+            'gidNumber': [uid_num],
             'uid': [request.name],
-            'uidNumber': [uid],
+            'uidNumber': [uid_num],
             'homeDirectory': ['/compsoc/home/{nickname}'.format(nickname=request.name)],
             'loginShell': ['/bin/bash'],
             'shadowWarning': ['7'],

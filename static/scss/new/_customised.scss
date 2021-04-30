@@ -348,6 +348,10 @@ body {
     &.is-transparent {
       opacity: 0.3;
     }
+
+    &.is-transparent-less {
+      opacity: 0.5;
+    }
   }
 }
 

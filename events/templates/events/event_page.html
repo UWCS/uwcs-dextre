@@ -1,12 +1,16 @@
 {% extends "new_base.html" %}
-{% load wagtailcore_tags wagtailimages_tags base_tags event_tags %}
+{% load wagtailcore_tags wagtailimages_tags base_tags event_tags static %}
 
 {% block title %}UWCS | {{ self.title }} ({{ self.start|date:'Y-m-d' }}) {% endblock %}
 
 {% block content %}
     {% breadcrumbs %}
-    <section class="hero {% if self.category.banner_image %}is-black{% else %}is-dark{% endif %} has-background">
-        {% image self.category.banner_image original class="hero-background is-transparent" %}
+    <section class="hero is-black has-background">
+        {% if self.category.banner_image %}
+            {% image self.category.banner_image original class="hero-background is-transparent" %}
+        {% else %}
+            <img class="hero-background is-transparent-less" original alt="Background" src="{% static "background.svg" %}">
+        {% endif %}
         <div class="hero-body">
             <div class="container is-centered is-vcentered">
                 <div class="columns is-centered is-vcentered">

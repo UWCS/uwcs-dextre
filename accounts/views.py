@@ -61,7 +61,7 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
         return super(MemberAccountUpdateView, self).form_valid(form)
 
 
-class MemberProfileView(View):
+class MemberProfileView(LoginRequiredMixin, View):
     template_name = 'accounts/profile.html'
 
     def get(self, request, uid):

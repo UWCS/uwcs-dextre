@@ -1,7 +1,7 @@
 from datetime import datetime
 
 from django.contrib.auth import get_user_model
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.core.mail import send_mail
 from django.http import HttpResponse
 from django.shortcuts import render, get_object_or_404
@@ -11,6 +11,12 @@ from django.views.generic.edit import FormView
 from .forms import CompsocUserForm, ShellAccountForm, DatabaseAccountForm
 from .models import CompsocUser
 from .tasks import create_ldap_user
+
+
+class StaffMemberRequiredMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        return self.request.user.is_staff
 
 
 class MemberAccountView(LoginRequiredMixin, View):
@@ -61,7 +67,7 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
         return super(MemberAccountUpdateView, self).form_valid(form)
 
 
-class MemberProfileView(LoginRequiredMixin, View):
+class MemberProfileView(StaffMemberRequiredMixin, View):
     template_name = 'accounts/profile.html'
 
     def get(self, request, uid):

@@ -129,7 +129,7 @@
                                                     </div>
                                                 </form>
                                             {% endif %}
-                                        {% elif not self.cancelled %}
+                                        {% elif not self.cancelled or self.signup_type != 2 %}
                                             <p>
                                                 <a href="/accounts/login" class="button is-primary">
                                                     <span class="icon is-small">

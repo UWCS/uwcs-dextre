@@ -61,7 +61,7 @@ class Command(BaseCommand):
 
         # Handle special cases with Ex-exec, exec and staff/superuser status
         for member in User.objects.all():
-            if member.groups.filter(name__in=['Ex-exec', 'Exec', 'Whitelist']).exists():
+            if member.groups.filter(name__in=['Ex-exec', 'Exec', 'Active Alumni']).exists():
                 if member not in active_members:
                     active_members.append(member.id)
             elif member.is_staff or member.is_superuser:

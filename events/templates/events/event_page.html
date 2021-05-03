@@ -157,7 +157,7 @@
                                             {% if comment.comment %}
                                             <tr>
                                                 <td class="user">
-                                                    <a href="{% url 'public_profile' uid=comment.member.id %}" class="subtitle has-text-primary">
+                                                    <p class="subtitle has-text-primary">
                                                         {% if comment.member.compsocuser %}
                                                             {% with comment.member.compsocuser as user %}
                                                                 {% if user.nickname %}
@@ -169,7 +169,7 @@
                                                         {% else %}
                                                             {{ comment.member.get_full_name }}
                                                         {% endif %}
-                                                    </a>
+                                                    </p>
                                                     <p><i><span class="date is-size-7">{{ comment.signup_created|date:'D jS F Y, H:i' }}</span></i></p>
                                                     <p class="subtitle">{{ comment.comment }}</p>
                                                 </td>

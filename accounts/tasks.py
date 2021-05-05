@@ -125,7 +125,7 @@ def create_ldap_user(account_id):
         password_hashed = '{crypt}' + crypt.crypt(password, salt)
         days_since_epoch = (datetime.utcnow() - datetime(1970, 1, 1)).days
         uid_list = list(user.username.encode('ascii'))
-        uid_num = ''.join([str(x) for x in uid_list])
+        uid_num = int(''.join([str(x) for x in uid_list]))
 
         group_add_dn = 'cn={nickname},ou=Groups,dc=uwcs,dc=co,dc=uk'.format(nickname=request.name)
         group_attributes_dict = {

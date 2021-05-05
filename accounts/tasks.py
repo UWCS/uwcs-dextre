@@ -124,14 +124,12 @@ def create_ldap_user(account_id):
         salt = crypt.mksalt(crypt.METHOD_SHA512)
         password_hashed = '{crypt}' + crypt.crypt(password, salt)
         days_since_epoch = (datetime.utcnow() - datetime(1970, 1, 1)).days
-        uid_list = list(user.username.encode('ascii'))
-        uid_num = int(''.join([str(x) for x in uid_list]))
 
         group_add_dn = 'cn={nickname},ou=Groups,dc=uwcs,dc=co,dc=uk'.format(nickname=request.name)
         group_attributes_dict = {
             'objectClass': ['posixGroup', 'top'],
             'cn': request.name,
-            'gidNumber': [uid_num],
+            'gidNumber': [int(user.username)],
             'userPassword': [password_hashed],
         }
 
@@ -141,9 +139,9 @@ def create_ldap_user(account_id):
         user_attributes_dict = {
             'objectClass': ['account', 'posixAccount', 'top', 'shadowAccount'],
             'cn': [user.get_full_name()],
-            'gidNumber': [uid_num],
+            'gidNumber': [int(user.username)],
             'uid': [request.name],
-            'uidNumber': [uid_num],
+            'uidNumber': [int(user.username)],
             'homeDirectory': ['/compsoc/home/{nickname}'.format(nickname=request.name)],
             'loginShell': ['/bin/bash'],
             'shadowWarning': ['7'],
@@ -161,13 +159,13 @@ def create_ldap_user(account_id):
         sites_path = '/compsoc/sites/{nickname}'.format(nickname=request.name)
         if not os.path.exists(sites_path):
             os.makedirs(sites_path)
-            os.chown(sites_path, uid_num, uid_num)
+            os.chown(sites_path, int(user.username), int(user.username))
 
         apache_conf_path = '{apache}/member-{nickname}.conf'.format(apache=settings.APACHE_SITES_AVAILABLE,
                                                                     nickname=request.name)
         if not os.path.exists(apache_conf_path):
             make_user_site_config(request.name)
-            make_user_site_placeholder(username=request.name, uid=uid_num)
+            make_user_site_placeholder(username=request.name, uid=int(user.username))
 
         send_success_mail(user, request.name, password)
 

@@ -1,5 +1,6 @@
+import copy
 from datetime import datetime
-from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
+from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils import timezone
 from django.utils.safestring import mark_safe
@@ -10,32 +11,38 @@ from pygments.formatters import get_formatter_by_name
 from pygments.lexers import get_lexer_by_name
 from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
+from wagtail.contrib.table_block.blocks import TableBlock, DEFAULT_TABLE_OPTIONS
 from wagtail.core.blocks import TextBlock, StructBlock, StreamBlock, CharBlock, RichTextBlock, \
-    ChoiceBlock
+    ChoiceBlock, StaticBlock
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
+import bleach
+
+from lib.html_cleaners import domestos
+from lib.ellipsis_paginator import EllipsisPaginator
 
 
 @register_snippet
-class Footer(models.Model):
-    facebook_url = models.URLField(null=True, blank=True)
-    twitch_url = models.URLField(null=True, blank=True)
-    twitter_url = models.URLField(null=True, blank=True)
-    privacy_policy_url = models.URLField(null=True, blank=True)
+class FooterLink(models.Model):
+    link_url = models.URLField(null=True, blank=True)
+    title = models.CharField(max_length=20, blank=True)
+    order = models.SmallIntegerField(default=0)
 
     panels = [
-        FieldPanel('facebook_url'),
-        FieldPanel('twitch_url'),
-        FieldPanel('twitter_url'),
-        FieldPanel('privacy_policy_url'),
+        FieldPanel('title'),
+        FieldPanel('link_url'),
+        FieldPanel('order')
     ]
 
+    class Meta:
+        ordering = ('order',)
+
     def __str__(self):
-        return 'Footer URLs'
+        return self.title
 
 
 @register_snippet
@@ -43,11 +50,13 @@ class SocialMedia(models.Model):
     url = models.URLField()
     icon = models.CharField(max_length=30)
     name = models.CharField(max_length=30)
+    footer = models.BooleanField(default=True, help_text="Should this be shown in the footer")
 
     panels = [
         FieldPanel('name'),
         FieldPanel('url'),
         FieldPanel('icon'),
+        FieldPanel('footer')
     ]
 
     def __str__(self):
@@ -104,7 +113,7 @@ class Sponsor(models.Model):
         tier = self.TIERS(self.tier).name.capitalize()
         if self.email_sponsor:
             tier += '+Email'
-        return self.name+" ("+tier+")"
+        return self.name + " (" + tier + ")"
 
 
 class PullQuoteBlock(StructBlock):
@@ -128,6 +137,14 @@ class Heading3Block(CharBlock):
 class Heading4Block(CharBlock):
     class Meta:
         template = 'blog/blocks/h4.html'
+
+
+class HRuleBlock(StaticBlock):
+    class Meta:
+        icon = 'horizontalrule'
+        label = 'Divider'
+        admin_text = 'Horizontal Rule'
+        template = 'blog/blocks/hr.html'
 
 
 class CodeBlock(StructBlock):
@@ -163,7 +180,7 @@ class CodeBlock(StructBlock):
     )
 
     language = ChoiceBlock(choices=LANGUAGE_CHOICES)
-    code = TextBlock()
+    code = TextBlock(rows=15)
 
     class Meta:
         icon = 'code'
@@ -183,15 +200,51 @@ class CodeBlock(StructBlock):
         return mark_safe(highlight(src, lexer, formatter))
 
 
+class HTMLBlock(StructBlock):
+    value = TextBlock(rows=15)
+
+    class Meta:
+        icon = 'cogs'
+
+    def render(self, value, **kwargs):
+        content = domestos.clean(str(value['value']))
+        return mark_safe(content)
+
+
+TABLE_SETTINGS = DEFAULT_TABLE_OPTIONS.copy()
+TABLE_SETTINGS['renderer'] = "html"
+
+
+class HtmlTableBlock(TableBlock):
+    class Meta:
+        template = 'blog/blocks/table.html'
+
+
+PARAGRAPH_FEATURES = ['bold','italic','underline','h2','h3','h4','superscript','subscript','strikethrough','ol','ul','code','link','document-link','image','embed']
+
+
+class CalloutBlock(RichTextBlock):
+
+    class Meta:
+        icon = 'placeholder'
+        label = 'Callout'
+        admin_text = 'Callout'
+        template = 'blog/blocks/callout.html'
+
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
     h4 = Heading4Block(icon="title", classname="title")
-    paragraph = RichTextBlock(icon="pilcrow")
+    hr = HRuleBlock()
+    paragraph = RichTextBlock(icon="pilcrow", features=PARAGRAPH_FEATURES)
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()
     document = DocumentChooserBlock(icon="doc-full-inverse")
     code = CodeBlock()
+    table = HtmlTableBlock(table_options=TABLE_SETTINGS)
+    callout = CalloutBlock()
+    html = HTMLBlock()
 
 
 class HomePage(Page):
@@ -199,13 +252,15 @@ class HomePage(Page):
     subpage_types = ['blog.BlogIndexPage', 'blog.AboutPage', 'events.EventsIndexPage']
 
     description = StreamField(BlogStreamBlock())
-    alert = RichTextField(blank=True, features=['bold', 'italic'])
+    alert = RichTextField(blank=True, features=['bold', 'italic', 'underline'])
     alert_link = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
-        FieldPanel('alert'),
-        FieldPanel('alert_link'),
         StreamFieldPanel('description'),
+        MultiFieldPanel(
+            [FieldPanel('alert'),
+             FieldPanel('alert_link'),
+             ], heading="Alert"),
     ]
 
 
@@ -224,18 +279,20 @@ class BlogIndexPage(Page):
         blogs = self.blogs
 
         # Filter by tag
-        tag = request.GET.get('tag')
+        tag = request.GET.get('tag', None)
         if tag:
             blogs = blogs.filter(tags__name=tag)
 
         # Filter by date
-        filter_date = request.GET.get('date')
+        filter_date = request.GET.get('date', None)
+        archive_year = timezone.now().year
         if filter_date:
             filter_date = datetime.strptime(filter_date, '%Y-%m')
+            archive_year = filter_date.year
             blogs = blogs.filter(date__month=filter_date.month, date__year=filter_date.year)
 
         # Pagination
-        paginator = Paginator(blogs, 10)  # Show 10 blogs per page
+        paginator = EllipsisPaginator(blogs, 10)  # Show 10 blogs per page
         try:
             blogs = paginator.page(request.GET.get('page'))
         except PageNotAnInteger:
@@ -247,6 +304,9 @@ class BlogIndexPage(Page):
         context = super(BlogIndexPage, self).get_context(request)
         context['blogs'] = blogs
         context['paginator'] = paginator
+        context['archive_year'] = archive_year
+        context['filter_date'] = filter_date
+        context['filter_tag'] = tag
         return context
 
 
@@ -257,9 +317,10 @@ class BlogPageTag(TaggedItemBase):
 class BlogPage(Page):
     # Parent page/subpage rules
     parent_page_types = ['blog.BlogIndexPage']
+    subpage_types = []
 
     body = StreamField(BlogStreamBlock())
-    intro = RichTextField(help_text="This is displayed on the home and blog listing pages")
+    intro = RichTextField(help_text="This is displayed on the home and blog listing pages", features=PARAGRAPH_FEATURES)
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
     date = models.DateTimeField("Post date", default=timezone.now)
 

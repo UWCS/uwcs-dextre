@@ -8,7 +8,7 @@
 <!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
 <!--[if gt IE 8]><!-->
 {% endcomment %}
-<html class="no-js" xmlns:fb="http://ogp.me/ns/fb#"> {# <!--<![endif]-->  #}
+<html lang="en" xmlns:fb="http://ogp.me/ns/fb#"> {# <!--<![endif]-->  #}
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
@@ -63,18 +63,18 @@
 <body class="{% if nightmode %}nightmode{% endif %}">
 {% wagtailuserbar %}
 
-<div class="">
-    {% get_site_root as site_root %}
-    <div class="">
-        {% top_menu parent=site_root calling_page=request.path %}
 
-        {% block content %}{% endblock %}
-    </div>
+{% get_site_root as site_root %}
+<div class="page-content">
+    {% top_menu parent=site_root calling_page=request.path %}
 
-    <div class="footer">
-        {% footer parent=site_root %}
-    </div>
+    {% block content %}{% endblock %}
 </div>
+
+<div class="footer pb-2">
+    {% footer parent=site_root %}
+</div>
+
 
 {# Global javascript #}
 <script type="text/javascript" src='{% static 'js/jquery.min.js' %}'></script>

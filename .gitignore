@@ -92,6 +92,7 @@ ENV/
 dextre/settings/production.py
 .sass-cache/
 static/CACHE/
+static/img/
 media/
 documents/
 
@@ -104,6 +105,10 @@ documents/
 .idea/dictionaries
 .idea/vcs.xml
 .idea/jsLibraryMappings.xml
+.idea/sonarlint/*
+.idea/shelf/
+.idea/dataSources/
+.idea/discord.xml
 
 # Sensitive or high-churn files:
 .idea/dataSources.ids
@@ -142,3 +147,6 @@ fabric.properties
 
 # Celery
 celerybeat.pid
+
+# Node modules
+node_modules

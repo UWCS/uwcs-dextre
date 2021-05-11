@@ -62,18 +62,20 @@
                     {% if self.signup_type != self.SIGNUP_TYPES.NONE %}
                         <div class="card">
                             <div class="card-content">
-                                <div class="columns">
-                                    <div class="column">
-                                        <p class="subtitle my-0">Signups open</p>
-                                        <p class="my-0">{{ self.signup_open|date:'D jS F Y, H:i' }} {% if self.signup_freshers_open %}
-                                          (Freshers:
-                                          {{ self.signup_freshers_open|date:'D jS F Y, H:i' }}{% endif %}</p>
+                                {% if self.signup_tupe == 2 %}
+                                    <div class="columns">
+                                        <div class="column">
+                                            <p class="subtitle my-0">Signups open</p>
+                                            <p class="my-0">{{ self.signup_open|date:'D jS F Y, H:i' }} {% if self.signup_freshers_open %}
+                                              (Freshers:
+                                              {{ self.signup_freshers_open|date:'D jS F Y, H:i' }}{% endif %}</p>
+                                        </div>
+                                        <div class="column">
+                                            <p class="subtitle my-0">Signups close</p>
+                                            <p class="my-0">{{ self.signup_close|date:'D jS F Y, H:i' }}</p>
+                                        </div>
                                     </div>
-                                    <div class="column">
-                                        <p class="subtitle my-0">Signups close</p>
-                                        <p class="my-0">{{ self.signup_close|date:'D jS F Y, H:i' }}</p>
-                                    </div>
-                                </div>
+                                {% endif %}
                                 <div class="columns">
                                     <div class="column">
                                         <p class="subtitle my-0">Total signups</p>

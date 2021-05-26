@@ -7,6 +7,12 @@ $(document).ready(function() {
       $(".navbar-menu").toggleClass("is-active");
 
   });
+
+  $("#userDropdown").click(function() {
+      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
+      $("#userDropdown").toggleClass("is-active");
+
+  });
 });
 
 var col = document.getElementsByClassName("collapsible")

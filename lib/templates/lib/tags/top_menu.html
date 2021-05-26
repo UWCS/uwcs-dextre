@@ -29,7 +29,7 @@
 
             <div class="navbar-end">
                 {% if request.user.is_authenticated %}
-                    <div class="navbar-item has-dropdown is-hoverable">
+                    <div class="navbar-item has-dropdown is-hoverable" id="userDropdown">
                         <a class="navbar-link">
                             {% if request.user.compsocuser %}
                                 {{ request.user.compsocuser }}

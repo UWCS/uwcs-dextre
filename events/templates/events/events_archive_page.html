@@ -66,7 +66,7 @@
                                 <br />
                             {% endfor %}
                         </div>
-                        {% include "events/includes/pagination.html" %}
+                        {% include "events/includes/pagination.html" with events=weeks %}
                     {% else %}
                         <p class="margin-top-1x-mobile">There are no past events</p>
                     {% endif %}

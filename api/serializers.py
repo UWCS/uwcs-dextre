@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework import serializers
 
 from events.models import EventPage, EventSignup
@@ -20,7 +20,32 @@ class UserSerialiser(serializers.ModelSerializer):
         fields = ['username', 'first_name', 'last_name', 'email']
 
 
-class LanAppProfileSerialiser(serializers.Serializer):
+class GroupSerialiser(serializers.ModelSerializer):
+    class Meta:
+        model = Group
+        fields = ['name']
+
+
+class UserGroupSerialiser(serializers.ModelSerializer):
+    groups = GroupSerialiser(many=True)
+
+    class Meta:
+        model = User
+        fields = ['groups', 'is_staff', 'is_superuser']
+
+
+class RolesProfileSerialiser(serializers.Serializer):
+    nickname = serializers.CharField(read_only=True)
+    user = UserGroupSerialiser()
+
+    def create(self, validated_data):
+        pass
+
+    def update(self, instance, validated_data):
+        pass
+
+
+class ProfileSerialiser(serializers.Serializer):
     nickname = serializers.CharField(read_only=True)
     user = UserSerialiser()
 

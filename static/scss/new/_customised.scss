@@ -4,7 +4,7 @@ $event-bar-spacing: 1.25rem !default;
 $event-shadow: 0 0.5em 1em -0.125em rgba($scheme-invert, 0.1), 0 0px 0 1px rgba($scheme-invert, 0.02) !default;
 
 .head_block {
-  background-image: url("/static/img/headbg.jpg");
+  background-image: url("/static/img/background.svg");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
@@ -359,4 +359,39 @@ body {
   background: rgba($grey-darker, 0.4);
   border-color: transparent;
   color: #fff;
+}
+
+.collapsible:hover {
+	background-color: #f1f2e9;
+}
+
+.collapsible:after {
+	content: '+';
+	font-style: normal;
+	font-size: 16px;
+	float: right;
+	margin-left: 5px;
+}
+
+button.collapsible {
+	color: $primary;
+	background: none;
+	border: none;
+	border-left: 1px solid $primary;
+	border-spacing: 10px 0px;
+	padding-left: 10px;
+	margin-left: -10px;
+	font-size: 16px;
+	width: 100%;
+	text-align: left;
+}
+
+.ccontent {
+	border-left: 1px solid $primary;
+	border-spacing: 10px 0px;
+	padding-left: 10px;
+	margin-left: -10px;
+	overflow: hidden;
+	display: none;
+	transition: max-height 0.2s ease-out;
 }

@@ -232,6 +232,17 @@ class CalloutBlock(RichTextBlock):
         template = 'blog/blocks/callout.html'
 
 
+class CollapsibleBlock(StructBlock):
+    visible_text = TextBlock(label="Visible Text")
+    hidden_content = RichTextBlock(label="Hidden Content", features=PARAGRAPH_FEATURES)
+
+    class Meta:
+        icon = 'placeholder'
+        label = 'Collapsible Box'
+        admin_text = 'Collapsible Box'
+        template = 'blog/blocks/collapsible.html'
+
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
@@ -243,6 +254,7 @@ class BlogStreamBlock(StreamBlock):
     document = DocumentChooserBlock(icon="doc-full-inverse")
     code = CodeBlock()
     table = HtmlTableBlock(table_options=TABLE_SETTINGS)
+    collapsible = CollapsibleBlock()
     callout = CalloutBlock()
     html = HTMLBlock()
 

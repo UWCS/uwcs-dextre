@@ -8,9 +8,10 @@ $(document).ready(function() {
 
   });
 
-  $("#userDropdown").click(function() {
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      $("#userDropdown").toggleClass("is-active");
+  // Check for click events on the user profile dropdown
+  $(".user-dropdown").click(function() {
+      // Toggle the "is-active" class on the "user-dropdown" class
+      $(".user-dropdown").toggleClass("is-active");
 
   });
 });

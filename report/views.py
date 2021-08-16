@@ -2,10 +2,11 @@ from django.shortcuts import render
 from django.core.mail import EmailMultiAlternatives
 from django.template.loader import render_to_string
 from django.views import View
+from django.views.generic.edit import FormView
 from django.http import HttpResponseRedirect
 from .forms import ReportForm
 
-class ReportView(View):
+class ReportView(FormView):
     form_class = ReportForm
     template_name = 'report/report_form.html'
     success_url = 'success/'

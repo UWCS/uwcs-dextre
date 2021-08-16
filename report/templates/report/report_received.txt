@@ -1,0 +1,11 @@
+{% extends 'accounts/email_text.txt' %}
+
+{% block title %}{{ subject }}{% endblock %}
+
+{% block content %}
+A new anonymous report has been received on the UWCS website. You can find the message below, along with any files that were submitted attached to this email.
+
+---
+
+{{ message }}
+{% endblock %}

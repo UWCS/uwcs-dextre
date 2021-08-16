@@ -43,3 +43,9 @@ class ReportView(View):
             email.send()
             return HttpResponseRedirect('success/')
         return render(request, self.template_name, {'form': form})
+
+class SuccessView(View):
+    template_name = 'report/report_success.html'
+
+    def get(self, request):
+        return render(request, self.template_name)

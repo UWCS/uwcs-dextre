@@ -14,6 +14,7 @@ urlpatterns = [
     url(r'^api/', include('api.urls')),
     url(r'^accounts/', include('accounts.urls')),
     url(r'^signups/', include('events.urls')),
+    url(r'^report/', include('report.urls')),
     url(r'^cms/', include(wagtailadmin_urls)),
     url(r'^documents/', include(wagtaildocs_urls)),
     url(r'^markdownx/', include('markdownx.urls')),

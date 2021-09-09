@@ -1,0 +1,109 @@
+{% extends 'new_base.html' %}
+{% load widget_tweaks %}
+
+{% block title %}UWCS | Report Something To Us {% endblock %}
+
+{% block content %}
+    <section class="section">
+        <div class="container">
+            <h1 class="title has-2">Report Something To Us</h1>
+            <div class="card">
+                <div class="card-content">
+                    <p>Is there anything you want to let the exec know about, or any concerns you have? This is the form for you. It's completely anonymous and will only be seen by who you select below (this defaults to all of the current exec).</p>
+                    <p>Any information you provide in the box below will remain confidential and will not be shared beyond the exec unless necessary to help you or if action is needed to be taken by the University or the Student's Union.</p>
+                    <br />
+                    <p>If necessary, we recommend talking to your Personal Tutor or <a href="https://warwick.ac.uk/services/wss/">Wellbeing Support Services</a>. You can also visit <a href="https://reportandsupport.warwick.ac.uk/">Report & Support</a> to speak to someone anonymously.</p>
+                    <br />
+                    <p>If you want to check who holds a current exec position, you can check out our <a href="/about/exec">Exec page</a>.</p>
+                    <br />
+
+                    <form method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
+
+                        {% include "lib/includes/form_errors.html" with form=form %}
+
+                        <div class="field">
+                            <label class="label is-medium" for="id_send_to">Send To</label>
+                            <div class="select">
+                                <select id="id_send_to" name="send_to" required="required">
+                                    <option value="exec">All Exec</option>
+                                    <option value="preswelfare">President, Welfare & Women's Officer</option>
+                                    <optgroup label="Individual Exec">
+                                        <option value="president">President</option>
+                                        <option value="secretary">Secretary</option>
+                                        <option value="treasurer">Treasurer</option>
+                                        <option value="academic-coordinator">Academic Coordinator</option>
+                                        <option value="gaming-coordinator">Gaming Coordinator</option>
+                                        <option value="tech">Tech Officer</option>
+                                        <option value="womens-officer">Women's Officer</option>
+                                        <option value="socials">Social Secretary</option>
+                                        <option value="welfare">Welfare Officer</option>
+                                    </optgroup>
+
+                                </select>
+                            </div>
+                            {% if form.send_to.errors %}
+                                {% for e in form.send_to.errors %}
+                                    <p class="help is-danger">{{ e }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="field">
+                            <label class="label is-medium" for="id_message">Message</label>
+                            <div class="control">
+                                <textarea id="id_message" class="textarea" name="message" rows="3"></textarea>
+                            </div>
+                            {% if form.message.errors %}
+                                {% for e in form.message.errors %}
+                                    <p class="help is-danger">{{ e }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="field">
+                            <p class="help">You can also upload a single small file as evidence if you wish. This can only be a maximum of 10MB.</p>
+                            <div id="file_upload" class="file has-name is-secondary">
+                                <label class="file-label">
+                                    <input class="file-input" type="file" name="ev_file">
+                                    <span class="file-cta">
+                                        <span class="file-icon">
+                                            <i class="fas fa-upload"></i>
+                                        </span>
+                                        <span class="file-label">
+                                            Choose a file…
+                                        </span>
+                                    </span>
+                                    <span class="file-name">
+                                        No file uploaded
+                                    </span>
+                                </label>
+                            </div>
+                            {% if form.ev_file.errors %}
+                                {% for e in form.ev_file.errors %}
+                                    <p class="help is-danger">{{ e }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
+
+                        <div class="control">
+                            <input type="submit" class="button is-primary" value="Submit">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        const fileInput = document.querySelector('#file_upload input[type=file]');
+        fileInput.onchange = () => {
+            if (fileInput.files.length > 0) {
+                const fileName = document.querySelector('#file_upload .file-name');
+                fileName.textContent = fileInput.files[0].name;
+            }
+        }
+    </script>
+{% endblock %}

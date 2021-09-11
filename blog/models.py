@@ -2,6 +2,7 @@ import copy
 from datetime import datetime
 from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
+from django.template.loader import render_to_string
 from django.utils import timezone
 from django.utils.safestring import mark_safe
 from modelcluster.contrib.taggit import ClusterTaggableManager
@@ -344,6 +345,13 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context['body'] = self.body
+        html_context = {
+            'title': self.title,
+            'content': self.body
+        }
+        context['email'] = render_to_string('email_base.html', html_context)
+        context['email'] = context['email'].replace("class=\"richtext-image left\"", "")
+        context['email'] = context['email'].replace("<p></p>", "")
         return context
 
 

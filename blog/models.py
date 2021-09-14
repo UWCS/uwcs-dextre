@@ -352,6 +352,7 @@ class BlogPage(Page):
         context['email'] = render_to_string('email_base.html', html_context)
         context['email'] = context['email'].replace("class=\"richtext-image left\"", "")
         context['email'] = context['email'].replace("<p></p>", "")
+        context['email'] = context['email'].replace("class=\"bs-callout\"", "")
         return context
 
 

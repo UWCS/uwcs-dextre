@@ -64,7 +64,6 @@
         // copy code to clipboard
         new ClipboardJS('.copy', {
             text: function() {
-                // based on your fiddle, you may need to replace this selector, too.
                 var htmlBlock = document.querySelector('.email-html');
                 return htmlBlock.innerHTML;
             }

@@ -11,7 +11,6 @@
             <div class="columns">
                 <div class="column">
                     <article>
-
                         <h1 class="title has-2 mb-2">{{ self.title }}</h1>
                         {% if self.tags %}
                             <div class="tags mb-0">
@@ -27,10 +26,74 @@
                     </article>
                 </div>
                 <div class="column is-one-third-tablet is-one-quarter-desktop is-one-fifth-fullhd">
+                    {% if request.user.is_staff %}
+                        <button class="button is-primary modal-button" id="emailHTMLButton"
+                                data-toggle="#email-html-modal">
+                            Generate email HTML
+                        </button>
+                    {% endif %}
                     {% blog_sidebar %}
                     {% sponsor_sidebar %}
                 </div>
             </div>
         </div>
     </section>
+
+    <div class="modal" id="email-html-modal">
+        <div class="modal-background"></div>
+        <div class="modal-card">
+            <header class="modal-card-head">
+                <p class="modal-card-title">Email HTML</p>
+                <button class="delete modal-close" aria-label="close"></button>
+            </header>
+            <section class="modal-card-body">
+                <div class="code-block email-html" id="email-html">
+                    {{ email|safe }}
+                </div>
+            </section>
+            <footer class="modal-card-foot">
+                <button class="button modal-button copy" id="email-html-button">Copy to clipboard
+                </button>
+            </footer>
+        </div>
+    </div>
 {% endblock content %}
+
+{% block extra_js %}
+    <script type="text/javascript">
+        // copy code to clipboard
+        new ClipboardJS('.copy', {
+            text: function() {
+                var htmlBlock = document.querySelector('.email-html');
+                return htmlBlock.innerHTML;
+            }
+        });
+
+        // JS to open/close modal
+        const modal =
+            document.querySelector('#email-html-modal');
+        const btn =
+            document.querySelector('#emailHTMLButton')
+        const close =
+            document.querySelector('.modal-close')
+
+        btn.addEventListener('click',
+            function () {
+                modal.style.display = 'block'
+            })
+
+        close.addEventListener('click',
+            function () {
+                modal.style.display = 'none'
+            })
+
+        window.addEventListener('click',
+            function (event) {
+                if (event.target.className ===
+                    'modal-background') {
+                    modal.style.display = 'none'
+                }
+            })
+
+    </script>
+{% endblock %}

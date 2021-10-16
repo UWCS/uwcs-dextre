@@ -3,6 +3,8 @@ from datetime import datetime
 from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils import timezone
+from django.utils.functional import cached_property
+from django.utils.html import format_html
 from django.utils.safestring import mark_safe
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
@@ -13,7 +15,7 @@ from taggit.models import TaggedItemBase
 from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
 from wagtail.contrib.table_block.blocks import TableBlock, DEFAULT_TABLE_OPTIONS
 from wagtail.core.blocks import TextBlock, StructBlock, StreamBlock, CharBlock, RichTextBlock, \
-    ChoiceBlock, StaticBlock
+    ChoiceBlock, StaticBlock, ChooserBlock
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 from wagtail.documents.blocks import DocumentChooserBlock
@@ -243,6 +245,31 @@ class CollapsibleBlock(StructBlock):
         template = 'blog/blocks/collapsible.html'
 
 
+class PDFEmbedBlock(ChooserBlock):
+    @cached_property
+    def target_model(self):
+        from wagtail.documents import get_document_model
+        return get_document_model()
+
+    @cached_property
+    def widget(self):
+        from wagtail.documents.widgets import AdminDocumentChooser
+        return AdminDocumentChooser
+
+    def render_basic(self, value, context=None):
+        if value:
+            return format_html(
+                '<figure class="image is-16by9"><iframe class="has-ratio" frameborder="0" width="100%" src="{0}"></iframe></figure>',
+                value.url)
+        else:
+            return ''
+
+    class Meta:
+        icon = 'doc-full'
+        label = 'PDF Embed'
+        admin_text = 'PDF Embed'
+
+
 class BlogStreamBlock(StreamBlock):
     h2 = Heading2Block(icon="title", classname="title")
     h3 = Heading3Block(icon="title", classname="title")
@@ -257,6 +284,7 @@ class BlogStreamBlock(StreamBlock):
     collapsible = CollapsibleBlock()
     callout = CalloutBlock()
     html = HTMLBlock()
+    pdf = PDFEmbedBlock()
 
 
 class HomePage(Page):

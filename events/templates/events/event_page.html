@@ -18,9 +18,15 @@
                         <h2 class="title">{{ self.title }}</h2>
                         <p class="subtitle">{{ self.description }}</p>
                         {% if self.facebook_link %}
-                            <a class="button is-5 is-dark-trans" href="{{ self.facebook_link }}">
+                            <a class="button is-5 is-dark-trans is-grouped" href="{{ self.facebook_link }}">
                                 <span class="icon is-small"><i class="fab fa-facebook"></i></span>
                                 <span class="">See event on Facebook</span>
+                            </a>
+                        {% endif %}
+                        {% if self.discord_event_link %}
+                            <a class="button is-5 is-dark-trans is-grouped" href="{{ self.discord_event_link }}">
+                                <span class="icon is-small"><i class="fab fa-discord"></i></span>
+                                <span class="">See event on Discord</span>
                             </a>
                         {% endif %}
                     </div>

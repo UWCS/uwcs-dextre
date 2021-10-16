@@ -275,6 +275,11 @@ class HomePage(Page):
              ], heading="Alert"),
     ]
 
+    def get_context(self, request):
+        context = super(HomePage, self).get_context(request)
+        context['description'] = "The University of Warwick Computing Society is a free-to-join academic society open to anyone with an interest in computing, technology, or gaming."
+        return context
+
 
 class BlogIndexPage(Page):
     # Parent page/subpage rules
@@ -344,6 +349,7 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context['body'] = self.body
+        context['description'] = self.intro.__str__().replace('<p>', '').replace('</p>', '')
         return context
 
 

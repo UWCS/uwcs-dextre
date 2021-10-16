@@ -230,6 +230,8 @@ class EventPage(Page):
         else:
             context['can_signup'] = False
 
+        context['description'] = self.description
+
         return context
 
 

@@ -1,4 +1,4 @@
-{% load static wagtailuserbar compress base_tags %}
+{% load static wagtailuserbar compress base_tags wagtailcore_tags %}
 {% is_nightmode as nightmode %}
 
 <!DOCTYPE html>
@@ -12,9 +12,8 @@
 <head>
     <meta charset="utf-8"/>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
-    <title>{% block title_prefix %}{% endblock %}{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}
-        {{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% endblock %}</title>
-    <meta name="description" content=""/>
+    <title>{% block title_prefix %}{% endblock %}{% block title %}{% if self.seo_title %}{{ self.seo_title }}{% else %}{{ self.title }}{% endif %}{% endblock %}{% block title_suffix %}{% endblock %}</title>
+    <meta name="description" content="{% block description %}{% if description %}{{ description | richtext }}{% endif %}{% endblock %}"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
     <meta name="theme-color" content="#141E24"/>
     {# Facebook post image #}

@@ -219,6 +219,9 @@ WAGTAIL_FRONTEND_LOGIN_URL = '/accounts/login/'
 # Cross-origin Requests
 CORS_ORIGIN_ALLOW_ALL = True
 
+# X-frame Requests
+X_FRAME_OPTIONS = 'SAMEORIGIN'
+
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
 BASE_URL = 'uwcs.co.uk'

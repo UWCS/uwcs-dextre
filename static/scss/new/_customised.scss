@@ -395,3 +395,8 @@ button.collapsible {
 	display: none;
 	transition: max-height 0.2s ease-out;
 }
+
+.linenos {
+    margin-right: 1rem;
+    user-select: none;
+}

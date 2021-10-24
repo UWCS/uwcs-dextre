@@ -168,6 +168,9 @@ class EventPage(Page):
     facebook_link = models.URLField(verbose_name='Facebook event',
                                     help_text='A link to the associated Facebook event if one exists', blank=True,
                                     default='')
+    discord_event_link = models.URLField(verbose_name='Discord event',
+                                         help_text='A link to the associated Discord event if one exists', blank=True,
+                                         default='')
     # Event signup fields
     signup_type = models.IntegerField(choices=SIGNUP_TYPES.choices)
     signup_url = models.URLField(help_text='External only', blank=True)
@@ -241,6 +244,7 @@ EventPage.content_panels = [
         FieldPanel('category'),
         FieldPanel('location'),
         FieldPanel('facebook_link'),
+        FieldPanel('discord_event_link'),
         FieldPanel('start'),
         FieldPanel('finish'),
         StreamFieldPanel('body'),

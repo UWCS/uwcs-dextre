@@ -116,7 +116,7 @@ def notify_account_requested(user, request):
     send_mail(subject, message, from_email, to_email)
 
 
-class RequestDatabaseAccountView(LoginRequiredMixin, FormView):
+class RequestDatabaseAccountView(AlreadyHasDatabaseAccountMixin, FormView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = 'accounts/request_database.html'

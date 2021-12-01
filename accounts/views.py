@@ -22,13 +22,23 @@ class StaffMemberRequiredMixin(UserPassesTestMixin):
 class AlreadyHasShellAccountMixin(UserPassesTestMixin):
 
     def test_func(self):
-        return not(ShellAccount.objects.filter(user=self.request.user).exists())
+        return not ShellAccount.objects.filter(user=self.request.user).exists()
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not self.test_func():
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class AlreadyHasDatabaseAccountMixin(UserPassesTestMixin):
 
     def test_func(self):
-        return not(DatabaseAccount.objects.filter(user=self.request.user).exists())
+        return not DatabaseAccount.objects.filter(user=self.request.user).exists()
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not self.test_func():
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class MemberAccountView(LoginRequiredMixin, View):

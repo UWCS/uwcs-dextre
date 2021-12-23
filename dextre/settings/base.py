@@ -209,6 +209,8 @@ OAUTH2_PROVIDER = {
 
 REQUEST_APPROVAL_PROMPT = 'auto'
 
+ACCESS_TOKEN_EXPIRE_SECONDS = 86400
+
 # WarwickSU Membership API key
 UNION_API_KEY = 'insert-api-key'
 

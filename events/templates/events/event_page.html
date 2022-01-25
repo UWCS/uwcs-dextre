@@ -84,18 +84,22 @@
                                 {% endif %}
                                 <div class="columns">
                                     <div class="column">
-                                        <p class="subtitle my-0">Total signups</p>
-                                        <p class="my-0">
-                                            {% if self.signup_limit == 0 %}
-                                                This event has unlimited spaces
-                                            {% else %}
-                                                {% if self.signups.count < self.signup_limit %}
-                                                    This event has {{ self.signup_limit|subtract:self.signups.count }} places remaining ({{ self.signups.count }}/{{ self.signup_limit }})
+                                        {% if self.signup_type == 2 %}
+                                            <p class="my-0">Click the link to sign up (external link):</p>
+                                        {% else %}
+                                            <p class="subtitle my-0">Total signups</p>
+                                            <p class="my-0">
+                                                {% if self.signup_limit == 0 %}
+                                                    This event has unlimited spaces
                                                 {% else %}
-                                                    There are no more spaces left for this event ({{ self.signups.count }}/{{ self.signup_limit }})
+                                                    {% if self.signups.count < self.signup_limit %}
+                                                        This event has {{ self.signup_limit|subtract:self.signups.count }} places remaining ({{ self.signups.count }}/{{ self.signup_limit }})
+                                                    {% else %}
+                                                        There are no more spaces left for this event ({{ self.signups.count }}/{{ self.signup_limit }})
+                                                    {% endif %}
                                                 {% endif %}
-                                            {% endif %}
-                                        </p>
+                                            </p>
+                                        {% endif %}
                                     </div>
                                     <div class="column">
                                         {% if self.signup_type == 2 %}
@@ -187,7 +191,7 @@
                                         {% endfor %}
                                     </tbody>
                                 </table>
-                            {% else %}
+                            {% elif self.signup_type != 2 %}
                                 {% if can_signup %}
                                     <p>There are no sign ups for this event yet, why not be the first?</p>
                                 {% else %}

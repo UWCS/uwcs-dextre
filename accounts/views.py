@@ -9,7 +9,7 @@ from django.views.generic import View, RedirectView
 from django.views.generic.edit import FormView
 
 from .forms import CompsocUserForm, ShellAccountForm, DatabaseAccountForm
-from .models import CompsocUser
+from .models import CompsocUser, ShellAccount, DatabaseAccount
 from .tasks import create_ldap_user
 
 
@@ -17,6 +17,28 @@ class StaffMemberRequiredMixin(UserPassesTestMixin):
 
     def test_func(self):
         return self.request.user.is_staff
+
+
+class AlreadyHasShellAccountMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        return not ShellAccount.objects.filter(user=self.request.user).exists()
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not self.test_func():
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
+
+
+class AlreadyHasDatabaseAccountMixin(UserPassesTestMixin):
+
+    def test_func(self):
+        return not DatabaseAccount.objects.filter(user=self.request.user).exists()
+
+    def dispatch(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or not self.test_func():
+            return self.handle_no_permission()
+        return super().dispatch(request, *args, **kwargs)
 
 
 class MemberAccountView(LoginRequiredMixin, View):
@@ -76,7 +98,7 @@ class MemberProfileView(StaffMemberRequiredMixin, View):
         return render(request, self.template_name, {'user': user})
 
 
-class RequestShellAccountView(LoginRequiredMixin, FormView):
+class RequestShellAccountView(AlreadyHasShellAccountMixin, FormView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = 'accounts/request_shell.html'
@@ -104,7 +126,7 @@ def notify_account_requested(user, request):
     send_mail(subject, message, from_email, to_email)
 
 
-class RequestDatabaseAccountView(LoginRequiredMixin, FormView):
+class RequestDatabaseAccountView(AlreadyHasDatabaseAccountMixin, FormView):
     login_url = '/accounts/login/'
     redirect_field_name = 'redirect_to'
     template_name = 'accounts/request_database.html'

@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0009_auto_20200722_1723'),
+        ("blog", "0009_auto_20200722_1723"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sponsor',
-            name='email_text_markdown',
-            field=models.TextField(blank=True, help_text='The text content in our newsletter emails. Is required to be valid markdown', max_length=4000, verbose_name='Email text'),
+            model_name="sponsor",
+            name="email_text_markdown",
+            field=models.TextField(
+                blank=True,
+                help_text="The text content in our newsletter emails. Is required to be valid markdown",
+                max_length=4000,
+                verbose_name="Email text",
+            ),
         ),
     ]

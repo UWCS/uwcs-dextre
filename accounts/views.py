@@ -14,13 +14,11 @@ from .tasks import create_ldap_user
 
 
 class StaffMemberRequiredMixin(UserPassesTestMixin):
-
     def test_func(self):
         return self.request.user.is_staff
 
 
 class AlreadyHasShellAccountMixin(UserPassesTestMixin):
-
     def test_func(self):
         return not ShellAccount.objects.filter(user=self.request.user).exists()
 
@@ -31,7 +29,6 @@ class AlreadyHasShellAccountMixin(UserPassesTestMixin):
 
 
 class AlreadyHasDatabaseAccountMixin(UserPassesTestMixin):
-
     def test_func(self):
         return not DatabaseAccount.objects.filter(user=self.request.user).exists()
 
@@ -42,32 +39,32 @@ class AlreadyHasDatabaseAccountMixin(UserPassesTestMixin):
 
 
 class MemberAccountView(LoginRequiredMixin, View):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/account.html'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/account.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 
 class MemberAccountUpdateView(LoginRequiredMixin, FormView):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/account_update.html'
-    success_url = 'done/'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/account_update.html"
+    success_url = "done/"
     form_class = CompsocUserForm
 
     def get_initial(self):
         try:
             info = self.request.user.compsocuser
             return {
-                'nickname': info.nickname,
-                'website_url': info.website_url,
-                'website_title': info.website_title,
-                'first_name': info.first_name,
-                'last_name': info.last_name,
-                'nightmode_on': info.nightmode_on,
-                'discord_user': info.discord_user,
+                "nickname": info.nickname,
+                "website_url": info.website_url,
+                "website_title": info.website_title,
+                "first_name": info.first_name,
+                "last_name": info.last_name,
+                "nightmode_on": info.nightmode_on,
+                "discord_user": info.discord_user,
             }
         except CompsocUser.DoesNotExist:
             return None
@@ -76,13 +73,15 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
         account = form.save(commit=False)
         account.user = self.request.user
         if CompsocUser.objects.filter(user=self.request.user).first():
-            CompsocUser.objects.filter(user=self.request.user).update(nickname=account.nickname,
-                                                                      website_url=account.website_url,
-                                                                      website_title=account.website_title,
-                                                                      first_name=account.first_name,
-                                                                      last_name=account.last_name,
-                                                                      nightmode_on=account.nightmode_on,
-                                                                      discord_user=account.discord_user)
+            CompsocUser.objects.filter(user=self.request.user).update(
+                nickname=account.nickname,
+                website_url=account.website_url,
+                website_title=account.website_title,
+                first_name=account.first_name,
+                last_name=account.last_name,
+                nightmode_on=account.nightmode_on,
+                discord_user=account.discord_user,
+            )
         else:
             account.save()
 
@@ -90,25 +89,25 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
 
 
 class MemberProfileView(StaffMemberRequiredMixin, View):
-    template_name = 'accounts/profile.html'
+    template_name = "accounts/profile.html"
 
     def get(self, request, uid):
         user = get_object_or_404(get_user_model(), id=uid)
 
-        return render(request, self.template_name, {'user': user})
+        return render(request, self.template_name, {"user": user})
 
 
 class RequestShellAccountView(AlreadyHasShellAccountMixin, FormView):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/request_shell.html'
-    success_url = 'done/'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/request_shell.html"
+    success_url = "done/"
     form_class = ShellAccountForm
 
     def form_valid(self, form):
         account = form.save(commit=False)
         account.user = self.request.user
-        account.status = 'RE'  # Requested
+        account.status = "RE"  # Requested
         account.save()
 
         create_ldap_user.delay(account.id)
@@ -117,26 +116,28 @@ class RequestShellAccountView(AlreadyHasShellAccountMixin, FormView):
 
 
 def notify_account_requested(user, request):
-    subject = '{username} requested a database account at {datetime}'.format(username=user.username,
-                                                                             datetime=datetime.now())
-    from_email = 'noreply@uwcs.co.uk'
-    to_email = ['tech@uwcs.co.uk']
-    message = '{username} has requested a database account with the username {db_username} at {datetime}.'.format(
-        username=user.username, db_username=request.name, datetime=datetime.now())
+    subject = "{username} requested a database account at {datetime}".format(
+        username=user.username, datetime=datetime.now()
+    )
+    from_email = "noreply@uwcs.co.uk"
+    to_email = ["tech@uwcs.co.uk"]
+    message = "{username} has requested a database account with the username {db_username} at {datetime}.".format(
+        username=user.username, db_username=request.name, datetime=datetime.now()
+    )
     send_mail(subject, message, from_email, to_email)
 
 
 class RequestDatabaseAccountView(AlreadyHasDatabaseAccountMixin, FormView):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/request_database.html'
-    success_url = 'done/'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/request_database.html"
+    success_url = "done/"
     form_class = DatabaseAccountForm
 
     def form_valid(self, form):
         account = form.save(commit=False)
         account.user = self.request.user
-        account.status = 'RE'  # Requested
+        account.status = "RE"  # Requested
         account.save()
 
         notify_account_requested(self.request.user, account)
@@ -149,32 +150,33 @@ class RootRedirectView(RedirectView):
 
     def get_redirect_url(self, *args, **kwargs):
         if self.request.user.is_authenticated:
-            return '/accounts/profile'
+            return "/accounts/profile"
         else:
-            return '/accounts/login'
+            return "/accounts/login"
 
 
 class RequestAccountDoneView(LoginRequiredMixin, View):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/request_account_done.html'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/request_account_done.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 
 class MemberAccountUpdateDoneView(LoginRequiredMixin, View):
-    login_url = '/accounts/login/'
-    redirect_field_name = 'redirect_to'
-    template_name = 'accounts/account_update_done.html'
+    login_url = "/accounts/login/"
+    redirect_field_name = "redirect_to"
+    template_name = "accounts/account_update_done.html"
 
     def get(self, request):
         return render(request, self.template_name)
 
 
 class ToggleNightModeView(View):
-
     def post(self, request):
-        request.session['night_mode'] = request.POST.get('night_mode', default="") == "true"
+        request.session["night_mode"] = (
+            request.POST.get("night_mode", default="") == "true"
+        )
 
         return HttpResponse(status=200)

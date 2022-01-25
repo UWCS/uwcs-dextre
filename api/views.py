@@ -7,24 +7,36 @@ from oauth2_provider.contrib.rest_framework.permissions import TokenHasScope
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
-from rest_framework.status import HTTP_201_CREATED, HTTP_400_BAD_REQUEST, HTTP_200_OK, HTTP_403_FORBIDDEN
+from rest_framework.status import (
+    HTTP_201_CREATED,
+    HTTP_400_BAD_REQUEST,
+    HTTP_200_OK,
+    HTTP_403_FORBIDDEN,
+)
 from rest_framework.views import APIView
 
 from accounts.models import CompsocUser
 from events.models import EventPage, EventSignup
-from .serializers import DiscordUserSerialiser, EventSerialiser, EventSignupSerialiser, ProfileSerialiser, \
-    RolesProfileSerialiser
+from .serializers import (
+    DiscordUserSerialiser,
+    EventSerialiser,
+    EventSignupSerialiser,
+    ProfileSerialiser,
+    RolesProfileSerialiser,
+)
 
 
 class LanAppProfileView(APIView):
     authentication_classes = [OAuth2Authentication]
     permission_classes = [TokenHasScope]
-    required_scopes = ['lanapp']
+    required_scopes = ["lanapp"]
 
     def get(self, request):
         if not request.user.is_authenticated:
-            return JsonResponse({'detail': 'cannot perform that action on an unauthenticated user'},
-                                status=HTTP_403_FORBIDDEN)
+            return JsonResponse(
+                {"detail": "cannot perform that action on an unauthenticated user"},
+                status=HTTP_403_FORBIDDEN,
+            )
         user = request.user
         compsoc_user = CompsocUser.objects.get(user_id=user.id)
         serializer = ProfileSerialiser(compsoc_user)
@@ -35,12 +47,14 @@ class LanAppProfileView(APIView):
 class ProfileView(APIView):
     authentication_classes = [OAuth2Authentication]
     permission_classes = [TokenHasScope]
-    required_scopes = ['profile']
+    required_scopes = ["profile"]
 
     def get(self, request):
         if not request.user.is_authenticated:
-            return JsonResponse({'detail': 'cannot perform that action on an unauthenticated user'},
-                                status=HTTP_403_FORBIDDEN)
+            return JsonResponse(
+                {"detail": "cannot perform that action on an unauthenticated user"},
+                status=HTTP_403_FORBIDDEN,
+            )
         user = request.user
         compsoc_user = CompsocUser.objects.get(user_id=user.id)
         serializer = ProfileSerialiser(compsoc_user)
@@ -51,12 +65,14 @@ class ProfileView(APIView):
 class RolesProfileView(APIView):
     authentication_classes = [OAuth2Authentication]
     permission_classes = [TokenHasScope]
-    required_scopes = ['roles']
+    required_scopes = ["roles"]
 
     def get(self, request):
         if not request.user.is_authenticated:
-            return JsonResponse({'detail': 'cannot perform that action on an unauthenticated user'},
-                                status=HTTP_403_FORBIDDEN)
+            return JsonResponse(
+                {"detail": "cannot perform that action on an unauthenticated user"},
+                status=HTTP_403_FORBIDDEN,
+            )
         user = request.user
         compsoc_user = CompsocUser.objects.get(user_id=user.id)
         serializer = RolesProfileSerialiser(compsoc_user)
@@ -79,16 +95,19 @@ class MemberDiscordInfoApiView(APIView):
 class EventSignupView(APIView):
     authentication_classes = [OAuth2Authentication]
     permission_classes = [TokenHasScope]
-    required_scopes = ['event']
+    required_scopes = ["event"]
 
     def post(self, request):
-        if not request.data.get('event_id'):
-            return JsonResponse({'detail': 'event_id field is required but wasn\'t found'}, status=HTTP_400_BAD_REQUEST)
+        if not request.data.get("event_id"):
+            return JsonResponse(
+                {"detail": "event_id field is required but wasn't found"},
+                status=HTTP_400_BAD_REQUEST,
+            )
 
         data = {
-            'event': request.data.get('event_id'),
-            'member': request.user.id,
-            'comment': request.data.get('comment')
+            "event": request.data.get("event_id"),
+            "member": request.user.id,
+            "comment": request.data.get("comment"),
         }
 
         serialiser = EventSignupSerialiser(data=data)
@@ -103,15 +122,17 @@ class EventSignupView(APIView):
 class EventDeregisterView(APIView):
     authentication_classes = [OAuth2Authentication]
     permission_classes = [TokenHasScope]
-    required_scopes = ['event']
+    required_scopes = ["event"]
 
     def get(self, request, event_id):
         signup = get_object_or_404(EventSignup, event=event_id, member=request.user.id)
         signup.delete()
 
-        return JsonResponse({'detail': 'signup deleted'}, status=HTTP_200_OK)
+        return JsonResponse({"detail": "signup deleted"}, status=HTTP_200_OK)
 
 
 class EventListView(ListAPIView):
-    queryset = EventPage.objects.live().filter(finish__gte=timezone.now()).order_by('start')
+    queryset = (
+        EventPage.objects.live().filter(finish__gte=timezone.now()).order_by("start")
+    )
     serializer_class = EventSerialiser

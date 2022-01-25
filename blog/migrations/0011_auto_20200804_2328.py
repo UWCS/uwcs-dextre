@@ -6,28 +6,38 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0010_auto_20200725_2145'),
+        ("blog", "0010_auto_20200725_2145"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='FooterLink',
+            name="FooterLink",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('link_url', models.URLField(blank=True, null=True)),
-                ('title', models.CharField(blank=True, max_length=20)),
-                ('order', models.SmallIntegerField(default=0)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("link_url", models.URLField(blank=True, null=True)),
+                ("title", models.CharField(blank=True, max_length=20)),
+                ("order", models.SmallIntegerField(default=0)),
             ],
             options={
-                'ordering': ('order',),
+                "ordering": ("order",),
             },
         ),
         migrations.DeleteModel(
-            name='Footer',
+            name="Footer",
         ),
         migrations.AddField(
-            model_name='socialmedia',
-            name='footer',
-            field=models.BooleanField(default=True, help_text='Should this be shown in the footer'),
+            model_name="socialmedia",
+            name="footer",
+            field=models.BooleanField(
+                default=True, help_text="Should this be shown in the footer"
+            ),
         ),
     ]

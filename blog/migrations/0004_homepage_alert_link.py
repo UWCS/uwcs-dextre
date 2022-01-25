@@ -6,13 +6,13 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0003_homepage_alert'),
+        ("blog", "0003_homepage_alert"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='homepage',
-            name='alert_link',
+            model_name="homepage",
+            name="alert_link",
             field=models.URLField(blank=True),
         ),
     ]

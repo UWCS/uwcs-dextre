@@ -7,27 +7,29 @@ from django.core.validators import RegexValidator
 from django.db import models
 from django.db.models.signals import post_save
 
-username_pattern = re.compile(r'^[a-z0-9]+$')
+username_pattern = re.compile(r"^[a-z0-9]+$")
 
 STATUS = (
-    ('RE', 'Requested'),
-    ('PR', 'Enabled'),
-    ('DD', 'Disabled'),
+    ("RE", "Requested"),
+    ("PR", "Enabled"),
+    ("DD", "Disabled"),
 )
 
 
 class CompsocUser(models.Model):
-    nickname = models.CharField(max_length=50, blank=True, default='')
-    first_name = models.CharField(max_length=50, blank=True, default='')
-    last_name = models.CharField(max_length=50, blank=True, default='')
+    nickname = models.CharField(max_length=50, blank=True, default="")
+    first_name = models.CharField(max_length=50, blank=True, default="")
+    last_name = models.CharField(max_length=50, blank=True, default="")
 
-    discord_user = models.CharField(max_length=50, blank=True, default='')
+    discord_user = models.CharField(max_length=50, blank=True, default="")
 
-    nightmode_on = models.BooleanField(default=False,
-                                       help_text='Enable night mode whenever you are logged into UWCS - overrides the nightmode switch in the footer')
+    nightmode_on = models.BooleanField(
+        default=False,
+        help_text="Enable night mode whenever you are logged into UWCS - overrides the nightmode switch in the footer",
+    )
 
-    website_url = models.CharField(max_length=50, blank=True, default='')
-    website_title = models.CharField(max_length=50, blank=True, default='')
+    website_url = models.CharField(max_length=50, blank=True, default="")
+    website_title = models.CharField(max_length=50, blank=True, default="")
 
     user = models.OneToOneField(
         settings.AUTH_USER_MODEL,
@@ -36,10 +38,10 @@ class CompsocUser(models.Model):
 
     @property
     def abs_website_url(self):
-        if self.website_url.startswith(('http://', 'https://')):
+        if self.website_url.startswith(("http://", "https://")):
             return self.website_url
         else:
-            return 'http://{url}'.format(url=self.website_url)
+            return "http://{url}".format(url=self.website_url)
 
     def __str__(self):
         return self.name()
@@ -55,7 +57,7 @@ class CompsocUser(models.Model):
 
     def full_name(self):
         if self.first_name:
-            return '{} {}'.format(self.first_name.strip(), self.last_name.strip())
+            return "{} {}".format(self.first_name.strip(), self.last_name.strip())
         else:
             return self.user.get_full_name()
 
@@ -79,9 +81,13 @@ class ShellAccount(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=30,
-                            error_messages={'regex': 'The name must contain all lowercase alphanumeric characters'},
-                            validators=[RegexValidator(regex=username_pattern, code='regex')])
+    name = models.CharField(
+        max_length=30,
+        error_messages={
+            "regex": "The name must contain all lowercase alphanumeric characters"
+        },
+        validators=[RegexValidator(regex=username_pattern, code="regex")],
+    )
     status = models.CharField(max_length=2, choices=STATUS)
 
     def __str__(self):
@@ -93,9 +99,13 @@ class DatabaseAccount(models.Model):
         settings.AUTH_USER_MODEL,
         on_delete=models.CASCADE,
     )
-    name = models.CharField(max_length=30,
-                            error_messages={'regex': 'The name must contain all lowercase alphanumeric characters'},
-                            validators=[RegexValidator(regex=username_pattern, code='regex')])
+    name = models.CharField(
+        max_length=30,
+        error_messages={
+            "regex": "The name must contain all lowercase alphanumeric characters"
+        },
+        validators=[RegexValidator(regex=username_pattern, code="regex")],
+    )
     status = models.CharField(max_length=2, choices=STATUS)
 
     def __str__(self):
@@ -106,7 +116,7 @@ class ExecPosition(models.Model):
     title = models.CharField(max_length=30)
 
     class Meta:
-        ordering = ['title']
+        ordering = ["title"]
 
     def __str__(self):
         return self.title
@@ -123,8 +133,9 @@ class ExecPlacement(models.Model):
     end = models.DateField()
 
     class Meta:
-        ordering = ['start']
+        ordering = ["start"]
 
     def __str__(self):
-        return "{start}/{end} - {pos}".format(start=self.start.year, end=self.end.year,
-                                              pos=self.position)
+        return "{start}/{end} - {pos}".format(
+            start=self.start.year, end=self.end.year, pos=self.position
+        )

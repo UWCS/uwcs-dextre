@@ -6,13 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('events', '0017_auto_20210512_2232'),
+        ("events", "0017_auto_20210512_2232"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='eventpage',
-            name='discord_event_link',
-            field=models.URLField(blank=True, default='', help_text='A link to the associated Discord event if one exists', verbose_name='Discord event'),
+            model_name="eventpage",
+            name="discord_event_link",
+            field=models.URLField(
+                blank=True,
+                default="",
+                help_text="A link to the associated Discord event if one exists",
+                verbose_name="Discord event",
+            ),
         ),
     ]

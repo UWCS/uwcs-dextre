@@ -17,13 +17,13 @@ class DiscordUserSerialiser(serializers.Serializer):
 class UserSerialiser(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['username', 'first_name', 'last_name', 'email']
+        fields = ["username", "first_name", "last_name", "email"]
 
 
 class GroupSerialiser(serializers.ModelSerializer):
     class Meta:
         model = Group
-        fields = ['name']
+        fields = ["name"]
 
 
 class UserGroupSerialiser(serializers.ModelSerializer):
@@ -31,7 +31,7 @@ class UserGroupSerialiser(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ['groups', 'is_staff', 'is_superuser']
+        fields = ["groups", "is_staff", "is_superuser"]
 
 
 class RolesProfileSerialiser(serializers.Serializer):
@@ -59,12 +59,23 @@ class ProfileSerialiser(serializers.Serializer):
 class EventSignupSerialiser(serializers.ModelSerializer):
     class Meta:
         model = EventSignup
-        fields = ('event', 'member', 'signup_created', 'comment')
+        fields = ("event", "member", "signup_created", "comment")
 
 
 class EventSerialiser(serializers.ModelSerializer):
     class Meta:
         model = EventPage
         fields = (
-            'title', 'id', 'location', 'start', 'finish', 'description', 'cancelled', 'signup_limit', 'signup_open',
-            'signup_close', 'signup_freshers_open', 'signup_count')
+            "title",
+            "id",
+            "location",
+            "start",
+            "finish",
+            "description",
+            "cancelled",
+            "signup_limit",
+            "signup_open",
+            "signup_close",
+            "signup_freshers_open",
+            "signup_count",
+        )

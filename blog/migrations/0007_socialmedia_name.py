@@ -6,14 +6,14 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0006_socialmedia'),
+        ("blog", "0006_socialmedia"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='socialmedia',
-            name='name',
-            field=models.CharField(default='', max_length=30),
+            model_name="socialmedia",
+            name="name",
+            field=models.CharField(default="", max_length=30),
             preserve_default=False,
         ),
     ]

@@ -7,28 +7,49 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('wagtailimages', '0022_uploadedimage'),
-        ('blog', '0007_socialmedia_name'),
+        ("wagtailimages", "0022_uploadedimage"),
+        ("blog", "0007_socialmedia_name"),
     ]
 
     operations = [
         migrations.RemoveField(
-            model_name='sponsor',
-            name='primary_sponsor',
+            model_name="sponsor",
+            name="primary_sponsor",
         ),
         migrations.AddField(
-            model_name='sponsor',
-            name='tier',
-            field=models.IntegerField(choices=[(1, 'Bronze (Appears in sponsor page)'), (2, 'Silver (Appears in sponsors and homepage)'), (3, 'Gold (Appears on every page)')], default=1),
+            model_name="sponsor",
+            name="tier",
+            field=models.IntegerField(
+                choices=[
+                    (1, "Bronze (Appears in sponsor page)"),
+                    (2, "Silver (Appears in sponsors and homepage)"),
+                    (3, "Gold (Appears on every page)"),
+                ],
+                default=1,
+            ),
         ),
         migrations.AlterField(
-            model_name='sponsor',
-            name='nightmode_image',
-            field=models.ForeignKey(blank=True, help_text='This image will be displayed in all sponsor display locations across the website in night mode', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image'),
+            model_name="sponsor",
+            name="nightmode_image",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="This image will be displayed in all sponsor display locations across the website in night mode",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.Image",
+            ),
         ),
         migrations.AlterField(
-            model_name='sponsor',
-            name='sponsor_image',
-            field=models.ForeignKey(blank=True, help_text='This image will be displayed in all sponsor display locations across the website', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image'),
+            model_name="sponsor",
+            name="sponsor_image",
+            field=models.ForeignKey(
+                blank=True,
+                help_text="This image will be displayed in all sponsor display locations across the website",
+                null=True,
+                on_delete=django.db.models.deletion.SET_NULL,
+                related_name="+",
+                to="wagtailimages.Image",
+            ),
         ),
     ]

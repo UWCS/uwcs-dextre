@@ -12,23 +12,236 @@ import wagtail.images.blocks
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0014_auto_20200813_2151'),
+        ("blog", "0014_auto_20200813_2151"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='aboutpage',
-            name='body',
-            field=wagtail.core.fields.StreamField([('h2', blog.models.Heading2Block(classname='title', icon='title')), ('h3', blog.models.Heading3Block(classname='title', icon='title')), ('h4', blog.models.Heading4Block(classname='title', icon='title')), ('hr', blog.models.HRuleBlock()), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('image', wagtail.images.blocks.ImageChooserBlock()), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse')), ('code', wagtail.core.blocks.StructBlock([('language', wagtail.core.blocks.ChoiceBlock(choices=[('bash', 'Bash/Shell'), ('c', 'C'), ('cmake', 'CMake'), ('cpp', 'C++'), ('csharp', 'C#'), ('css', 'CSS'), ('go', 'Go'), ('haskell', 'Haskell'), ('haxe', 'Haxe'), ('html', 'HTML'), ('java', 'Java'), ('js', 'JavaScript'), ('json', 'JSON'), ('kotlin', 'Kotlin'), ('lua', 'Lua'), ('make', 'Makefile'), ('perl', 'Perl'), ('perl6', 'Perl 6'), ('php', 'PHP'), ('python', 'Python'), ('python3', 'Python 3'), ('ruby', 'Ruby'), ('sql', 'SQL'), ('swift', 'Swift'), ('xml', 'XML')])), ('code', wagtail.core.blocks.TextBlock())])), ('table', wagtail.contrib.table_block.blocks.TableBlock()), ('html', wagtail.core.blocks.StructBlock([('value', wagtail.core.blocks.TextBlock())]))]),
+            model_name="aboutpage",
+            name="body",
+            field=wagtail.core.fields.StreamField(
+                [
+                    ("h2", blog.models.Heading2Block(classname="title", icon="title")),
+                    ("h3", blog.models.Heading3Block(classname="title", icon="title")),
+                    ("h4", blog.models.Heading4Block(classname="title", icon="title")),
+                    ("hr", blog.models.HRuleBlock()),
+                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("image", wagtail.images.blocks.ImageChooserBlock()),
+                    (
+                        "pullquote",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    ),
+                    (
+                        "document",
+                        wagtail.documents.blocks.DocumentChooserBlock(
+                            icon="doc-full-inverse"
+                        ),
+                    ),
+                    (
+                        "code",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                (
+                                    "language",
+                                    wagtail.core.blocks.ChoiceBlock(
+                                        choices=[
+                                            ("bash", "Bash/Shell"),
+                                            ("c", "C"),
+                                            ("cmake", "CMake"),
+                                            ("cpp", "C++"),
+                                            ("csharp", "C#"),
+                                            ("css", "CSS"),
+                                            ("go", "Go"),
+                                            ("haskell", "Haskell"),
+                                            ("haxe", "Haxe"),
+                                            ("html", "HTML"),
+                                            ("java", "Java"),
+                                            ("js", "JavaScript"),
+                                            ("json", "JSON"),
+                                            ("kotlin", "Kotlin"),
+                                            ("lua", "Lua"),
+                                            ("make", "Makefile"),
+                                            ("perl", "Perl"),
+                                            ("perl6", "Perl 6"),
+                                            ("php", "PHP"),
+                                            ("python", "Python"),
+                                            ("python3", "Python 3"),
+                                            ("ruby", "Ruby"),
+                                            ("sql", "SQL"),
+                                            ("swift", "Swift"),
+                                            ("xml", "XML"),
+                                        ]
+                                    ),
+                                ),
+                                ("code", wagtail.core.blocks.TextBlock()),
+                            ]
+                        ),
+                    ),
+                    ("table", wagtail.contrib.table_block.blocks.TableBlock()),
+                    (
+                        "html",
+                        wagtail.core.blocks.StructBlock(
+                            [("value", wagtail.core.blocks.TextBlock())]
+                        ),
+                    ),
+                ]
+            ),
         ),
         migrations.AlterField(
-            model_name='blogpage',
-            name='body',
-            field=wagtail.core.fields.StreamField([('h2', blog.models.Heading2Block(classname='title', icon='title')), ('h3', blog.models.Heading3Block(classname='title', icon='title')), ('h4', blog.models.Heading4Block(classname='title', icon='title')), ('hr', blog.models.HRuleBlock()), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('image', wagtail.images.blocks.ImageChooserBlock()), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse')), ('code', wagtail.core.blocks.StructBlock([('language', wagtail.core.blocks.ChoiceBlock(choices=[('bash', 'Bash/Shell'), ('c', 'C'), ('cmake', 'CMake'), ('cpp', 'C++'), ('csharp', 'C#'), ('css', 'CSS'), ('go', 'Go'), ('haskell', 'Haskell'), ('haxe', 'Haxe'), ('html', 'HTML'), ('java', 'Java'), ('js', 'JavaScript'), ('json', 'JSON'), ('kotlin', 'Kotlin'), ('lua', 'Lua'), ('make', 'Makefile'), ('perl', 'Perl'), ('perl6', 'Perl 6'), ('php', 'PHP'), ('python', 'Python'), ('python3', 'Python 3'), ('ruby', 'Ruby'), ('sql', 'SQL'), ('swift', 'Swift'), ('xml', 'XML')])), ('code', wagtail.core.blocks.TextBlock())])), ('table', wagtail.contrib.table_block.blocks.TableBlock()), ('html', wagtail.core.blocks.StructBlock([('value', wagtail.core.blocks.TextBlock())]))]),
+            model_name="blogpage",
+            name="body",
+            field=wagtail.core.fields.StreamField(
+                [
+                    ("h2", blog.models.Heading2Block(classname="title", icon="title")),
+                    ("h3", blog.models.Heading3Block(classname="title", icon="title")),
+                    ("h4", blog.models.Heading4Block(classname="title", icon="title")),
+                    ("hr", blog.models.HRuleBlock()),
+                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("image", wagtail.images.blocks.ImageChooserBlock()),
+                    (
+                        "pullquote",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    ),
+                    (
+                        "document",
+                        wagtail.documents.blocks.DocumentChooserBlock(
+                            icon="doc-full-inverse"
+                        ),
+                    ),
+                    (
+                        "code",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                (
+                                    "language",
+                                    wagtail.core.blocks.ChoiceBlock(
+                                        choices=[
+                                            ("bash", "Bash/Shell"),
+                                            ("c", "C"),
+                                            ("cmake", "CMake"),
+                                            ("cpp", "C++"),
+                                            ("csharp", "C#"),
+                                            ("css", "CSS"),
+                                            ("go", "Go"),
+                                            ("haskell", "Haskell"),
+                                            ("haxe", "Haxe"),
+                                            ("html", "HTML"),
+                                            ("java", "Java"),
+                                            ("js", "JavaScript"),
+                                            ("json", "JSON"),
+                                            ("kotlin", "Kotlin"),
+                                            ("lua", "Lua"),
+                                            ("make", "Makefile"),
+                                            ("perl", "Perl"),
+                                            ("perl6", "Perl 6"),
+                                            ("php", "PHP"),
+                                            ("python", "Python"),
+                                            ("python3", "Python 3"),
+                                            ("ruby", "Ruby"),
+                                            ("sql", "SQL"),
+                                            ("swift", "Swift"),
+                                            ("xml", "XML"),
+                                        ]
+                                    ),
+                                ),
+                                ("code", wagtail.core.blocks.TextBlock()),
+                            ]
+                        ),
+                    ),
+                    ("table", wagtail.contrib.table_block.blocks.TableBlock()),
+                    (
+                        "html",
+                        wagtail.core.blocks.StructBlock(
+                            [("value", wagtail.core.blocks.TextBlock())]
+                        ),
+                    ),
+                ]
+            ),
         ),
         migrations.AlterField(
-            model_name='homepage',
-            name='description',
-            field=wagtail.core.fields.StreamField([('h2', blog.models.Heading2Block(classname='title', icon='title')), ('h3', blog.models.Heading3Block(classname='title', icon='title')), ('h4', blog.models.Heading4Block(classname='title', icon='title')), ('hr', blog.models.HRuleBlock()), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('image', wagtail.images.blocks.ImageChooserBlock()), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse')), ('code', wagtail.core.blocks.StructBlock([('language', wagtail.core.blocks.ChoiceBlock(choices=[('bash', 'Bash/Shell'), ('c', 'C'), ('cmake', 'CMake'), ('cpp', 'C++'), ('csharp', 'C#'), ('css', 'CSS'), ('go', 'Go'), ('haskell', 'Haskell'), ('haxe', 'Haxe'), ('html', 'HTML'), ('java', 'Java'), ('js', 'JavaScript'), ('json', 'JSON'), ('kotlin', 'Kotlin'), ('lua', 'Lua'), ('make', 'Makefile'), ('perl', 'Perl'), ('perl6', 'Perl 6'), ('php', 'PHP'), ('python', 'Python'), ('python3', 'Python 3'), ('ruby', 'Ruby'), ('sql', 'SQL'), ('swift', 'Swift'), ('xml', 'XML')])), ('code', wagtail.core.blocks.TextBlock())])), ('table', wagtail.contrib.table_block.blocks.TableBlock()), ('html', wagtail.core.blocks.StructBlock([('value', wagtail.core.blocks.TextBlock())]))]),
+            model_name="homepage",
+            name="description",
+            field=wagtail.core.fields.StreamField(
+                [
+                    ("h2", blog.models.Heading2Block(classname="title", icon="title")),
+                    ("h3", blog.models.Heading3Block(classname="title", icon="title")),
+                    ("h4", blog.models.Heading4Block(classname="title", icon="title")),
+                    ("hr", blog.models.HRuleBlock()),
+                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("image", wagtail.images.blocks.ImageChooserBlock()),
+                    (
+                        "pullquote",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    ),
+                    (
+                        "document",
+                        wagtail.documents.blocks.DocumentChooserBlock(
+                            icon="doc-full-inverse"
+                        ),
+                    ),
+                    (
+                        "code",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                (
+                                    "language",
+                                    wagtail.core.blocks.ChoiceBlock(
+                                        choices=[
+                                            ("bash", "Bash/Shell"),
+                                            ("c", "C"),
+                                            ("cmake", "CMake"),
+                                            ("cpp", "C++"),
+                                            ("csharp", "C#"),
+                                            ("css", "CSS"),
+                                            ("go", "Go"),
+                                            ("haskell", "Haskell"),
+                                            ("haxe", "Haxe"),
+                                            ("html", "HTML"),
+                                            ("java", "Java"),
+                                            ("js", "JavaScript"),
+                                            ("json", "JSON"),
+                                            ("kotlin", "Kotlin"),
+                                            ("lua", "Lua"),
+                                            ("make", "Makefile"),
+                                            ("perl", "Perl"),
+                                            ("perl6", "Perl 6"),
+                                            ("php", "PHP"),
+                                            ("python", "Python"),
+                                            ("python3", "Python 3"),
+                                            ("ruby", "Ruby"),
+                                            ("sql", "SQL"),
+                                            ("swift", "Swift"),
+                                            ("xml", "XML"),
+                                        ]
+                                    ),
+                                ),
+                                ("code", wagtail.core.blocks.TextBlock()),
+                            ]
+                        ),
+                    ),
+                    ("table", wagtail.contrib.table_block.blocks.TableBlock()),
+                    (
+                        "html",
+                        wagtail.core.blocks.StructBlock(
+                            [("value", wagtail.core.blocks.TextBlock())]
+                        ),
+                    ),
+                ]
+            ),
         ),
     ]

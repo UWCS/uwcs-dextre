@@ -6,13 +6,21 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0008_auto_20200722_1716'),
+        ("blog", "0008_auto_20200722_1716"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='sponsor',
-            name='tier',
-            field=models.IntegerField(choices=[(0, 'Lapsed (Not shown anywhere)'), (1, 'Bronze (Appears in sponsor page)'), (2, 'Silver (Appears in sponsors and homepage)'), (3, 'Gold (Appears on every page)')], default=1),
+            model_name="sponsor",
+            name="tier",
+            field=models.IntegerField(
+                choices=[
+                    (0, "Lapsed (Not shown anywhere)"),
+                    (1, "Bronze (Appears in sponsor page)"),
+                    (2, "Silver (Appears in sponsors and homepage)"),
+                    (3, "Gold (Appears on every page)"),
+                ],
+                default=1,
+            ),
         ),
     ]

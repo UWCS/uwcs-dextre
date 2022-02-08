@@ -7,13 +7,13 @@ import wagtail.core.fields
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('blog', '0002_auto_20200720_1902'),
+        ("blog", "0002_auto_20200720_1902"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='homepage',
-            name='alert',
+            model_name="homepage",
+            name="alert",
             field=wagtail.core.fields.RichTextField(blank=True),
         ),
     ]

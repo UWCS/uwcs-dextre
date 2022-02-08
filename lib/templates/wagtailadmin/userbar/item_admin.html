@@ -2,11 +2,9 @@
 {% load i18n wagtailadmin_tags %}
 
 {% block item_content %}
-    <div class="wagtail-action">
-        <a href="{% url 'wagtailadmin_home' %}" target="_parent">
-          {% icon name="wagtail-icon" class_name="wagtail-action-icon" %}
-          {% trans 'Go to Website Editor' %}
-        </a>
-    </div>
+    <a href="{% url 'wagtailadmin_home' %}" target="_parent" class="wagtail-userbar-link" role="menuitem">
+        {% icon name="wagtail-icon" class_name="wagtail-action-icon" %}
+        {% trans 'Go to Website Editor' %}
+    </a>
 {% endblock %}
 

@@ -9,7 +9,14 @@ import re
 
 class Migration(migrations.Migration):
 
-    replaces = [('accounts', '0001_initial'), ('accounts', '0002_auto_20160914_1423'), ('accounts', '0003_auto_20160914_1943'), ('accounts', '0004_auto_20170623_1855'), ('accounts', '0005_auto_20171002_1505'), ('accounts', '0006_compsocuser_discord_user')]
+    replaces = [
+        ("accounts", "0001_initial"),
+        ("accounts", "0002_auto_20160914_1423"),
+        ("accounts", "0003_auto_20160914_1943"),
+        ("accounts", "0004_auto_20170623_1855"),
+        ("accounts", "0005_auto_20171002_1505"),
+        ("accounts", "0006_compsocuser_discord_user"),
+    ]
 
     initial = True
 
@@ -19,58 +26,189 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='ExecPosition',
+            name="ExecPosition",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('title', models.CharField(max_length=30)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("title", models.CharField(max_length=30)),
             ],
             options={
-                'ordering': ['title'],
+                "ordering": ["title"],
             },
         ),
         migrations.CreateModel(
-            name='ExecPlacement',
+            name="ExecPlacement",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('start', models.DateField()),
-                ('end', models.DateField()),
-                ('position', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='accounts.ExecPosition')),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("start", models.DateField()),
+                ("end", models.DateField()),
+                (
+                    "position",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="accounts.ExecPosition",
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
             options={
-                'ordering': ['start'],
+                "ordering": ["start"],
             },
         ),
         migrations.CreateModel(
-            name='DatabaseAccount',
+            name="DatabaseAccount",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(error_messages={'regex': 'The name must contain all lowercase alphanumeric characters'}, max_length=30, validators=[django.core.validators.RegexValidator(code='regex', regex=re.compile('^[a-z0-9]+$'))])),
-                ('status', models.CharField(choices=[('RE', 'Requested'), ('PR', 'Enabled'), ('DD', 'Disabled')], max_length=2)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        error_messages={
+                            "regex": "The name must contain all lowercase alphanumeric characters"
+                        },
+                        max_length=30,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                code="regex", regex=re.compile("^[a-z0-9]+$")
+                            )
+                        ],
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("RE", "Requested"),
+                            ("PR", "Enabled"),
+                            ("DD", "Disabled"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='ShellAccount',
+            name="ShellAccount",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(error_messages={'regex': 'The name must contain all lowercase alphanumeric characters'}, max_length=30, validators=[django.core.validators.RegexValidator(code='regex', regex=re.compile('^[a-z0-9]+$'))])),
-                ('status', models.CharField(choices=[('RE', 'Requested'), ('PR', 'Enabled'), ('DD', 'Disabled')], max_length=2)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "name",
+                    models.CharField(
+                        error_messages={
+                            "regex": "The name must contain all lowercase alphanumeric characters"
+                        },
+                        max_length=30,
+                        validators=[
+                            django.core.validators.RegexValidator(
+                                code="regex", regex=re.compile("^[a-z0-9]+$")
+                            )
+                        ],
+                    ),
+                ),
+                (
+                    "status",
+                    models.CharField(
+                        choices=[
+                            ("RE", "Requested"),
+                            ("PR", "Enabled"),
+                            ("DD", "Disabled"),
+                        ],
+                        max_length=2,
+                    ),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='CompsocUser',
+            name="CompsocUser",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('nickname', models.CharField(blank=True, default='', max_length=50)),
-                ('website_url', models.CharField(blank=True, default='', max_length=50)),
-                ('website_title', models.CharField(blank=True, default='', max_length=50)),
-                ('user', models.OneToOneField(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
-                ('first_name', models.CharField(blank=True, default='', max_length=50)),
-                ('last_name', models.CharField(blank=True, default='', max_length=50)),
-                ('nightmode_on', models.BooleanField(default=False, help_text='Enable night mode whenever you are logged into UWCS - overrides the nightmode switch in the footer')),
-                ('discord_user', models.CharField(blank=True, default='', max_length=50)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("nickname", models.CharField(blank=True, default="", max_length=50)),
+                (
+                    "website_url",
+                    models.CharField(blank=True, default="", max_length=50),
+                ),
+                (
+                    "website_title",
+                    models.CharField(blank=True, default="", max_length=50),
+                ),
+                (
+                    "user",
+                    models.OneToOneField(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to=settings.AUTH_USER_MODEL,
+                    ),
+                ),
+                ("first_name", models.CharField(blank=True, default="", max_length=50)),
+                ("last_name", models.CharField(blank=True, default="", max_length=50)),
+                (
+                    "nightmode_on",
+                    models.BooleanField(
+                        default=False,
+                        help_text="Enable night mode whenever you are logged into UWCS - overrides the nightmode switch in the footer",
+                    ),
+                ),
+                (
+                    "discord_user",
+                    models.CharField(blank=True, default="", max_length=50),
+                ),
             ],
         ),
     ]

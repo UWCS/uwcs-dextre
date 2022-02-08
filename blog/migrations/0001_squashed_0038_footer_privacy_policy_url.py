@@ -13,133 +13,523 @@ import wagtail.images.blocks
 
 class Migration(migrations.Migration):
 
-    replaces = [('blog', '0001_initial'), ('blog', '0002_auto_20160719_2104'), ('blog', '0003_auto_20160719_2147'), ('blog', '0004_homepage_description'), ('blog', '0005_auto_20160725_1312'), ('blog', '0006_sponsor'), ('blog', '0007_remove_homepage_sponsor_image'), ('blog', '0008_sponsor_primary_sponsor'), ('blog', '0009_footer'), ('blog', '0010_blogpage_intro'), ('blog', '0011_auto_20160814_1738'), ('blog', '0012_auto_20160814_1739'), ('blog', '0013_auto_20160814_1815'), ('blog', '0014_auto_20160814_1854'), ('blog', '0015_blogpage_body'), ('blog', '0016_auto_20160814_2044'), ('blog', '0017_auto_20160815_0847'), ('blog', '0018_aboutpage_contactindexpage_execpage'), ('blog', '0019_eventsindexpage'), ('blog', '0020_aboutpage_full_title'), ('blog', '0021_eventpage'), ('blog', '0022_auto_20160917_1241'), ('blog', '0023_auto_20160917_1243'), ('blog', '0024_auto_20160917_1246'), ('blog', '0025_auto_20160917_1617'), ('blog', '0026_auto_20160917_2055'), ('blog', '0027_auto_20160919_1426'), ('blog', '0028_auto_20160919_1643'), ('blog', '0029_auto_20160922_1928'), ('blog', '0030_auto_20161017_1034'), ('blog', '0031_sponsor_nightmode_image'), ('blog', '0032_auto_20171016_1330'), ('blog', '0033_auto_20171016_1334'), ('blog', '0034_auto_20171016_1335'), ('blog', '0035_auto_20171016_1339'), ('blog', '0036_auto_20171016_1340'), ('blog', '0037_auto_20171016_1513'), ('blog', '0038_footer_privacy_policy_url')]
+    replaces = [
+        ("blog", "0001_initial"),
+        ("blog", "0002_auto_20160719_2104"),
+        ("blog", "0003_auto_20160719_2147"),
+        ("blog", "0004_homepage_description"),
+        ("blog", "0005_auto_20160725_1312"),
+        ("blog", "0006_sponsor"),
+        ("blog", "0007_remove_homepage_sponsor_image"),
+        ("blog", "0008_sponsor_primary_sponsor"),
+        ("blog", "0009_footer"),
+        ("blog", "0010_blogpage_intro"),
+        ("blog", "0011_auto_20160814_1738"),
+        ("blog", "0012_auto_20160814_1739"),
+        ("blog", "0013_auto_20160814_1815"),
+        ("blog", "0014_auto_20160814_1854"),
+        ("blog", "0015_blogpage_body"),
+        ("blog", "0016_auto_20160814_2044"),
+        ("blog", "0017_auto_20160815_0847"),
+        ("blog", "0018_aboutpage_contactindexpage_execpage"),
+        ("blog", "0019_eventsindexpage"),
+        ("blog", "0020_aboutpage_full_title"),
+        ("blog", "0021_eventpage"),
+        ("blog", "0022_auto_20160917_1241"),
+        ("blog", "0023_auto_20160917_1243"),
+        ("blog", "0024_auto_20160917_1246"),
+        ("blog", "0025_auto_20160917_1617"),
+        ("blog", "0026_auto_20160917_2055"),
+        ("blog", "0027_auto_20160919_1426"),
+        ("blog", "0028_auto_20160919_1643"),
+        ("blog", "0029_auto_20160922_1928"),
+        ("blog", "0030_auto_20161017_1034"),
+        ("blog", "0031_sponsor_nightmode_image"),
+        ("blog", "0032_auto_20171016_1330"),
+        ("blog", "0033_auto_20171016_1334"),
+        ("blog", "0034_auto_20171016_1335"),
+        ("blog", "0035_auto_20171016_1339"),
+        ("blog", "0036_auto_20171016_1340"),
+        ("blog", "0037_auto_20171016_1513"),
+        ("blog", "0038_footer_privacy_policy_url"),
+    ]
 
     initial = True
 
     dependencies = [
-        ('wagtailimages', '0019_delete_filter'),
-        ('events', '0001_initial'),
-        ('wagtailcore', '0028_merge'),
-        ('taggit', '0002_auto_20150616_2121'),
-        ('wagtailimages', '0013_make_rendition_upload_callable'),
-        ('wagtailredirects', '0005_capitalizeverbose'),
-        ('wagtailforms', '0003_capitalizeverbose'),
-        ('wagtailcore', '0029_unicode_slugfield_dj19'),
+        ("wagtailimages", "0019_delete_filter"),
+        ("events", "0001_initial"),
+        ("wagtailcore", "0028_merge"),
+        ("taggit", "0002_auto_20150616_2121"),
+        ("wagtailimages", "0013_make_rendition_upload_callable"),
+        ("wagtailredirects", "0005_capitalizeverbose"),
+        ("wagtailforms", "0003_capitalizeverbose"),
+        ("wagtailcore", "0029_unicode_slugfield_dj19"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='BlogIndexPage',
+            name="BlogIndexPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='BlogPage',
+            name="BlogPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('body', wagtail.core.fields.StreamField([('h2', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h3', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h4', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('intro', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse'))])),
-                ('date', models.DateField(verbose_name='Post date')),
-                ('feed_image', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                (
+                    "body",
+                    wagtail.core.fields.StreamField(
+                        [
+                            (
+                                "h2",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "h3",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "h4",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "intro",
+                                wagtail.core.blocks.RichTextBlock(icon="pilcrow"),
+                            ),
+                            (
+                                "paragraph",
+                                wagtail.core.blocks.RichTextBlock(icon="pilcrow"),
+                            ),
+                            (
+                                "pullquote",
+                                wagtail.core.blocks.StructBlock(
+                                    [
+                                        (
+                                            "quote",
+                                            wagtail.core.blocks.TextBlock(
+                                                "quote title"
+                                            ),
+                                        ),
+                                        (
+                                            "attribution",
+                                            wagtail.core.blocks.CharBlock(),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            (
+                                "document",
+                                wagtail.documents.blocks.DocumentChooserBlock(
+                                    icon="doc-full-inverse"
+                                ),
+                            ),
+                        ]
+                    ),
+                ),
+                ("date", models.DateField(verbose_name="Post date")),
+                (
+                    "feed_image",
+                    models.ForeignKey(
+                        blank=True,
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='BlogPageTag',
+            name="BlogPageTag",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('content_object', modelcluster.fields.ParentalKey(on_delete=django.db.models.deletion.CASCADE, related_name='tagged_items', to='blog.BlogPage')),
-                ('tag', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='blog_blogpagetag_items', to='taggit.Tag')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "content_object",
+                    modelcluster.fields.ParentalKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="tagged_items",
+                        to="blog.BlogPage",
+                    ),
+                ),
+                (
+                    "tag",
+                    models.ForeignKey(
+                        on_delete=django.db.models.deletion.CASCADE,
+                        related_name="blog_blogpagetag_items",
+                        to="taggit.Tag",
+                    ),
+                ),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
         ),
         migrations.AddField(
-            model_name='blogpage',
-            name='tags',
-            field=modelcluster.contrib.taggit.ClusterTaggableManager(blank=True, help_text='A comma-separated list of tags.', through='blog.BlogPageTag', to='taggit.Tag', verbose_name='Tags'),
+            model_name="blogpage",
+            name="tags",
+            field=modelcluster.contrib.taggit.ClusterTaggableManager(
+                blank=True,
+                help_text="A comma-separated list of tags.",
+                through="blog.BlogPageTag",
+                to="taggit.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.CreateModel(
-            name='HomePage',
+            name="HomePage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('description', models.TextField(default='', max_length=400)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                ("description", models.TextField(default="", max_length=400)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.CreateModel(
-            name='Sponsor',
+            name="Sponsor",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('url', models.URLField(blank=True, null=True)),
-                ('name', models.CharField(max_length=255)),
-                ('sponsor_image', models.ForeignKey(blank=True, help_text='This image will be displayed in all sponsor display locations accross the website', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
-                ('primary_sponsor', models.BooleanField(default=False)),
-                ('nightmode_image', models.ForeignKey(blank=True, help_text='This image will be displayed in all sponsor display locations accross the website in night mode', null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='+', to='wagtailimages.Image')),
-                ('email_sponsor', models.BooleanField(default=True, help_text='Should this sponsor be included in the newsletters?')),
-                ('email_text_markdown', models.TextField(help_text='The text content in our newsletter emails. Is required to be valid markdown', max_length=4000, verbose_name='Email text')),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("url", models.URLField(blank=True, null=True)),
+                ("name", models.CharField(max_length=255)),
+                (
+                    "sponsor_image",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="This image will be displayed in all sponsor display locations accross the website",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                    ),
+                ),
+                ("primary_sponsor", models.BooleanField(default=False)),
+                (
+                    "nightmode_image",
+                    models.ForeignKey(
+                        blank=True,
+                        help_text="This image will be displayed in all sponsor display locations accross the website in night mode",
+                        null=True,
+                        on_delete=django.db.models.deletion.SET_NULL,
+                        related_name="+",
+                        to="wagtailimages.Image",
+                    ),
+                ),
+                (
+                    "email_sponsor",
+                    models.BooleanField(
+                        default=True,
+                        help_text="Should this sponsor be included in the newsletters?",
+                    ),
+                ),
+                (
+                    "email_text_markdown",
+                    models.TextField(
+                        help_text="The text content in our newsletter emails. Is required to be valid markdown",
+                        max_length=4000,
+                        verbose_name="Email text",
+                    ),
+                ),
             ],
         ),
         migrations.CreateModel(
-            name='Footer',
+            name="Footer",
             fields=[
-                ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('facebook_url', models.URLField(blank=True, null=True)),
-                ('twitch_url', models.URLField(blank=True, null=True)),
-                ('twitter_url', models.URLField(blank=True, null=True)),
-                ('privacy_policy_url', models.URLField(blank=True, null=True)),
+                (
+                    "id",
+                    models.AutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("facebook_url", models.URLField(blank=True, null=True)),
+                ("twitch_url", models.URLField(blank=True, null=True)),
+                ("twitter_url", models.URLField(blank=True, null=True)),
+                ("privacy_policy_url", models.URLField(blank=True, null=True)),
             ],
         ),
         migrations.RemoveField(
-            model_name='blogpage',
-            name='body',
+            model_name="blogpage",
+            name="body",
         ),
         migrations.AddField(
-            model_name='blogpage',
-            name='intro',
-            field=wagtail.core.fields.RichTextField(help_text='This is displayed on the home and blog listing pages'),
+            model_name="blogpage",
+            name="intro",
+            field=wagtail.core.fields.RichTextField(
+                help_text="This is displayed on the home and blog listing pages"
+            ),
         ),
         migrations.RemoveField(
-            model_name='blogpage',
-            name='feed_image',
+            model_name="blogpage",
+            name="feed_image",
         ),
         migrations.AddField(
-            model_name='blogpage',
-            name='body',
-            field=wagtail.core.fields.StreamField([('h2', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h3', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h4', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('image', wagtail.images.blocks.ImageChooserBlock()), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse')), ('code', wagtail.core.blocks.StructBlock([('language', wagtail.core.blocks.ChoiceBlock(choices=[('bash', 'Bash/Shell'), ('c', 'C'), ('cmake', 'CMake'), ('cpp', 'C++'), ('csharp', 'C#'), ('css', 'CSS'), ('go', 'Go'), ('haskell', 'Haskell'), ('haxe', 'Haxe'), ('html', 'HTML'), ('java', 'Java'), ('js', 'JavaScript'), ('json', 'JSON'), ('kotlin', 'Kotlin'), ('lua', 'Lua'), ('make', 'Makefile'), ('perl', 'Perl'), ('perl6', 'Perl 6'), ('php', 'PHP'), ('python', 'Python'), ('python3', 'Python 3'), ('ruby', 'Ruby'), ('sql', 'SQL'), ('swift', 'Swift'), ('xml', 'XML')])), ('code', wagtail.core.blocks.TextBlock())]))]),
+            model_name="blogpage",
+            name="body",
+            field=wagtail.core.fields.StreamField(
+                [
+                    (
+                        "h2",
+                        wagtail.core.blocks.CharBlock(classname="title", icon="title"),
+                    ),
+                    (
+                        "h3",
+                        wagtail.core.blocks.CharBlock(classname="title", icon="title"),
+                    ),
+                    (
+                        "h4",
+                        wagtail.core.blocks.CharBlock(classname="title", icon="title"),
+                    ),
+                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("image", wagtail.images.blocks.ImageChooserBlock()),
+                    (
+                        "pullquote",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.core.blocks.CharBlock()),
+                            ]
+                        ),
+                    ),
+                    (
+                        "document",
+                        wagtail.documents.blocks.DocumentChooserBlock(
+                            icon="doc-full-inverse"
+                        ),
+                    ),
+                    (
+                        "code",
+                        wagtail.core.blocks.StructBlock(
+                            [
+                                (
+                                    "language",
+                                    wagtail.core.blocks.ChoiceBlock(
+                                        choices=[
+                                            ("bash", "Bash/Shell"),
+                                            ("c", "C"),
+                                            ("cmake", "CMake"),
+                                            ("cpp", "C++"),
+                                            ("csharp", "C#"),
+                                            ("css", "CSS"),
+                                            ("go", "Go"),
+                                            ("haskell", "Haskell"),
+                                            ("haxe", "Haxe"),
+                                            ("html", "HTML"),
+                                            ("java", "Java"),
+                                            ("js", "JavaScript"),
+                                            ("json", "JSON"),
+                                            ("kotlin", "Kotlin"),
+                                            ("lua", "Lua"),
+                                            ("make", "Makefile"),
+                                            ("perl", "Perl"),
+                                            ("perl6", "Perl 6"),
+                                            ("php", "PHP"),
+                                            ("python", "Python"),
+                                            ("python3", "Python 3"),
+                                            ("ruby", "Ruby"),
+                                            ("sql", "SQL"),
+                                            ("swift", "Swift"),
+                                            ("xml", "XML"),
+                                        ]
+                                    ),
+                                ),
+                                ("code", wagtail.core.blocks.TextBlock()),
+                            ]
+                        ),
+                    ),
+                ]
+            ),
         ),
         migrations.CreateModel(
-            name='AboutPage',
+            name="AboutPage",
             fields=[
-                ('page_ptr', models.OneToOneField(auto_created=True, on_delete=django.db.models.deletion.CASCADE, parent_link=True, primary_key=True, serialize=False, to='wagtailcore.Page')),
-                ('body', wagtail.core.fields.StreamField([('h2', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h3', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('h4', wagtail.core.blocks.CharBlock(classname='title', icon='title')), ('paragraph', wagtail.core.blocks.RichTextBlock(icon='pilcrow')), ('image', wagtail.images.blocks.ImageChooserBlock()), ('pullquote', wagtail.core.blocks.StructBlock([('quote', wagtail.core.blocks.TextBlock('quote title')), ('attribution', wagtail.core.blocks.CharBlock())])), ('document', wagtail.documents.blocks.DocumentChooserBlock(icon='doc-full-inverse')), ('code', wagtail.core.blocks.StructBlock([('language', wagtail.core.blocks.ChoiceBlock(choices=[('bash', 'Bash/Shell'), ('c', 'C'), ('cmake', 'CMake'), ('cpp', 'C++'), ('csharp', 'C#'), ('css', 'CSS'), ('go', 'Go'), ('haskell', 'Haskell'), ('haxe', 'Haxe'), ('html', 'HTML'), ('java', 'Java'), ('js', 'JavaScript'), ('json', 'JSON'), ('kotlin', 'Kotlin'), ('lua', 'Lua'), ('make', 'Makefile'), ('perl', 'Perl'), ('perl6', 'Perl 6'), ('php', 'PHP'), ('python', 'Python'), ('python3', 'Python 3'), ('ruby', 'Ruby'), ('sql', 'SQL'), ('swift', 'Swift'), ('xml', 'XML')])), ('code', wagtail.core.blocks.TextBlock())]))])),
-                ('full_title', models.CharField(blank=True, max_length=255, null=True)),
+                (
+                    "page_ptr",
+                    models.OneToOneField(
+                        auto_created=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        parent_link=True,
+                        primary_key=True,
+                        serialize=False,
+                        to="wagtailcore.Page",
+                    ),
+                ),
+                (
+                    "body",
+                    wagtail.core.fields.StreamField(
+                        [
+                            (
+                                "h2",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "h3",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "h4",
+                                wagtail.core.blocks.CharBlock(
+                                    classname="title", icon="title"
+                                ),
+                            ),
+                            (
+                                "paragraph",
+                                wagtail.core.blocks.RichTextBlock(icon="pilcrow"),
+                            ),
+                            ("image", wagtail.images.blocks.ImageChooserBlock()),
+                            (
+                                "pullquote",
+                                wagtail.core.blocks.StructBlock(
+                                    [
+                                        (
+                                            "quote",
+                                            wagtail.core.blocks.TextBlock(
+                                                "quote title"
+                                            ),
+                                        ),
+                                        (
+                                            "attribution",
+                                            wagtail.core.blocks.CharBlock(),
+                                        ),
+                                    ]
+                                ),
+                            ),
+                            (
+                                "document",
+                                wagtail.documents.blocks.DocumentChooserBlock(
+                                    icon="doc-full-inverse"
+                                ),
+                            ),
+                            (
+                                "code",
+                                wagtail.core.blocks.StructBlock(
+                                    [
+                                        (
+                                            "language",
+                                            wagtail.core.blocks.ChoiceBlock(
+                                                choices=[
+                                                    ("bash", "Bash/Shell"),
+                                                    ("c", "C"),
+                                                    ("cmake", "CMake"),
+                                                    ("cpp", "C++"),
+                                                    ("csharp", "C#"),
+                                                    ("css", "CSS"),
+                                                    ("go", "Go"),
+                                                    ("haskell", "Haskell"),
+                                                    ("haxe", "Haxe"),
+                                                    ("html", "HTML"),
+                                                    ("java", "Java"),
+                                                    ("js", "JavaScript"),
+                                                    ("json", "JSON"),
+                                                    ("kotlin", "Kotlin"),
+                                                    ("lua", "Lua"),
+                                                    ("make", "Makefile"),
+                                                    ("perl", "Perl"),
+                                                    ("perl6", "Perl 6"),
+                                                    ("php", "PHP"),
+                                                    ("python", "Python"),
+                                                    ("python3", "Python 3"),
+                                                    ("ruby", "Ruby"),
+                                                    ("sql", "SQL"),
+                                                    ("swift", "Swift"),
+                                                    ("xml", "XML"),
+                                                ]
+                                            ),
+                                        ),
+                                        ("code", wagtail.core.blocks.TextBlock()),
+                                    ]
+                                ),
+                            ),
+                        ]
+                    ),
+                ),
+                ("full_title", models.CharField(blank=True, max_length=255, null=True)),
             ],
             options={
-                'abstract': False,
+                "abstract": False,
             },
-            bases=('wagtailcore.page',),
+            bases=("wagtailcore.page",),
         ),
         migrations.AlterField(
-            model_name='blogpage',
-            name='date',
-            field=models.DateField(default=django.utils.timezone.now, verbose_name='Post date'),
+            model_name="blogpage",
+            name="date",
+            field=models.DateField(
+                default=django.utils.timezone.now, verbose_name="Post date"
+            ),
         ),
         migrations.AlterField(
-            model_name='blogpage',
-            name='date',
-            field=models.DateTimeField(default=django.utils.timezone.now, verbose_name='Post date'),
+            model_name="blogpage",
+            name="date",
+            field=models.DateTimeField(
+                default=django.utils.timezone.now, verbose_name="Post date"
+            ),
         ),
     ]

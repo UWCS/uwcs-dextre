@@ -31,6 +31,7 @@ django-markdownx==3.0.1
 django-modelcluster==5.2
 django-oauth-toolkit==1.3.3
 django-recurrence==1.10.3
+django-saml-sp
 django-taggit==1.3.0
 django-taggit-templatetags2==1.6.1
 django-treebeard==4.3.1

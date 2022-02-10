@@ -55,11 +55,17 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "oauth2_provider",
     "corsheaders",
+    "sp",
     "djangobower",
     "compressor",
     "anymail",
     "markdownx",
     "widget_tweaks",
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'sp.backends.SAMLAuthenticationBackend'
 ]
 
 REST_FRAMEWORK = {

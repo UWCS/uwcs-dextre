@@ -7,6 +7,18 @@
     <section class="section">
         <div class="container">
             <h3 class="title is-2">Member Log in</h3>
+
+            <a href="/sso/warwick/login">
+                <button class="button is-warwick-aubergine is-medium is-fullwidth">
+                    <span class="icon">
+                        <i class="fas fa-user-graduate"></i>
+                    </span>
+                    <span>Log in with Warwick SSO</span>
+                </button>
+            </a>
+
+            <hr />
+
             <form method="post">
                 {% csrf_token %}
 

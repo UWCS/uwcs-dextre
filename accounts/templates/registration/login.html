@@ -21,7 +21,7 @@
                 </div>
 
                 <div class="column">
-                    <button class="button is-primary is-medium is-fullwidth" onclick="$('div[id=loginWithUwcsForm]').removeClass('is-hidden');">
+                    <button class="button is-primary is-medium is-fullwidth" id="loginWithUwcsButton">
                         <span class="icon">
                             <i class="fas fa-sign-in-alt"></i>
                         </span>
@@ -53,4 +53,12 @@
             </div>
         </div>
     </section>
+{% endblock %}
+
+{% block extra_js %}
+    <script>
+        $('#loginWithUwcsButton').click(function() {
+            $('#loginWithUwcsForm').removeClass('is-hidden');
+        });
+    </script>
 {% endblock %}

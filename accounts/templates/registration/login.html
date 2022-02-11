@@ -8,35 +8,49 @@
         <div class="container">
             <h3 class="title is-2">Member Log in</h3>
 
-            <a href="/sso/warwick/login">
-                <button class="button is-warwick-aubergine is-medium is-fullwidth">
-                    <span class="icon">
-                        <i class="fas fa-user-graduate"></i>
-                    </span>
-                    <span>Log in with Warwick SSO</span>
-                </button>
-            </a>
-
-            <hr />
-
-            <form method="post">
-                {% csrf_token %}
-
-                {% include "lib/includes/form_errors.html" with form=form %}
-
-                {% include "lib/includes/form_field.html" with iconleft="fas fa-user" size="is-medium" field=form.username label="University ID" %}
-                {% include "lib/includes/form_field.html" with iconleft="fas fa-lock" size="is-medium" field=form.password %}
-
-                <input type="hidden" name="next" value="{{ next }}"/>
-                <div class="control">
-                    <input type="submit" class="button is-primary is-medium is-fullwidth" value="Log in">
+            <div class="columns">
+                <div class="column">
+                    <a href="/sso/warwick/login">
+                        <button class="button is-warwick-aubergine is-medium is-fullwidth">
+                            <span class="icon">
+                                <i class="fas fa-user-graduate"></i>
+                            </span>
+                            <span>Log in with Warwick ITS Account</span>
+                        </button>
+                    </a>
                 </div>
-            </form>
 
-            <hr>
+                <div class="column">
+                    <button class="button is-primary is-medium is-fullwidth" onclick="$('div[id=loginWithUwcsForm]').removeClass('is-hidden');">
+                        <span class="icon">
+                            <i class="fas fa-sign-in-alt"></i>
+                        </span>
+                        <span>Log in with your UWCS account</span>
+                    </button>
+                </div>
+            </div>
 
-            <h3>Forgotten your password?</h3>
-            <p><a href="{% url 'password_reset' %}">Click here to start resetting your password.</a></p>
+            <div id="loginWithUwcsForm" {% if form.errors %}{% else %}class="is-hidden"{% endif %}>
+                <hr />
+                <form method="post">
+                    {% csrf_token %}
+
+                    {% include "lib/includes/form_errors.html" with form=form %}
+
+                    {% include "lib/includes/form_field.html" with iconleft="fas fa-user" size="is-medium" field=form.username label="University ID" %}
+                    {% include "lib/includes/form_field.html" with iconleft="fas fa-lock" size="is-medium" field=form.password %}
+
+                    <input type="hidden" name="next" value="{{ next }}"/>
+                    <div class="control">
+                        <input type="submit" class="button is-primary is-medium is-fullwidth" value="Log in">
+                    </div>
+                </form>
+
+                <hr>
+                <h3>Forgotten your password?</h3>
+                <p><a href="{% url 'password_reset' %}">Click here to start resetting your password.</a></p>
+
+            </div>
         </div>
     </section>
 {% endblock %}

@@ -37,12 +37,12 @@ With the packaged dependencies installed and configured (most/all should be avai
 4. Install the requirements using `pip install -r requirements.txt` (make sure you're using the virtualenv if you're using one)
 5. `cd uwcs-dextre/dextre/settings` and create an appropriate settings file `production.py` from the provided sample `production.py.example`
 6. `cd uwcs-dextre/` and bring the backend database up to speed by running `python manage.py migrate` - if you're using a virtualenv do make sure you are running python from it
-7. Download the [Bulma](https://bulma.io/) CSS files from their website, and copy `bulma.scss` and the `css` and `sass` folders from the downloaded zip file into `uwcs-dextre/static/scss`
+7. *(Note May 2022: I don't think you need this step anymore, and was only needed for development anyway)* Download the [Bulma](https://bulma.io/) CSS files from their website, and copy `bulma.scss` and the `css` and `sass` folders from the downloaded zip file into `uwcs-dextre/static/scss`
 8. `cd uwcs-dextre/dextre/components` and then install the Bower dependencies using `bower install` (if you are not deploying for production, you may skip to point 11 at the end of the list)
 9. `cd uwcs-dextre/` and run `python manage.py compress --force` and `python manage.py collectstatic`, accepting where applicable
 10. Create a directory `uwcs-dextre/media`, ensuring your web server has sufficient access to this folder (`rwx` permissions)
 11. Create the appropriate configuration files for Supervisor to run Celery automatically and allow it to recover on restart
-12. Create the configuration file(s) for the web server of your chosing
+12. Create the configuration file(s) for the web server of your choosing
 13. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 #### Ubuntu 20.04 development setup
@@ -55,7 +55,7 @@ Setup postgres database:
 sudo apt-get install postgresql
 sudo -u postgres createuser -D -A -P dextre
 (enter 'password' as password)
-sudo -u postgres createdb -0dextre dextre
+sudo -u postgres createdb -Odextre dextre
 ```
 
 Install systemwide runtime/build dependencies:

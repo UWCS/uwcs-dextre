@@ -56,7 +56,7 @@ If you blindly follow these instructions, you should have a working instance of 
 
 Setup PostgreSQL database:
 ```
-sudo apt-get install postgresql
+sudo apt-get install postgresql postgresql-contrib
 sudo -u postgres createuser -D -A -P dextre
 (enter 'password' as password)
 sudo -u postgres createdb -Odextre dextre
@@ -64,7 +64,7 @@ sudo -u postgres createdb -Odextre dextre
 
 Install system-wide runtime/build dependencies:
 ```
-sudo apt-get install virtualenv postgresql-server-dev-9.5 build-essential python3 python3-pip redis ruby-sass
+sudo apt-get install virtualenv build-essential python3 python3-pip redis ruby-sass
 ```
 
 Install NodeJS

@@ -18,7 +18,7 @@ This section details the deployment of uwcs-dextre on a Linux system.
 #### Dependencies
 uwcs-dextre depends upon a variety of softwares though at its core the website is built upon the Django web framework. The list of dependencies are:
 
-* Python 3.8
+* Python 3.8 (has also been tested with Python 3.9 and 3.10)
 * Redis
 * Sass (Ruby)
 * Bower (npm/node)
@@ -29,9 +29,11 @@ uwcs-dextre depends upon a variety of softwares though at its core the website i
 The deployment of the website on the UWCS systems also uses Apache 2 and mod_wsgi for a web server, though it would be possible to use nginx too. The site also uses a transactional email provided for email, though normal SMTP is planned to be used and configured using Django's standard configuration settings.
 
 #### Installation and Configuration
+**These instructions are soon going to be rewritten. Versions here are probably out of date and need updating**
+
 With the packaged dependencies installed and configured (most/all should be available with any Linux distribution's package manager), the steps for installation of the website are as follows, though you may want to stop after step 5 if you are not going to deploy the website for production purposes:
 
-1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.8
+1. (Optional) Create a virtualenv to run the server from - make sure it's using python 3.8 or 3.9
 2. `git clone` the repository to the location you wish to serve the site from (e.g: `/var/www/uwcs-dextre`)
 3. Install the `wheel` package which is required for the configuration of some other python packages using `pip install wheel` (using the virtualenv if you are using one)   
 4. Install the requirements using `pip install -r requirements.txt` (make sure you're using the virtualenv if you're using one)
@@ -46,11 +48,13 @@ With the packaged dependencies installed and configured (most/all should be avai
 13. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 #### Ubuntu 20.04 development setup
+**As above, these instructions are soon going to be updated rewritten in more detail.**
+
 These are (mostly) tested on Josh's system using WSL 2 & Ubuntu 20.04. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
 
 If you blindly follow these instructions, you should have a working instance of the website.
 
-Setup postgres database:
+Setup PostgreSQL database:
 ```
 sudo apt-get install postgresql
 sudo -u postgres createuser -D -A -P dextre
@@ -58,21 +62,24 @@ sudo -u postgres createuser -D -A -P dextre
 sudo -u postgres createdb -Odextre dextre
 ```
 
-Install systemwide runtime/build dependencies:
+Install system-wide runtime/build dependencies:
 ```
 sudo apt-get install virtualenv postgresql-server-dev-9.5 build-essential python3 python3-pip redis ruby-sass
 ```
 
 Install NodeJS
+
+*I'd recommend using something like [Node Version Manager](https://github.com/nvm-sh/nvm) to install Node instead of just installing from your package manager. This makes it nicer to have multiple versions of NPM and NodeJS installed on your machine at once.*
+
 ```
-curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -
 sudo apt-get install -y nodejs
 ```
 
 Create python virtualenv and install python dependencies:
 ```
-python3 -m venv dextre-venv
-source dextre-env/bin/activate
+python3 -m venv venv
+source venv/bin/activate
 pip3 install wheel
 pip3 install -r requirements.txt
 ```
@@ -81,7 +88,7 @@ Fetch bower components:
 ```
 cd dextre/components
 npm install bower
-./node_modules/.bin/bower install
+bower install
 ```
 
 Ensure the database settings in `dev.py` and `production.py` match the database you created earlier.
@@ -94,12 +101,12 @@ python3 manage.py createsuperuser
 
 Start development server:
 ```
-python manage.py runserver
+python3 manage.py runserver
 ```
 
 Go to http://localhost:8000 and you should see a basic instance of the site!
 
-Head to http://localhost:8000/cms and sign in with the super user you just created. Head to Pages, and create the following pages with the below hierarchy:
+Head to http://localhost:8000/cms and sign in with the superuser you just created. Head to Pages, and create the following pages with the below hierarchy:
 ```
 UWCS Home *type - home page
 |- About *type - about page

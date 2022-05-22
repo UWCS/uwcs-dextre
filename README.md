@@ -78,7 +78,7 @@ sudo apt-get install -y nodejs
 
 3. Install system-wide runtime/build dependencies:
 ```
-sudo apt-get install virtualenv build-essential python3 python3-pip redis
+sudo apt-get install virtualenv build-essential python3 python3-pip redis libxml2-dev libxmlsec1-dev libxmlsec1-openssl
 npm install -g sass
 ```
 

@@ -64,8 +64,8 @@ INSTALLED_APPS = [
 ]
 
 AUTHENTICATION_BACKENDS = [
-    'django.contrib.auth.backends.ModelBackend',
-    'sp.backends.SAMLAuthenticationBackend'
+    "django.contrib.auth.backends.ModelBackend",
+    "sp.backends.SAMLAuthenticationBackend",
 ]
 
 REST_FRAMEWORK = {

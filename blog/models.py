@@ -4,8 +4,9 @@ from django.core.paginator import PageNotAnInteger, EmptyPage
 from django.db import models
 from django.utils import timezone
 from django.utils.functional import cached_property
-from django.utils.html import format_html
+from django.utils.html import format_html, strip_tags
 from django.utils.safestring import mark_safe
+from html import unescape
 from modelcluster.contrib.taggit import ClusterTaggableManager
 from modelcluster.fields import ParentalKey
 from pygments import highlight
@@ -422,7 +423,7 @@ class BlogPage(Page):
         context = super(BlogPage, self).get_context(request)
         context["body"] = self.body
         context["description"] = (
-            self.intro.__str__().replace("<p>", "").replace("</p>", "")
+            unescape(strip_tags(self.intro))
         )
         return context
 

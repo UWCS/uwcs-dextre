@@ -422,9 +422,7 @@ class BlogPage(Page):
     def get_context(self, request):
         context = super(BlogPage, self).get_context(request)
         context["body"] = self.body
-        context["description"] = (
-            unescape(strip_tags(self.intro))
-        )
+        context["description"] = unescape(strip_tags(self.intro))
         return context
 
 

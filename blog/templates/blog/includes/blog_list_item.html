@@ -7,5 +7,5 @@
         <small class="mb-3 has-text-muted">Posted on {{ blog.date|date:'jS F Y' }}</small>
         <div class="content">{{ blog.intro | richtext }}</div>
     </div>
-    <div class="card-footer"><a class="card-footer-item" href="{% pageurl blog %}">Read more&nbsp;<i class="fas fa-chevron-right"></i></a></div>
+    <div class="card-footer"><a class="card-footer-item is-primary-scheme" href="{% pageurl blog %}">Read more&nbsp;<i class="fas fa-chevron-right"></i></a></div>
 </div>

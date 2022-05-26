@@ -208,10 +208,10 @@ a.event:hover {
   }
 
   > a {
-    color: $white;
+    color: rgba(255, 255, 255, 0.87);
 
     &:hover {
-      color: $grey;
+      color: $white;
     }
   }
 }
@@ -260,13 +260,13 @@ a.event:hover {
 }
 
 .credits {
-  color: $grey-light;
+  color: $grey-test-light;
 
   a {
-    color: $white;
+    color: rgba(255, 255, 255, 0.87);
 
     &:hover {
-      color: $grey;
+      color: $white;
     }
   }
 }

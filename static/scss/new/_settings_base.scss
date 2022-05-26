@@ -7,6 +7,7 @@ $grey-darker: $gray-base;
 $grey-dark: desaturate(lighten($gray-base, 10%),2%);
 $grey: desaturate(lighten($gray-base, 20%),3%);
 $grey-light: desaturate(lighten($gray-base, 40%),5%);
+$grey-test-light: hsl(0%, 0%, 60%);
 $grey-lighter: hsl(0, 0%, 86%);
 $grey-lightest: hsl(0, 0%, 93%);
 $white-ter: hsl(0, 0%, 96%);

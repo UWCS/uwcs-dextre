@@ -28,6 +28,7 @@ from wagtail.core.blocks import (
 from wagtail.core.fields import StreamField, RichTextField
 from wagtail.core.models import Page
 from wagtail.documents.blocks import DocumentChooserBlock
+from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
@@ -320,6 +321,7 @@ class BlogStreamBlock(StreamBlock):
     callout = CalloutBlock()
     html = HTMLBlock()
     pdf = PDFEmbedBlock()
+    embed = EmbedBlock(max_width=800, max_height=400)
 
 
 class HomePage(Page):

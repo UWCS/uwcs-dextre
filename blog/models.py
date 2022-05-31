@@ -32,6 +32,7 @@ from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
 from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
+from wagtailmarkdown.blocks import MarkdownBlock
 import bleach
 
 from lib.html_cleaners import domestos
@@ -311,7 +312,8 @@ class BlogStreamBlock(StreamBlock):
     h3 = Heading3Block(icon="title", classname="title")
     h4 = Heading4Block(icon="title", classname="title")
     hr = HRuleBlock()
-    paragraph = RichTextBlock(icon="pilcrow", features=PARAGRAPH_FEATURES)
+    paragraph = RichTextBlock(icon="pilcrow", features=PARAGRAPH_FEATURES, label="Paragraph (old)")
+    markdown = MarkdownBlock(icon="code", label="Markdown")
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()
     document = DocumentChooserBlock(icon="doc-full-inverse")

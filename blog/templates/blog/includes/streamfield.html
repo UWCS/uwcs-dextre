@@ -1,4 +1,4 @@
-{% load wagtailcore_tags wagtailimages_tags blog_tags %}
+{% load wagtailcore_tags wagtailimages_tags blog_tags wagtailmarkdown %}
 
 <div class="content">
     {% for child in content %}
@@ -31,6 +31,8 @@
             </blockquote>
         {% elif child.block_type == 'paragraph' %}
             {{ child.value | richtext }}
+        {% elif child.block_type == 'markdown' %}
+            {{ child.value | markdown }}
         {% elif child.block_type == 'image' %}
             {% image child.value width-900 %}
         {% elif child.block_type == 'document' %}

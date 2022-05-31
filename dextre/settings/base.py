@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "compressor",
     "anymail",
     "markdownx",
+    "wagtailmarkdown",
     "widget_tweaks",
 ]
 
@@ -168,6 +169,10 @@ COMPRESS_PRECOMPILERS = (
         % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT),
     ),
 )
+
+WAGTAILMARKDOWN = {
+    "autodownload_fontawesome": False,
+}
 
 PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.Argon2PasswordHasher",

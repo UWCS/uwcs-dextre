@@ -312,7 +312,9 @@ class BlogStreamBlock(StreamBlock):
     h3 = Heading3Block(icon="title", classname="title")
     h4 = Heading4Block(icon="title", classname="title")
     hr = HRuleBlock()
-    paragraph = RichTextBlock(icon="pilcrow", features=PARAGRAPH_FEATURES, label="Paragraph (old)")
+    paragraph = RichTextBlock(
+        icon="pilcrow", features=PARAGRAPH_FEATURES, label="Paragraph (old)"
+    )
     markdown = MarkdownBlock(icon="code", label="Markdown")
     image = ImageChooserBlock()
     pullquote = PullQuoteBlock()

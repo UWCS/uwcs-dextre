@@ -164,11 +164,9 @@ COMPRESS_PRECOMPILERS = (
     (
         "text/x-scss",
         "sass --style compressed"
-        ' -I "%s/bower_components/foundation-sites/scss"'
         ' -I "%s/bower_components/bulma"'
         ' -I "%s/bower_components/motion-ui"'
-        ' {infile} "{outfile}"'
-        % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT),
+        ' {infile} "{outfile}"' % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT),
     ),
 )
 

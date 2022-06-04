@@ -21,11 +21,12 @@
       <sourceFolder url="file://$MODULE_DIR$/newsletter" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/api" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/events" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/report" isTestSource="false" />
       <excludeFolder url="file://$MODULE_DIR$/static/CACHE" />
       <excludeFolder url="file://$MODULE_DIR$/venv" />
       <excludeFolder url="file://$MODULE_DIR$/venv_minimal" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.8 (uwcs-dextre)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.9 (uwcs-dextre)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TemplatesService">
@@ -43,7 +44,9 @@
         <option value="$MODULE_DIR$/lib/templates" />
         <option value="$MODULE_DIR$/blog/templates" />
         <option value="$MODULE_DIR$/dextre/templates" />
-        <option value="$MODULE_DIR$/members/templates" />
+        <option value="$MODULE_DIR$/accounts/templates" />
+        <option value="$MODULE_DIR$/events/templates" />
+        <option value="$MODULE_DIR$/report/templates" />
       </list>
     </option>
   </component>

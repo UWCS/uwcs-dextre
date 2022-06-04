@@ -82,7 +82,7 @@ typing-extensions==4.0.1
 Unidecode==1.1.1
 urllib3==1.25.11
 vine==5.0.0
-wagtail==2.15.2
+wagtail==2.15.5
 wagtail-markdown==0.8.0
 wcwidth==0.2.5
 webencodings==0.5.1

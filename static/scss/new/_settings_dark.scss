@@ -30,7 +30,7 @@ $text-strong: $white;
 $text-light: $white-ter;
 $background: $black-ter;
 
-$card-background-color: $scheme-main-bis;
+$card-background-color: $alt-grey-base;
 //$link
 //$card-color: hsl(0,0,100%);
 //$card-header-color: $card-color;
@@ -59,7 +59,7 @@ $border-hover: $grey-darker;
 $border-light: $grey-dark;
 $border-light-hover: $grey-darker;
 
-$custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
+$custom-colors: ("primary": $primary-dark, "secondary": $secondary-dark, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,
         "danger-scheme": $danger-scheme, "light-scheme": $light-scheme, "primary-light-scheme": $primary-light-scheme,
         "secondary-light-scheme": $secondary-light-scheme, "info-light-scheme": $info-light-scheme, "success-light-scheme": $success-light-scheme,

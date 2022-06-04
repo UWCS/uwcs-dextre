@@ -1,9 +1,10 @@
 $gray-base: #2c3134;
+$alt-grey-base: #2d3338;
 
 $black: darken($gray-base, 20%);
 $black-bis: darken($gray-base, 15%);
 $black-ter: darken($gray-base, 10%);;
-$grey-darker: $gray-base;
+$grey-darker: $alt-grey-base;
 $grey-dark: desaturate(lighten($gray-base, 10%),2%);
 $grey: desaturate(lighten($gray-base, 20%),3%);
 $grey-light: desaturate(lighten($gray-base, 40%),5%);
@@ -27,7 +28,9 @@ $footer-background-color: #2C3134;
 $footer-color: hsl(0, 0, 100%);
 
 $primary: #3d5afe;
+$primary-dark: desaturate(lighten($primary, 15%), 5%);
 $secondary: #fdd835;
+$secondary-dark: lighten($secondary, 15%);
 $info: $primary;
 $success: #48C774;
 $warning: #FFD600;

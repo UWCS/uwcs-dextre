@@ -2,9 +2,8 @@
     {% for social in socials %}
         <figure class="column">
             <a href="{{ social.url }}" class="social-circle has-text-white">
-                <i class="{{ social.icon }}" aria-hidden="true">
-                    <span class="is-sr-only">{{ social.name }}</span>
-                </i>
+                <i class="{{ social.icon }}" aria-hidden="true"></i>
+                <span class="is-sr-only">{{ social.name }}</span>
             </a>
             <p class="has-text-white has-text-centered social-text">{{ social.name }}</p>
         </figure>

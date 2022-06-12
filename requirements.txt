@@ -17,7 +17,7 @@ click-didyoumean==0.0.3
 click-repl==0.1.6
 cssselect==1.1.0
 cssutils==1.0.2
-Django==3.2.11
+Django==3.2.13
 django-anymail==8.1
 django-appconf==1.0.4
 django-bower==5.2.0

@@ -48,7 +48,7 @@ With the packaged dependencies installed and configured (most/all should be avai
 13. Run your web server (if you're developing locally, simply run `python manage.py runserver`
 
 ### Ubuntu 20.04 development setup
-These are (mostly) tested using WSL 2 & Ubuntu 20.04. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
+These are (mostly) tested using Ubuntu 20.04. They aren't complete and should be used in conjunction with the configuration instructions detailed above.
 
 If you blindly follow these instructions, you should have a working instance of the website.
 

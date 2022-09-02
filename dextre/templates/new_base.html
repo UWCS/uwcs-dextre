@@ -22,6 +22,13 @@
 
     {# Global stylesheets #}
     {% if autotheme %}
+        {% compress css %}
+            <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
+        {% endcompress %}
+        {% compress css %}
+            <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: dark)"/>
+        {% endcompress %}
+    {% else %}
         {% if nightmode %}
             {% compress css %}
                 <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss"/>
@@ -31,13 +38,6 @@
                 <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
             {% endcompress %}
         {% endif %}
-    {% else %}
-        {% compress css %}
-            <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
-        {% endcompress %}
-        {% compress css %}
-            <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: dark)"/>
-        {% endcompress %}
     {% endif %}
     <link href="{% static 'css/pygments-codehilite.css' %}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">

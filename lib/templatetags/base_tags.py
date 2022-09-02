@@ -36,15 +36,15 @@ def is_auto_theme(context):
     try:
         user = context["request"].user
     except AttributeError:
-        return False
+        return bool(context["request"].session.get("auto_colour_scheme", default=True))
     try:
         if user.compsocuser:
             if user.compsocuser.nightmode_on:
                 # If a user has nightmode switched on in profile, we don't want auto theme enabled
                 return False
-        return bool(context["request"].session.get("auto_colour_scheme", default=False))
+        return bool(context["request"].session.get("auto_colour_scheme", default=True))
     except AttributeError:
-        return False
+        return True
 
 
 @register.simple_tag(takes_context=True)

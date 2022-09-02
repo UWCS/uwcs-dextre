@@ -123,7 +123,9 @@ UWCS Home *type - home page
 
 You should now have the basic structure set up for the website to function. You can go ahead and add other pages and content to it.
 
-11. (Optional for local development unless you are working on one of the features that needs it) The last step is to start a celery worker for background tasks (namely for shell account creation and sending a selection of emails). Ensure you have `redis-server` set up before trying this step. Open a new terminal and run:
+11. Set your new home page as the root page of the website by heading to Settings -> Sites in the CMS and click edit on the default site in there. Then click "Choose a different root page" under these settings and pick your home page. Click Save and continue as normal.
+
+12. (Optional for local development unless you are working on one of the features that needs it) The last step is to start a celery worker for background tasks (namely for shell account creation and sending a selection of emails). Ensure you have `redis-server` set up before trying this step. Open a new terminal and run:
 
 ```
 source venv/bin/activate

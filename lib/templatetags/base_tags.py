@@ -32,6 +32,14 @@ def chlorox(field):
 
 
 @register.simple_tag(takes_context=True)
+def is_auto_theme(context):
+    try:
+        return bool(context["request"].session.get("auto_colour_scheme", default=False))
+    except AttributeError:
+        return False
+
+
+@register.simple_tag(takes_context=True)
 def is_nightmode(context):
     try:
         user = context["request"].user

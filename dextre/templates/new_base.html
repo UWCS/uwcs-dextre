@@ -1,5 +1,6 @@
 {% load static wagtailuserbar compress base_tags wagtailcore_tags %}
 {% is_nightmode as nightmode %}
+{% is_auto_theme as autotheme %}
 
 <!DOCTYPE html>
 {% comment %}
@@ -20,13 +21,22 @@
     <meta property="og:image" content="https://uwcs.co.uk/static/favicon-180.png"/>
 
     {# Global stylesheets #}
-    {% if nightmode %}
-        {% compress css %}
-            <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss"/>
-        {% endcompress %}
+    {% if autotheme %}
+        {% if nightmode %}
+            {% compress css %}
+                <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss"/>
+            {% endcompress %}
+        {% else %}
+            {% compress css %}
+                <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
+            {% endcompress %}
+        {% endif %}
     {% else %}
         {% compress css %}
             <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
+        {% endcompress %}
+        {% compress css %}
+            <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: dark)"/>
         {% endcompress %}
     {% endif %}
     <link href="{% static 'css/pygments-codehilite.css' %}" rel="stylesheet"/>
@@ -112,6 +122,24 @@
                 }, 'text');
         });
     });
+
+    // Auto theme switch toggle
+    $(document).ready(function () {
+        $("#auto-theme-switch").change(function () {
+            $.post(
+                '{% url 'toggle_auto_theme' %}',
+                {
+                    'auto_theme': $(this).is(':checked')
+                },
+                function () {
+                    location.reload();
+                }, 'text');
+        });
+    });
+
+    $(document).ready(function () {
+
+    })
 </script>
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}

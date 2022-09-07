@@ -44,7 +44,7 @@ def is_auto_theme(context):
                 return False
         return bool(context["request"].session.get("auto_colour_scheme", default=True))
     except AttributeError:
-        return True
+        return bool(context["request"].session.get("auto_colour_scheme", default=True))
 
 
 @register.simple_tag(takes_context=True)

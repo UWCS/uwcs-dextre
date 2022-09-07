@@ -7,6 +7,7 @@ urlpatterns = [
     url("^$", views.RootRedirectView.as_view(), name="root_redirect_view"),
     url("^profile/$", views.MemberAccountView.as_view(), name="profile"),
     url("^nightmode/$", views.ToggleNightModeView.as_view(), name="toggle_night_mode"),
+    url("^autotheme/$", views.ToggleAutoThemeView.as_view(), name="toggle_auto_theme"),
     url(
         "^profile/update/$",
         views.MemberAccountUpdateView.as_view(),

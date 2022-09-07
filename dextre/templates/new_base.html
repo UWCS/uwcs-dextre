@@ -129,7 +129,7 @@
             $.post(
                 '{% url 'toggle_auto_theme' %}',
                 {
-                    'auto_theme': $(this).is(':checked')
+                    'auto_colour_scheme': $(this).is(':checked')
                 },
                 function () {
                     location.reload();

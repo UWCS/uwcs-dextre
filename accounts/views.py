@@ -177,7 +177,8 @@ class ToggleNightModeView(View):
     def post(self, request):
         val = request.POST.get("night_mode", default="") == "true"
         request.session["night_mode"] = val
-        request.session["auto_colour_scheme"] = not val
+        if val:
+            request.session["auto_colour_scheme"] = not val
 
         return HttpResponse(status=200)
 
@@ -187,6 +188,5 @@ class ToggleAutoThemeView(View):
         request.session["auto_colour_scheme"] = (
             request.POST.get("auto_colour_scheme", default="") == "true"
         )
-        print(request.session["auto_colour_scheme"])
 
         return HttpResponse(status=200)

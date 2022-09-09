@@ -85,6 +85,12 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
         else:
             account.save()
 
+        if account.nightmode_on:
+            self.request.session["website_theme"] = "dark"
+        else:
+            if self.request.session["website_theme"] == "dark":
+                self.request.session["website_theme"] = "auto"
+
         return super(MemberAccountUpdateView, self).form_valid(form)
 
 

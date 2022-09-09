@@ -39,7 +39,7 @@
                         {% csrf_token %}
                     </p>
                 </div>
-                {% if webtheme == "dark" and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
+                {% if request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
                         <p class="is-size-7">Dark mode is manually enabled in your profile - please head to account settings to turn it off.</p>
                     {% endif %}
             </div>

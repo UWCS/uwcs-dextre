@@ -33,15 +33,21 @@ def chlorox(field):
 
 @register.simple_tag(takes_context=True)
 def website_theme(context):
-    try:
-        user = context["request"].user
-        if user.compsocuser:
-            if user.compsocuser.nightmode_on:
-                return "dark"
-    except AttributeError:
-        val = context["request"].session.get("website_theme", default="auto")
-        print(val)
-        return val
+    # try:
+    #     user = context["request"].user
+    #     if user.compsocuser:
+    #         if user.compsocuser.nightmode_on:
+    #             val = context["request"].session.get("website_theme", default="dark")
+    #             print(val)
+    #             return val
+    # except AttributeError:
+    #     val = context["request"].session.get("website_theme", default="auto")
+    #     print(val)
+    #     return val
+
+    val = context["request"].session.get("website_theme", default="auto")
+    print(val)
+    return val
 
 @register.inclusion_tag("lib/tags/sponsor_homepage.html", takes_context=True)
 def sponsor_homepage(context):

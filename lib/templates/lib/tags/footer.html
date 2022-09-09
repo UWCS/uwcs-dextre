@@ -21,19 +21,19 @@
                 <p class="title is-6 mt-2 mb-1">Website theme</p>
                 <div class="field has-addons">
                     <p class="control">
-                        <button class="button {% if webtheme == "auto" %}is-active is-primary{% endif %}" id="webtheme-auto">
+                        <button class="button {% if webtheme == "auto" %}is-active is-primary-scheme{% endif %}" id="webtheme-auto">
                             <span>System default</span>
                         </button>
                         {% csrf_token %}
                     </p>
                     <p class="control">
-                        <button class="button {% if webtheme == "light" %}is-active is-primary{% endif %}" id="webtheme-light">
+                        <button class="button {% if webtheme == "light" %}is-active is-primary-scheme{% endif %}" id="webtheme-light">
                             <span>Light mode</span>
                         </button>
                         {% csrf_token %}
                     </p>
                     <p class="control">
-                        <button class="button {% if webtheme == "dark" %}is-active is-primary{% endif %}" id="webtheme-dark">
+                        <button class="button {% if webtheme == "dark" %}is-active is-primary-scheme{% endif %}" id="webtheme-dark">
                             <span>Dark mode</span>
                         </button>
                         {% csrf_token %}

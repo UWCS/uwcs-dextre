@@ -1,5 +1,5 @@
 {% load wagtailimages_tags base_tags %}
-{% is_nightmode as nightmode %}
+{% website_theme as webtheme %}
 {% spaceless %}
 {% if sponsors %}
     <div class="container">
@@ -9,11 +9,19 @@
                 <div class="column is-narrow-tablet is-half-mobile">
                     <a href="{% if sponsor.url %}{{ sponsor.url }}{% else %}/about/sponsors/{% endif %}"
                        class="sponsor-image">
-                    <picture>
-                        {% image sponsor.nightmode_image max-300x100 as night_photo %}
-                        <source srcset="{{ night_photo.url }}" media="(prefers-color-scheme: dark)">
+                    {% if webtheme == "dark" and sponsor.nightmode_image %}
+                        {% image sponsor.nightmode_image max-300x100 class="image" %}
+                    {% elif webtheme == "light" %}
                         {% image sponsor.sponsor_image max-300x100 class="image" %}
-                    </picture>
+                    {% elif sponsor.nightmode_image %}
+                        <picture>
+                            {% image sponsor.nightmode_image max-300x100 as night_photo %}
+                            <source srcset="{{ night_photo.url }}" media="(prefers-color-scheme: dark)">
+                            {% image sponsor.sponsor_image max-300x100 class="image" %}
+                        </picture>
+                    {% else %}
+                        {% image sponsor.sponsor_image max-300x100 class="image" %}
+                    {% endif %}
                     </a>
                 </div>
             {% endfor %}

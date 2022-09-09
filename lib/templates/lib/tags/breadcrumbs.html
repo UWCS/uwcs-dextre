@@ -1,8 +1,8 @@
 {% load base_tags wagtailcore_tags %}
-{% is_nightmode as nightmode %}
+{% website_theme as webtheme %}
 
 {% if ancestors %}
-    <section class="section py-2 {% if nightmode %}has-background-dark-scheme{% else %}has-background-light-scheme{% endif %}">
+    <section class="section py-2 {% if webtheme == "dark" %}has-background-dark-scheme{% else %}has-background-light-scheme{% endif %}" id="breadcrumbs-section">
         <nav class="breadcrumb is-small py-1" aria-label="You are here:" role="navigation">
             <div class="container">
             <ul>

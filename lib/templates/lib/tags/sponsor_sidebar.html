@@ -1,5 +1,5 @@
 {% load wagtailimages_tags base_tags %}
-{% is_nightmode as nightmode %}
+{% website_theme as webtheme %}
 
 {% if sponsors %}
     <aside>
@@ -11,11 +11,19 @@
                 {% for sponsor in sponsors %}
                     <div class="column is-narrow-mobile is-full-tablet">
                         <a class="sponsor-image" href="{% if sponsor.url %}{{ sponsor.url }}{% else %}/about/sponsors/{% endif %}">
-                            <picture>
-                                {% image sponsor.nightmode_image max-400x75 as night_photo %}
-                                <source srcset="{{ night_photo.url }}" media="(prefers-color-scheme: dark)">
-                                {% image sponsor.sponsor_image max-400x75 class="image" %}
-                            </picture>
+                            {% if webtheme == "dark" and sponsor.nightmode_image %}
+                                {% image sponsor.nightmode_image max-300x100 class="image" %}
+                            {% elif webtheme == "light" %}
+                                {% image sponsor.sponsor_image max-300x100 class="image" %}
+                            {% elif sponsor.nightmode_image %}
+                                <picture>
+                                    {% image sponsor.nightmode_image max-300x100 as night_photo %}
+                                    <source srcset="{{ night_photo.url }}" media="(prefers-color-scheme: dark)">
+                                    {% image sponsor.sponsor_image max-300x100 class="image" %}
+                                </picture>
+                            {% else %}
+                                {% image sponsor.sponsor_image max-300x100 class="image" %}
+                            {% endif %}
                         </a>
                     </div>
                 {% endfor %}

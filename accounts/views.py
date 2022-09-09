@@ -183,10 +183,8 @@ class ToggleNightModeView(View):
         return HttpResponse(status=200)
 
 
-class ToggleAutoThemeView(View):
+class SetWebsiteThemeView(View):
     def post(self, request):
-        request.session["auto_colour_scheme"] = (
-            request.POST.get("auto_colour_scheme", default="") == "true"
-        )
+        request.session["website_theme"] = request.POST.get("theme", default="auto")
 
         return HttpResponse(status=200)

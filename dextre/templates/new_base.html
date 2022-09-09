@@ -1,6 +1,5 @@
 {% load static wagtailuserbar compress base_tags wagtailcore_tags %}
-{% is_nightmode as nightmode %}
-{% is_auto_theme as autotheme %}
+{% website_theme as webtheme %}
 
 <!DOCTYPE html>
 {% comment %}
@@ -20,24 +19,21 @@
     {# Facebook post image #}
     <meta property="og:image" content="https://uwcs.co.uk/static/favicon-180.png"/>
 
-    {# Global stylesheets #}
-    {% if autotheme %}
+    {% if webtheme == "dark" %}
+        {% compress css %}
+            <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss"/>
+        {% endcompress %}
+    {% elif webtheme == "light" %}
+        {% compress css %}
+            <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
+        {% endcompress %}
+    {% else %}
         {% compress css %}
             <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: light)"/>
         {% endcompress %}
         {% compress css %}
             <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: dark)"/>
         {% endcompress %}
-    {% else %}
-        {% if nightmode %}
-            {% compress css %}
-                <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss"/>
-            {% endcompress %}
-        {% else %}
-            {% compress css %}
-                <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
-            {% endcompress %}
-        {% endif %}
     {% endif %}
     <link href="{% static 'css/pygments-codehilite.css' %}" rel="stylesheet"/>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.14.0/css/all.css">
@@ -109,37 +105,49 @@
         }
     });
 
-    // Night mode switch toggle
     $(document).ready(function () {
-        $("#night-mode-switch").change(function () {
+         $("#webtheme-auto").click(function () {
             $.post(
-                '{% url 'toggle_night_mode' %}',
+                '{% url 'set_website_theme' %}',
                 {
-                    'night_mode': $(this).is(':checked')
+                    'theme': "auto"
                 },
                 function () {
                     location.reload();
                 }, 'text');
         });
-    });
+        $("#webtheme-light").click(function () {
+            $.post(
+                '{% url 'set_website_theme' %}',
+                {
+                    'theme': "light"
+                },
+                function () {
+                    location.reload();
+                }, 'text');
+        });
+        $("#webtheme-dark").click(function () {
+            $.post(
+                '{% url 'set_website_theme' %}',
+                {
+                    'theme': "dark"
+                },
+                function () {
+                    location.reload();
+                }, 'text');
+        });
 
-    // Auto theme switch toggle
-    $(document).ready(function () {
-        $("#auto-theme-switch").change(function () {
-            $.post(
-                '{% url 'toggle_auto_theme' %}',
-                {
-                    'auto_colour_scheme': $(this).is(':checked')
-                },
-                function () {
-                    location.reload();
-                }, 'text');
-        });
+        if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+            $('#breadcrumbs-section').removeClass('has-background-light-scheme');
+            $('#breadcrumbs-section').addClass('has-background-dark-scheme');
+        }
     });
 
     $(document).ready(function () {
 
     })
+
+
 </script>
 {% block extra_js %}
     {# Override this in templates to add extra javascript #}

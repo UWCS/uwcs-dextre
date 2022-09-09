@@ -23,7 +23,7 @@
     {# Global stylesheets #}
     {% if autotheme %}
         {% compress css %}
-            <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss"/>
+            <link href="{% static 'scss/new_light.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: light)"/>
         {% endcompress %}
         {% compress css %}
             <link href="{% static 'scss/new_dark.scss' %}" rel="stylesheet" type="text/x-scss" media="(prefers-color-scheme: dark)"/>

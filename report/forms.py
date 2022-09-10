@@ -3,14 +3,14 @@ from .validators import validate_file_size
 
 SEND_TO_OPTIONS = [
     ("exec", "All Exec"),
-    ("preswelfare", "President, Welfare & Women's Officer"),
+    ("preswelfare", "President, Welfare & Inclusivity"),
     ("president", "President"),
     ("secretary", "Secretary"),
     ("treasurer", "Treasurer"),
-    ("academic-coordinator", "Academic Coordinator"),
-    ("gaming-coordinator", "Gaming Coordinator"),
+    ("academic", "Academic Coordinator"),
+    ("gaming", "Gaming Coordinator"),
     ("tech", "Tech Officer"),
-    ("womens-officer", "Women's Officer"),
+    ("inclusivity", "Inclusivity Officer"),
     ("socials", "Social Secretary"),
     ("welfare", "Welfare Officer"),
 ]

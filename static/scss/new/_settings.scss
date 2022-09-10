@@ -1,11 +1,6 @@
 $light  : $white-ter;
 $dark   : $grey-darker;
 
-$text: $grey-darker;
-$text-strong: $black-ter;
-$text-light: $grey-darker;
-
-
 $primary-scheme: $primary;
 $secondary-scheme: $secondary;
 $info-scheme: $info;
@@ -23,6 +18,10 @@ $danger-light-scheme: findLightColor($danger);
 $cancelled-scheme: $danger-light-scheme;
 
 $link: $primary;
+
+$text: $grey-darker;
+$text-strong: $black-ter;
+$text-light: $grey-darker;
 
 $custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,

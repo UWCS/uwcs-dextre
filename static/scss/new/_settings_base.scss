@@ -27,7 +27,7 @@ $container-offset: 128px;
 $footer-background-color: #2C3134;
 $footer-color: hsl(0, 0, 100%);
 
-$primary: #3A7DFF;
+$primary: #3A69FF;  // Actual primary is #3A7DFF, changed for web contrast
 $primary-dark: desaturate(lighten($primary, 15%), 5%);
 $secondary: #FFC700;
 $secondary-dark: lighten($secondary, 15%);

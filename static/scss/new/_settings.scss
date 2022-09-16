@@ -1,3 +1,5 @@
+// Light theme colours
+
 $light  : $white-ter;
 $dark   : $grey-darker;
 
@@ -22,6 +24,8 @@ $link: $primary;
 $text: $grey-darker;
 $text-strong: $black-ter;
 $text-light: $grey-darker;
+
+// Custom colour mappings
 
 $custom-colors: ("secondary": $secondary, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,

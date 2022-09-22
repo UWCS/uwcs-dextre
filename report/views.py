@@ -26,7 +26,7 @@ class ReportView(FormView):
                 to_list = [
                     "president@uwcs.co.uk",
                     "welfare@uwcs.co.uk",
-                    "womens-officer@uwcs.co.uk",
+                    "inclusivity@uwcs.co.uk",
                 ]
             else:
                 to_email = to_email + "@uwcs.co.uk"

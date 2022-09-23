@@ -3,7 +3,7 @@ import os
 import subprocess
 from datetime import datetime
 
-from celery.decorators import task
+from celery import shared_task
 from django.conf import settings
 from django.contrib.auth.models import User
 from django.core.mail import EmailMultiAlternatives
@@ -107,7 +107,7 @@ def send_success_mail(user, username, password):
     email.send()
 
 
-@task(name="create_ldap_user")
+@shared_task(name="create_ldap_user")
 def create_ldap_user(account_id):
     request = ShellAccount.objects.get(id=account_id)
     user = request.user

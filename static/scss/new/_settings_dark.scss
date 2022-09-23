@@ -1,3 +1,5 @@
+// Dark theme colours
+
 $light  : $white-ter;
 $dark   : $grey-darker;
 
@@ -8,6 +10,7 @@ $success-scheme: darken($success, 30%);
 $warning-scheme: darken($warning, 30%);
 $danger-scheme: darken($danger, 30%);
 $light-scheme: $grey-darker;
+
 $primary-light-scheme: $primary-scheme;
 $secondary-light-scheme: $secondary-scheme;
 $info-light-scheme: $info-scheme;
@@ -18,6 +21,14 @@ $cancelled-scheme: darken($gray-base, 5%);
 
 $link: lighten(saturate($primary, 3%),5%);
 
+$text: $white-bis;
+$text-strong: $white;
+$text-light: $white-ter;
+
+// Default overrides for dark theme
+
+$background: $black-ter;
+
 $scheme-main: darken($gray-base, 10%);
 $scheme-main-bis: darken($gray-base, 3%);
 $scheme-main-ter: lighten($gray-base, 40%);
@@ -25,15 +36,7 @@ $scheme-invert: hsl(0, 0%, 100%);
 $scheme-invert-bis: hsl(0, 0%, 94%);
 $scheme-invert-ter: hsl(0, 0%, 88%);
 
-$text: $white-bis;
-$text-strong: $white;
-$text-light: $white-ter;
-$background: $black-ter;
-
 $card-background-color: $alt-grey-base;
-//$link
-//$card-color: hsl(0,0,100%);
-//$card-header-color: $card-color;
 $shadow: 0 0.5em 1em -0.125em rgba($scheme-main, 0.1), 0 0px 0 1px rgba($scheme-main, 0.02);
 
 $card-shadow: $shadow;
@@ -60,6 +63,8 @@ $border-light: $grey-dark;
 $border-light-hover: $grey-darker;
 
 $hr-background-color: $alt-grey-base;
+
+// Custom colour mappings
 
 $custom-colors: ("primary": $primary-dark, "secondary": $secondary-dark, "primary-scheme": $primary-scheme, "secondary-scheme": $secondary-scheme,
         "info-scheme": $info-scheme, "success-scheme": $success-scheme, "warning-scheme": $warning-scheme,

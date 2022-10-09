@@ -85,6 +85,12 @@ class MemberAccountUpdateView(LoginRequiredMixin, FormView):
         else:
             account.save()
 
+        if account.nightmode_on:
+            self.request.session["website_theme"] = "dark"
+        else:
+            if self.request.session["website_theme"] == "dark":
+                self.request.session["website_theme"] = "auto"
+
         return super(MemberAccountUpdateView, self).form_valid(form)
 
 
@@ -177,16 +183,14 @@ class ToggleNightModeView(View):
     def post(self, request):
         val = request.POST.get("night_mode", default="") == "true"
         request.session["night_mode"] = val
-        request.session["auto_colour_scheme"] = not val
+        if val:
+            request.session["auto_colour_scheme"] = not val
 
         return HttpResponse(status=200)
 
 
-class ToggleAutoThemeView(View):
+class SetWebsiteThemeView(View):
     def post(self, request):
-        request.session["auto_colour_scheme"] = (
-            request.POST.get("auto_colour_scheme", default="") == "true"
-        )
-        print(request.session["auto_colour_scheme"])
+        request.session["website_theme"] = request.POST.get("theme", default="auto")
 
         return HttpResponse(status=200)

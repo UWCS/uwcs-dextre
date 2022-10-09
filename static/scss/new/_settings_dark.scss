@@ -44,7 +44,7 @@ $card-shadow: $shadow;
 $event-shadow: $shadow;
 
 $box-background-color: $scheme-main-bis;
-$box-shadow: $shadow;
+$box-shadow: 0 0.5em 1em -0.125em rgba($black-ter, 0.8), 0 0px 0 1px rgba($black-ter, 0.4);
 
 $link-hover: $grey-light;
 $link-hover-border: $grey-dark;
@@ -61,6 +61,8 @@ $border: $grey-dark;
 $border-hover: $grey-darker;
 $border-light: $grey-dark;
 $border-light-hover: $grey-darker;
+
+$hr-background-color: $alt-grey-base;
 
 // Custom colour mappings
 

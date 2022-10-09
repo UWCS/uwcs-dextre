@@ -32,37 +32,8 @@ def chlorox(field):
 
 
 @register.simple_tag(takes_context=True)
-def is_auto_theme(context):
-    try:
-        user = context["request"].user
-    except AttributeError:
-        return bool(context["request"].session.get("auto_colour_scheme", default=True))
-    try:
-        if user.compsocuser:
-            if user.compsocuser.nightmode_on:
-                # If a user has nightmode switched on in profile, we don't want auto theme enabled
-                return False
-        return bool(context["request"].session.get("auto_colour_scheme", default=True))
-    except AttributeError:
-        return bool(context["request"].session.get("auto_colour_scheme", default=True))
-
-
-@register.simple_tag(takes_context=True)
-def is_nightmode(context):
-    try:
-        user = context["request"].user
-        # Wagtail preview context doesn't always have .user available
-    except AttributeError:
-        return False
-    try:
-        if user.compsocuser:
-            return user.compsocuser.nightmode_on or bool(
-                context["request"].session.get("night_mode", default=False)
-            )
-        else:
-            return bool(context["request"].session.get("night_mode", default=False))
-    except AttributeError:
-        return bool(context["request"].session.get("night_mode", default=False))
+def website_theme(context):
+    return context["request"].session.get("website_theme", default="auto")
 
 
 @register.inclusion_tag("lib/tags/sponsor_homepage.html", takes_context=True)

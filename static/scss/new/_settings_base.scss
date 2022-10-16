@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Muli:400,400i,700,700i|Montserrat:500|Ubuntu+Mono&display=swap');
+@import url('https://use.fontawesome.com/releases/v5.14.0/css/all.css');
+
 $gray-base: #2c3134;
 $alt-grey-base: #2d3338;
 
@@ -27,9 +30,9 @@ $container-offset: 128px;
 $footer-background-color: #2C3134;
 $footer-color: hsl(0, 0, 100%);
 
-$primary: #3d5afe;
+$primary: #3A69FF;  // Actual primary is #3A7DFF, changed for web contrast
 $primary-dark: desaturate(lighten($primary, 15%), 5%);
-$secondary: #fdd835;
+$secondary: #FFC700;
 $secondary-dark: lighten($secondary, 15%);
 $info: $primary;
 $success: #48C774;

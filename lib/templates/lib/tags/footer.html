@@ -1,7 +1,6 @@
 {% load base_tags wagtailcore_tags %}
 {% get_site_root as site_root %}
-{% is_nightmode as nightmode %}
-{% is_auto_theme as autotheme %}
+{% website_theme as webtheme %}
 
 <div class="container">
     <div class="columns">
@@ -18,41 +17,31 @@
                 {% endfor %}
             </ul>
 
-            <div class="columns">
-                <div class="column">
-                    <div class="switch-wrapper">
-                        <p class="title is-6 mt-2 mb-1">Night mode</p>
-                        <label class="switch">
-                            <input id="night-mode-switch" type="checkbox" name="night-mode-switch"
-                                   {% if nightmode %}checked="checked"{% endif %}>
-
-
-                            <span class="slider"></span>
-                            <span class="is-sr-only">Toggle dark theme</span>
-                        </label>
-                        {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
-                            <p class="is-size-7">You have enabled night mode in your profile, you can turn it off there</p>
-                        {% endif %}
+            <div>
+                <p class="title is-6 mt-2 mb-1">Website theme</p>
+                <div class="field has-addons">
+                    <p class="control">
+                        <button class="button {% if webtheme == "auto" %}is-active is-primary-scheme{% endif %}" id="webtheme-auto">
+                            <span>System default</span>
+                        </button>
                         {% csrf_token %}
-                    </div>
-                </div>
-                <div class="column">
-                    <div class="switch-wrapper">
-                        <p class="title is-6 mt-2 mb-1">Auto colour theme</p>
-                        <label class="switch">
-                            <input id="auto-theme-switch" type="checkbox" name="auto-theme-switch"
-                                   {% if autotheme %}checked="checked"{% endif %}>
-
-
-                            <span class="slider"></span>
-                            <span class="is-sr-only">Toggle auto theme based on system theme</span>
-                        </label>
-                        {% if nightmode and request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
-                            <p class="is-size-7">You have manually enabled night mode in your profile, which overrides this setting. To edit this setting, turn off night mode in your profile.</p>
-                        {% endif %}
+                    </p>
+                    <p class="control">
+                        <button class="button {% if webtheme == "light" %}is-active is-primary-scheme{% endif %}" id="webtheme-light">
+                            <span>Light mode</span>
+                        </button>
                         {% csrf_token %}
-                    </div>
+                    </p>
+                    <p class="control">
+                        <button class="button {% if webtheme == "dark" %}is-active is-primary-scheme{% endif %}" id="webtheme-dark">
+                            <span>Dark mode</span>
+                        </button>
+                        {% csrf_token %}
+                    </p>
                 </div>
+                {% if request.user.is_authenticated and request.user.compsocuser.nightmode_on %}
+                        <p class="is-size-7">Dark mode is manually enabled in your profile - please head to account settings to turn it off.</p>
+                    {% endif %}
             </div>
 
 

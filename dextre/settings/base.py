@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
-    "wagtail.core",
+    "wagtail",
     "modelcluster",
     "taggit",
     "taggit_templatetags2",
@@ -88,7 +88,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    #    'wagtail.core.middleware.SiteMiddleware',
+    #    'wagtail.middleware.SiteMiddleware',
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -222,6 +222,9 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = "uwcs.co.uk"
+
+# Keep BASE_URL updated for backwards compatibility
 BASE_URL = "uwcs.co.uk"
 
 # Apache template conf

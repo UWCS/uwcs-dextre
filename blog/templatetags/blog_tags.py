@@ -5,7 +5,7 @@ import sys
 
 from django.utils import timezone
 from django.utils.safestring import mark_safe
-from wagtail.core.rich_text import expand_db_html
+from wagtail.rich_text import expand_db_html
 
 from events.models import EventPage, EventsIndexPage
 

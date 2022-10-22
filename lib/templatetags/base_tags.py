@@ -6,7 +6,7 @@ from django.utils.safestring import mark_safe
 from blog.models import Sponsor, FooterLink, SocialMedia
 from lib.html_cleaners import chlorox as chlorox_
 
-from wagtail.core.models import Page, Site
+from wagtail.models import Page, Site
 from markdown import markdown
 
 register = template.Library()

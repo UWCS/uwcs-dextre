@@ -22,7 +22,7 @@ django-anymail==8.1
 django-appconf==1.0.4
 django-bower==5.2.0
 django-classy-tags==2.0.0
-django-compressor==2.4
+django-compressor==4.1
 django-cors-middleware==1.5.0
 django-filter==2.4.0
 django-ical==1.7.1
@@ -68,10 +68,10 @@ Pygments==2.7.4
 pyparsing==2.4.7
 python-dateutil==2.8.1
 pytz==2021.3
-rcssmin==1.0.6
+rcssmin==1.1.0
 redis==3.5.3
 requests==2.28.0
-rjsmin==1.1.0
+rjsmin==1.2.0
 six==1.15.0
 soupsieve==2.0.1
 sqlparse==0.4.2

@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "oauth2_provider",
     "corsheaders",
     "sp",
-    "djangobower",
     "compressor",
     "anymail",
     "markdownx",
@@ -143,7 +142,6 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "djangobower.finders.BowerFinder",
     "compressor.finders.CompressorFinder",
 ]
 
@@ -189,9 +187,6 @@ PASSWORD_HASHERS = [
 
 # Anymail
 DEFAULT_FROM_EMAIL = "noreply@uwcs.co.uk"
-
-# Django-bower
-BOWER_INSTALLED_APPS = ["bulma~0.9.0"]
 
 # OAuth2 groups
 OAUTH2_PROVIDER = {

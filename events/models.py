@@ -171,7 +171,7 @@ class EventPage(Page):
     subpage_types = []
 
     # Event fields
-    body = StreamField(BlogStreamBlock())
+    body = StreamField(BlogStreamBlock(), use_json_field=True)
     description = models.TextField()
     category = models.ForeignKey(EventType, on_delete=models.PROTECT)
     location = models.CharField(max_length=50, default="Department of Computer Science")
@@ -275,7 +275,7 @@ class EventPage(Page):
 EventPage.content_panels = [
     MultiFieldPanel(
         [
-            FieldPanel("title", classname="full title"),
+            FieldPanel("title", classname="title"),
             FieldPanel("cancelled"),
             FieldPanel("description"),
             FieldPanel("category"),

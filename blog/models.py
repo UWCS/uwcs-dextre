@@ -23,7 +23,6 @@ from wagtail.blocks import (
     RichTextBlock,
     ChoiceBlock,
     StaticBlock,
-    ChooserBlock,
 )
 from wagtail.fields import StreamField, RichTextField
 from wagtail.models import Page
@@ -278,18 +277,12 @@ class CollapsibleBlock(StructBlock):
         template = "blog/blocks/collapsible.html"
 
 
-class PDFEmbedBlock(ChooserBlock):
+class PDFEmbedBlock(DocumentChooserBlock):
     @cached_property
     def target_model(self):
         from wagtail.documents import get_document_model
 
         return get_document_model()
-
-    @cached_property
-    def widget(self):
-        from wagtail.documents.widgets import AdminDocumentChooser
-
-        return AdminDocumentChooser
 
     def render_basic(self, value, context=None):
         if value:
@@ -432,7 +425,7 @@ class BlogPage(Page):
 
 
 BlogPage.content_panels = [
-    FieldPanel("title", classname="full title"),
+    FieldPanel("title", classname="title"),
     FieldPanel("intro"),
     FieldPanel("date"),
     FieldPanel("body"),
@@ -467,7 +460,7 @@ class AboutPage(Page):
 
 
 AboutPage.content_panels = [
-    FieldPanel("title", classname="full title"),
+    FieldPanel("title", classname="title"),
     FieldPanel("full_title"),
     FieldPanel("body"),
 ]

@@ -2,12 +2,6 @@
 {% website_theme as webtheme %}
 
 <!DOCTYPE html>
-{% comment %}
-<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!-->
-{% endcomment %}
 <html lang="en" xmlns:fb="http://ogp.me/ns/fb#"> {# <!--<![endif]-->  #}
 <head>
     <meta charset="utf-8"/>
@@ -18,6 +12,10 @@
     <meta name="theme-color" content="#141E24"/>
     {# Facebook post image #}
     <meta property="og:image" content="https://uwcs.co.uk/static/favicon-180.png"/>
+
+    {% if request.in_preview_panel %}
+        <base target="_blank">
+    {% endif %}
 
     {% if webtheme == "dark" %}
         {% compress css %}

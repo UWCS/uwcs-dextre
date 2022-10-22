@@ -123,9 +123,7 @@ class Migration(migrations.Migration):
                                     [
                                         (
                                             "quote",
-                                            wagtail.blocks.TextBlock(
-                                                "quote title"
-                                            ),
+                                            wagtail.blocks.TextBlock("quote title"),
                                         ),
                                         (
                                             "attribution",

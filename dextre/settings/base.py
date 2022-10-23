@@ -158,13 +158,13 @@ MEDIA_URL = "/media/"
 # Django Compressor
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 BOWER_COMPONENTS_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, "../components"))
+NODE_MODULES = os.path.abspath(os.path.join(PROJECT_PATH, "../../node_modules"))
 COMPRESS_PRECOMPILERS = (
     (
         "text/x-scss",
         "sass --style compressed"
-        ' -I "%s/bower_components/bulma"'
-        ' -I "%s/bower_components/motion-ui"'
-        ' {infile} "{outfile}"' % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT),
+        ' -I "%s/bulma"'
+        ' {infile} "{outfile}"' % (NODE_MODULES),
     ),
 )
 

@@ -37,8 +37,3 @@ CELERY_ACCEPT_CONTENT = ["application/json"]
 CELERY_TASK_SERIALIZER = "json"
 CELERY_RESULT_SERIALIZER = "json"
 CELERY_TIMEZONE = "GMT"
-
-try:
-    from .local import *
-except ImportError:
-    pass

@@ -58,7 +58,6 @@ INSTALLED_APPS = [
     "sp",
     "compressor",
     "anymail",
-    "markdownx",
     "wagtailmarkdown",
     "widget_tweaks",
 ]

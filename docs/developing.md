@@ -95,4 +95,8 @@ celery -A dextre worker -l info
 ## Deployments & Releases
 When changes are merged to `develop`, someone in the tech team will eventually deploy the website to the staging environment. This runs separately from the production instance, including with a separate database. This instance points to idp-test at Warwick, so single-sign-on should still work but routed through the test instances of WSO at Warwick. Use this environment to check that nothing is majorly broken.
 
+Tracking towards a release, create a milestone in GitHub with the upcoming version number as the name (see below) and link any issues or PRs that will be included in that release to the milestone.
+
 When you are ready to deploy to live, create a PR merging `develop` into `master`, and make the PR name the version number of the "release". Version numbers follow the format YYYY.MM, where YYYY and MM represent the year and month of the deployment. If you have multiple deploys in a month, add on a .X where X increases incrementally from 1. Once merged, someone in the tech team will follow the steps provided to deploy to the production instance.
+
+Once a release is successfully completed, go to the milestone for this release, set the due date as the date of deployment and mark as done. Then. create a release in GitHub with the version number and add some brief release notes to the description. Create a new tag for the release with the version number.

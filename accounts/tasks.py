@@ -80,7 +80,7 @@ def send_user_issue_email(user, username):
     email = EmailMultiAlternatives(
         email_context["title"],
         email_text,
-        "UWCS Techteam <techteam@uwcs.co.uk>",
+        "UWCS <noreply@uwcs.co.uk>",
         to=[user.email],
     )
     email.attach_alternative(email_html, "text/html")
@@ -100,7 +100,7 @@ def send_success_mail(user, username, password):
     email = EmailMultiAlternatives(
         email_context["title"],
         email_text,
-        "UWCS Techteam <techteam@uwcs.co.uk>",
+        "UWCS <noreply@uwcs.co.uk>",
         to=[user.email],
     )
     email.attach_alternative(email_html, "text/html")

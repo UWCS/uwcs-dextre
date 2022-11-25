@@ -13,9 +13,9 @@ from pygments import highlight
 from pygments.formatters import get_formatter_by_name
 from pygments.lexers import get_lexer_by_name
 from taggit.models import TaggedItemBase
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
 from wagtail.contrib.table_block.blocks import TableBlock, DEFAULT_TABLE_OPTIONS
-from wagtail.core.blocks import (
+from wagtail.blocks import (
     TextBlock,
     StructBlock,
     StreamBlock,
@@ -23,14 +23,12 @@ from wagtail.core.blocks import (
     RichTextBlock,
     ChoiceBlock,
     StaticBlock,
-    ChooserBlock,
 )
-from wagtail.core.fields import StreamField, RichTextField
-from wagtail.core.models import Page
+from wagtail.fields import StreamField, RichTextField
+from wagtail.models import Page
 from wagtail.documents.blocks import DocumentChooserBlock
 from wagtail.embeds.blocks import EmbedBlock
 from wagtail.images.blocks import ImageChooserBlock
-from wagtail.images.edit_handlers import ImageChooserPanel
 from wagtail.snippets.models import register_snippet
 from wagtailmarkdown.blocks import MarkdownBlock
 import bleach
@@ -117,8 +115,8 @@ class Sponsor(models.Model):
                 FieldPanel("name"),
                 FieldPanel("tier"),
                 FieldPanel("url"),
-                ImageChooserPanel("sponsor_image"),
-                ImageChooserPanel("nightmode_image"),
+                FieldPanel("sponsor_image"),
+                FieldPanel("nightmode_image"),
             ],
             heading="Sponsor information",
         ),
@@ -279,18 +277,12 @@ class CollapsibleBlock(StructBlock):
         template = "blog/blocks/collapsible.html"
 
 
-class PDFEmbedBlock(ChooserBlock):
+class PDFEmbedBlock(DocumentChooserBlock):
     @cached_property
     def target_model(self):
         from wagtail.documents import get_document_model
 
         return get_document_model()
-
-    @cached_property
-    def widget(self):
-        from wagtail.documents.widgets import AdminDocumentChooser
-
-        return AdminDocumentChooser
 
     def render_basic(self, value, context=None):
         if value:
@@ -332,12 +324,12 @@ class HomePage(Page):
     # Parent page/subpage rules
     subpage_types = ["blog.BlogIndexPage", "blog.AboutPage", "events.EventsIndexPage"]
 
-    description = StreamField(BlogStreamBlock())
+    description = StreamField(BlogStreamBlock(), use_json_field=True)
     alert = RichTextField(blank=True, features=["bold", "italic", "underline"])
     alert_link = models.URLField(blank=True)
 
     content_panels = Page.content_panels + [
-        StreamFieldPanel("description"),
+        FieldPanel("description"),
         MultiFieldPanel(
             [
                 FieldPanel("alert"),
@@ -412,7 +404,7 @@ class BlogPage(Page):
     parent_page_types = ["blog.BlogIndexPage"]
     subpage_types = []
 
-    body = StreamField(BlogStreamBlock())
+    body = StreamField(BlogStreamBlock(), use_json_field=True)
     intro = RichTextField(
         help_text="This is displayed on the home and blog listing pages",
         features=PARAGRAPH_FEATURES,
@@ -433,10 +425,10 @@ class BlogPage(Page):
 
 
 BlogPage.content_panels = [
-    FieldPanel("title", classname="full title"),
+    FieldPanel("title", classname="title"),
     FieldPanel("intro"),
     FieldPanel("date"),
-    StreamFieldPanel("body"),
+    FieldPanel("body"),
 ]
 
 BlogPage.promote_panels = Page.promote_panels + [
@@ -449,7 +441,7 @@ class AboutPage(Page):
     parent_page_types = ["blog.HomePage", "blog.AboutPage"]
     subpage_types = ["blog.AboutPage"]
 
-    body = StreamField(BlogStreamBlock())
+    body = StreamField(BlogStreamBlock(), use_json_field=True)
     full_title = models.CharField(max_length=255, blank=True, null=True)
 
     @property
@@ -468,7 +460,7 @@ class AboutPage(Page):
 
 
 AboutPage.content_panels = [
-    FieldPanel("title", classname="full title"),
+    FieldPanel("title", classname="title"),
     FieldPanel("full_title"),
-    StreamFieldPanel("body"),
+    FieldPanel("body"),
 ]

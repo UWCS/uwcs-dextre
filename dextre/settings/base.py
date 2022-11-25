@@ -41,7 +41,7 @@ INSTALLED_APPS = [
     "wagtail.images",
     "wagtail.search",
     "wagtail.admin",
-    "wagtail.core",
+    "wagtail",
     "modelcluster",
     "taggit",
     "taggit_templatetags2",
@@ -56,10 +56,8 @@ INSTALLED_APPS = [
     "oauth2_provider",
     "corsheaders",
     "sp",
-    "djangobower",
     "compressor",
     "anymail",
-    "markdownx",
     "wagtailmarkdown",
     "widget_tweaks",
 ]
@@ -89,7 +87,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "corsheaders.middleware.CorsMiddleware",
-    #    'wagtail.core.middleware.SiteMiddleware',
+    #    'wagtail.middleware.SiteMiddleware',
     "wagtail.contrib.redirects.middleware.RedirectMiddleware",
 ]
 
@@ -143,7 +141,6 @@ USE_TZ = True
 STATICFILES_FINDERS = [
     "django.contrib.staticfiles.finders.FileSystemFinder",
     "django.contrib.staticfiles.finders.AppDirectoriesFinder",
-    "djangobower.finders.BowerFinder",
     "compressor.finders.CompressorFinder",
 ]
 
@@ -160,13 +157,13 @@ MEDIA_URL = "/media/"
 # Django Compressor
 PROJECT_PATH = os.path.abspath(os.path.dirname(__file__))
 BOWER_COMPONENTS_ROOT = os.path.abspath(os.path.join(PROJECT_PATH, "../components"))
+NODE_MODULES = os.path.abspath(os.path.join(PROJECT_PATH, "../../node_modules"))
 COMPRESS_PRECOMPILERS = (
     (
         "text/x-scss",
         "sass --style compressed"
-        ' -I "%s/bower_components/bulma"'
-        ' -I "%s/bower_components/motion-ui"'
-        ' {infile} "{outfile}"' % (BOWER_COMPONENTS_ROOT, BOWER_COMPONENTS_ROOT),
+        ' -I "%s/bulma"'
+        ' {infile} "{outfile}"' % (NODE_MODULES),
     ),
 )
 
@@ -189,9 +186,6 @@ PASSWORD_HASHERS = [
 
 # Anymail
 DEFAULT_FROM_EMAIL = "noreply@uwcs.co.uk"
-
-# Django-bower
-BOWER_INSTALLED_APPS = ["bulma~0.9.0"]
 
 # OAuth2 groups
 OAUTH2_PROVIDER = {
@@ -227,6 +221,9 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # Base URL to use when referring to full URLs within the Wagtail admin backend -
 # e.g. in notification emails. Don't include '/admin' or a trailing slash
+WAGTAILADMIN_BASE_URL = "uwcs.co.uk"
+
+# Keep BASE_URL updated for backwards compatibility
 BASE_URL = "uwcs.co.uk"
 
 # Apache template conf

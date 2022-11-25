@@ -3,7 +3,7 @@ from django.utils.safestring import mark_safe
 from wagtail.admin.rich_text.converters.html_to_contentstate import (
     InlineStyleElementHandler,
 )
-from wagtail.core import hooks
+from wagtail import hooks
 
 
 # 1. Use the register_rich_text_features hook.

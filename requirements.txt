@@ -69,6 +69,7 @@ rcssmin==1.1.0
 redis==3.5.3
 requests==2.28.0
 rjsmin==1.2.0
+sentry-sdk=1.11.1
 six==1.15.0
 soupsieve==2.0.1
 sqlparse==0.4.2
@@ -76,7 +77,7 @@ tablib==2.0.0
 tomli==1.2.3
 typing-extensions==4.0.1
 Unidecode==1.1.1
-urllib3==1.26.5
+urllib3==1.26.13
 vine==5.0.0
 wagtail==4.1
 wagtail-markdown==0.10.0

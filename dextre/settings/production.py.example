@@ -1,5 +1,8 @@
 from .base import *
 
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
+
 DEBUG = True
 SECRET_KEY = 'your_secret_key_here'
 
@@ -54,3 +57,21 @@ APACHE_WEBSITE_DIR = ''
 ALLOWED_HOSTS = [
     'allowed_host(s)'
 ]
+
+# Sentry
+sentry_sdk.init(
+    dsn="https://<token-here>.ingest.sentry.io/<token-here>",
+    integrations=[
+        DjangoIntegration(),
+    ],
+    environment="production",
+
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=0.1,
+
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True
+)

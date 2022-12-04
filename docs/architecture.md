@@ -10,7 +10,7 @@ Currently, within Dextre, we have the following apps:
   - Amphi
   - Warwick.GG
 - `blog` - is the main host of pages on the site and anything to do with the CMS (more on that later). The home page template is located here, along with templates for blog and about pages.
-- `dextre` - the main app of the website. Contains settings for Django along with any assets downloaded by Bower.
+- `dextre` - the main app of the website. Contains settings for Django.
 - `events` - anything to do with events on the website. Hooks into the CMS so event pages are managed within the CMS.
 - `lib` - contains templates for reusable components across the website, like the sidebars and social media bubbles on the home page.
 - `report` - a small app that powers the static report form on the website (`/report`) - this is purely a web form and does not store or communicate with the database in any way.
@@ -23,8 +23,7 @@ There are also a few other folders of important note (although these are not app
 - `static` - contains all the website's static files (CSS, JS, images)
 
 Beyond the use of Python, there are a number of dependencies in use across the website:
-- Bower is used to download all of the CSS files from Bulma, the CSS framework in use on this site
-  - Eventually this could be moved to NPM (considering there are other NPM dependencies) to remove the use of Bower if desired
+- NPM is used to download all the CSS files from Bulma, the CSS framework in use on this site
 - Sass (downloaded via NPM) is used to compress SCSS files into single CSS files for use in production
 - Redis is used to power the cache for asynchronous tasks which are run using the Celery library
 - Supervisor is used in production to run Celery for asynchronous tasks

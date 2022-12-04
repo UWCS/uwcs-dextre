@@ -3,8 +3,8 @@
 import blog.models
 from django.db import migrations
 import wagtail.contrib.table_block.blocks
-import wagtail.core.blocks
-import wagtail.core.fields
+import wagtail.blocks
+import wagtail.fields
 import wagtail.documents.blocks
 import wagtail.images.blocks
 
@@ -19,20 +19,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="aboutpage",
             name="body",
-            field=wagtail.core.fields.StreamField(
+            field=wagtail.fields.StreamField(
                 [
                     ("h2", blog.models.Heading2Block(classname="title", icon="title")),
                     ("h3", blog.models.Heading3Block(classname="title", icon="title")),
                     ("h4", blog.models.Heading4Block(classname="title", icon="title")),
                     ("hr", blog.models.HRuleBlock()),
-                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("paragraph", wagtail.blocks.RichTextBlock(icon="pilcrow")),
                     ("image", wagtail.images.blocks.ImageChooserBlock()),
                     (
                         "pullquote",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
-                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
-                                ("attribution", wagtail.core.blocks.CharBlock()),
+                                ("quote", wagtail.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.blocks.CharBlock()),
                             ]
                         ),
                     ),
@@ -44,11 +44,11 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "code",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
                                 (
                                     "language",
-                                    wagtail.core.blocks.ChoiceBlock(
+                                    wagtail.blocks.ChoiceBlock(
                                         choices=[
                                             ("bash", "Bash/Shell"),
                                             ("c", "C"),
@@ -78,7 +78,7 @@ class Migration(migrations.Migration):
                                         ]
                                     ),
                                 ),
-                                ("code", wagtail.core.blocks.TextBlock()),
+                                ("code", wagtail.blocks.TextBlock()),
                             ]
                         ),
                     ),
@@ -114,8 +114,8 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "html",
-                        wagtail.core.blocks.StructBlock(
-                            [("value", wagtail.core.blocks.TextBlock())]
+                        wagtail.blocks.StructBlock(
+                            [("value", wagtail.blocks.TextBlock())]
                         ),
                     ),
                 ]
@@ -124,20 +124,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="blogpage",
             name="body",
-            field=wagtail.core.fields.StreamField(
+            field=wagtail.fields.StreamField(
                 [
                     ("h2", blog.models.Heading2Block(classname="title", icon="title")),
                     ("h3", blog.models.Heading3Block(classname="title", icon="title")),
                     ("h4", blog.models.Heading4Block(classname="title", icon="title")),
                     ("hr", blog.models.HRuleBlock()),
-                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("paragraph", wagtail.blocks.RichTextBlock(icon="pilcrow")),
                     ("image", wagtail.images.blocks.ImageChooserBlock()),
                     (
                         "pullquote",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
-                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
-                                ("attribution", wagtail.core.blocks.CharBlock()),
+                                ("quote", wagtail.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.blocks.CharBlock()),
                             ]
                         ),
                     ),
@@ -149,11 +149,11 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "code",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
                                 (
                                     "language",
-                                    wagtail.core.blocks.ChoiceBlock(
+                                    wagtail.blocks.ChoiceBlock(
                                         choices=[
                                             ("bash", "Bash/Shell"),
                                             ("c", "C"),
@@ -183,7 +183,7 @@ class Migration(migrations.Migration):
                                         ]
                                     ),
                                 ),
-                                ("code", wagtail.core.blocks.TextBlock()),
+                                ("code", wagtail.blocks.TextBlock()),
                             ]
                         ),
                     ),
@@ -219,8 +219,8 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "html",
-                        wagtail.core.blocks.StructBlock(
-                            [("value", wagtail.core.blocks.TextBlock())]
+                        wagtail.blocks.StructBlock(
+                            [("value", wagtail.blocks.TextBlock())]
                         ),
                     ),
                 ]
@@ -229,20 +229,20 @@ class Migration(migrations.Migration):
         migrations.AlterField(
             model_name="homepage",
             name="description",
-            field=wagtail.core.fields.StreamField(
+            field=wagtail.fields.StreamField(
                 [
                     ("h2", blog.models.Heading2Block(classname="title", icon="title")),
                     ("h3", blog.models.Heading3Block(classname="title", icon="title")),
                     ("h4", blog.models.Heading4Block(classname="title", icon="title")),
                     ("hr", blog.models.HRuleBlock()),
-                    ("paragraph", wagtail.core.blocks.RichTextBlock(icon="pilcrow")),
+                    ("paragraph", wagtail.blocks.RichTextBlock(icon="pilcrow")),
                     ("image", wagtail.images.blocks.ImageChooserBlock()),
                     (
                         "pullquote",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
-                                ("quote", wagtail.core.blocks.TextBlock("quote title")),
-                                ("attribution", wagtail.core.blocks.CharBlock()),
+                                ("quote", wagtail.blocks.TextBlock("quote title")),
+                                ("attribution", wagtail.blocks.CharBlock()),
                             ]
                         ),
                     ),
@@ -254,11 +254,11 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "code",
-                        wagtail.core.blocks.StructBlock(
+                        wagtail.blocks.StructBlock(
                             [
                                 (
                                     "language",
-                                    wagtail.core.blocks.ChoiceBlock(
+                                    wagtail.blocks.ChoiceBlock(
                                         choices=[
                                             ("bash", "Bash/Shell"),
                                             ("c", "C"),
@@ -288,7 +288,7 @@ class Migration(migrations.Migration):
                                         ]
                                     ),
                                 ),
-                                ("code", wagtail.core.blocks.TextBlock()),
+                                ("code", wagtail.blocks.TextBlock()),
                             ]
                         ),
                     ),
@@ -324,8 +324,8 @@ class Migration(migrations.Migration):
                     ),
                     (
                         "html",
-                        wagtail.core.blocks.StructBlock(
-                            [("value", wagtail.core.blocks.TextBlock())]
+                        wagtail.blocks.StructBlock(
+                            [("value", wagtail.blocks.TextBlock())]
                         ),
                     ),
                 ]

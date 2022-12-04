@@ -8,10 +8,9 @@ from django.core.paginator import PageNotAnInteger, Paginator, EmptyPage
 from django.db import models
 from django.utils import timezone
 from taggit.models import TaggedItemBase
-from wagtail.admin.edit_handlers import FieldPanel, StreamFieldPanel, MultiFieldPanel
-from wagtail.core.fields import StreamField
-from wagtail.core.models import Page
-from wagtail.images.edit_handlers import ImageChooserPanel
+from wagtail.admin.panels import FieldPanel, MultiFieldPanel
+from wagtail.fields import StreamField
+from wagtail.models import Page
 from wagtail.snippets.models import register_snippet
 
 from accounts.models import CompsocUser
@@ -51,8 +50,8 @@ class EventType(models.Model):
     panels = [
         FieldPanel("name"),
         FieldPanel("target"),
-        ImageChooserPanel("list_image"),
-        ImageChooserPanel("banner_image"),
+        FieldPanel("list_image"),
+        FieldPanel("banner_image"),
     ]
 
     class Meta:
@@ -172,7 +171,7 @@ class EventPage(Page):
     subpage_types = []
 
     # Event fields
-    body = StreamField(BlogStreamBlock())
+    body = StreamField(BlogStreamBlock(), use_json_field=True)
     description = models.TextField()
     category = models.ForeignKey(EventType, on_delete=models.PROTECT)
     location = models.CharField(max_length=50, default="Department of Computer Science")
@@ -276,7 +275,7 @@ class EventPage(Page):
 EventPage.content_panels = [
     MultiFieldPanel(
         [
-            FieldPanel("title", classname="full title"),
+            FieldPanel("title", classname="title"),
             FieldPanel("cancelled"),
             FieldPanel("description"),
             FieldPanel("category"),
@@ -285,7 +284,7 @@ EventPage.content_panels = [
             FieldPanel("discord_event_link"),
             FieldPanel("start"),
             FieldPanel("finish"),
-            StreamFieldPanel("body"),
+            FieldPanel("body"),
         ],
         heading="Event details",
     ),

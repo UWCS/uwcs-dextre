@@ -6,7 +6,7 @@ import sys
 
 from django import template
 from django.utils import timezone
-from wagtail.core.models import Page
+from wagtail.models import Page
 from events.models import EventsArchivePage
 
 register = template.Library()
